@@ -163,6 +163,7 @@ public static class UserDtoMapper
                         { "cityLightCount", model.CityLightCount },
                         { "active", model.NightModeActive },
                         { "numExpansionsPurchased", model.LightExpansionsPurchased },
+                        { "isPlazaBuild", model.IsPlazaBuild },
                     }
                 },
                 { "remodel", new ASObject() { { "enabled", model.GetWorld().HasRemodelHeadquarters() } } },
