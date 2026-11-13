@@ -1,0 +1,37 @@
+@page
+@model CityVilleDotnet.Api.Pages.Account.ResetModel
+@using CityVilleDotnet.Api.Pages.Account
+
+<div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light px-3">
+    <img class="ag-auth-logo" src="/ag/logo_revived.png" alt="CityVille Revived"/>
+    <div class="ag-auth-wrap w-100">
+    <img class="ag-low" src="/ag/lowlitta.png" alt="Lowlitta"/>
+    <div class="card shadow-sm" style="max-width: 400px; width: 100%;">
+        <div class="card-header text-center"><h2 class="mb-0">@AgText.Get("ResetTitle")</h2></div>
+        <div class="card-body">
+            <p class="small text-muted">@AgText.Get("ResetHelp")</p>
+            @if (Model.Error != null) { <div class="alert alert-danger py-2">@Model.Error</div> }
+            <form method="post" novalidate>
+                <div class="form-floating mb-3">
+                    <input name="u" value="@Model.UserName" class="form-control" id="rU" placeholder="user" autocomplete="username" maxlength="64"/>
+                    <label for="rU">@AgText.Get("User")</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="code" value="@Model.Code" class="form-control text-uppercase" id="rC" placeholder="code" autocomplete="one-time-code" maxlength="16" style="letter-spacing:.2em"/>
+                    <label for="rC">@AgText.Get("Code")</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="Password" type="password" class="form-control" id="rP" placeholder="pass" autocomplete="new-password"/>
+                    <label for="rP">@AgText.Get("NewPass")</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="Confirm" type="password" class="form-control" id="rP2" placeholder="pass" autocomplete="new-password"/>
+                    <label for="rP2">@AgText.Get("Confirm")</label>
+                </div>
+                <button type="submit" class="w-100 btn btn-primary btn-lg">@AgText.Get("Save")</button>
+            </form>
+        </div>
+    </div>
+    </div>
+    <p class="mt-3 ag-stroke" style="font-weight:600">Allow Games · BETA v0.12 · <a href="/creditos.html" style="color:#fff">Créditos</a></p>
+</div>

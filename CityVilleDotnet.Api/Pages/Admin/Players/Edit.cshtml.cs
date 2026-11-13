@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using CityVilleDotnet.Common.Settings;
 using CityVilleDotnet.Domain.Entities;
 using CityVilleDotnet.Domain.Enums;
@@ -103,6 +103,19 @@ public class EditModel(CityVilleDbContext dbContext, UserManager<ApplicationUser
         await dbContext.SaveChangesAsync(ct);
 
         TempData["Success"] = localizer["AdminPlayerUpdated"].Value;
+        return RedirectToTab(id, "overview");
+    }
+
+    // Allow Games: código de un solo uso para que el jugador cambie su contraseña en /Account/Reset
+    public async Task<IActionResult> OnPostResetCodeAsync(Guid id, CancellationToken ct)
+    {
+        var userName = await dbContext.Set<Player>().Where(x => x.Id == id).Select(x => x.AppUser!.UserName).FirstOrDefaultAsync(ct);
+        if (string.IsNullOrEmpty(userName))
+            return NotFound();
+
+        var code = CityVilleDotnet.Api.Features.AllowGames.ResetCodeService.Create(userName, TimeSpan.FromHours(24));
+        TempData["AgResetCode"] = code;
+        TempData["AgResetUser"] = userName;
         return RedirectToTab(id, "overview");
     }
 

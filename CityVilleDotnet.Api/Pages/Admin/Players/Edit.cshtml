@@ -1,4 +1,4 @@
-@page "{id:guid}"
+﻿@page "{id:guid}"
 @using CityVilleDotnet.Domain.Enums
 @model CityVilleDotnet.Api.Pages.Admin.Players.EditModel
 
@@ -123,6 +123,24 @@
 					<button type="submit" class="btn btn-sm btn-outline-warning font-weight-bold">
 						<i class="bi bi-box-arrow-in-right mr-1"></i>@Localizer["AdminImpersonate"]
 					</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="card border-0 shadow-sm mb-4">
+			<div class="card-body d-flex align-items-center justify-content-between flex-wrap">
+				<div>
+					<h6 class="font-weight-bold text-dark mb-1"><i class="bi bi-key mr-2 text-success"></i>Código para cambiar contraseña</h6>
+					<div class="text-muted small">Para jugadores que olvidaron su contraseña. Dura 24 horas y sirve una sola vez. Se usa en /Account/Reset</div>
+					@if (TempData["AgResetCode"] is string agCode)
+					{
+						var agUser = TempData["AgResetUser"] as string ?? "";
+						var agLink = $"{Request.Scheme}://{Request.Host}/Account/Reset?u={Uri.EscapeDataString(agUser)}&code={agCode}";
+						<div class="alert alert-success mt-2 mb-0">Código: <b style="letter-spacing:.15em">@agCode</b><br/><small>Link: <a href="@agLink">@agLink</a></small></div>
+					}
+				</div>
+				<form method="post" asp-page-handler="ResetCode" asp-route-id="@player.Id">
+					<button type="submit" class="btn btn-sm btn-outline-success font-weight-bold"><i class="bi bi-key mr-1"></i>Generar código</button>
 				</form>
 			</div>
 		</div>
