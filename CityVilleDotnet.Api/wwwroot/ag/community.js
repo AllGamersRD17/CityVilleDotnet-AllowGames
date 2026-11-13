@@ -564,6 +564,49 @@
     var txt = [a, b, c, d].filter(function (x) { return typeof x === 'string' && x.length > 3 && x.length < 300 && !/^https?:/.test(x); });
     fromGame({ name: o.title || o.name || txt[0] || t.fromGame, description: o.message || o.body || txt[1] || '', media: o.image ? [{ src: o.image }] : (o.img ? [{ src: o.img }] : null) }, o.action_links || []);
   };
+  // El juego de 2012 pedia permisos de Facebook antes de publicar y se quedaba "publicando" esperando
+  // respuesta. Aqui contestamos como lo hacia Facebook: permiso concedido y la historia va al muro.
+  function flashCall(name) {
+    var f = gameFlash(), args = [].slice.call(arguments, 1);
+    try { if (f && typeof f[name] === 'function') { f[name].apply(f, args); return true; } } catch (e) { console.warn('[AG] ' + name, e); }
+    return false;
+  }
+  var lastPerm = 0;
+  window.showStreamPermissions = function () {
+    console.log('[AG] showStreamPermissions');
+    var now = Date.now(); if (now - lastPerm < 4000) { afterShare('null'); return; }
+    lastPerm = now;
+    setTimeout(function () {
+      if (!flashCall('extendedPermissionsDialogClosed', true, 'publish_stream')) flashCall('permissionDialogClosed', true);
+      flashCall('thawGame'); flashCall('enableAllInput');
+    }, 50);
+  };
+  window.showPostTOSPermissions = function () { setTimeout(function () { flashCall('onShowPostTOSPermissionsClose', true); flashCall('thawGame'); flashCall('enableAllInput'); }, 50); };
+  window.showBookmarkDialog = window.showEmailPermission = function () { setTimeout(function () { flashCall('thawGame'); flashCall('enableAllInput'); }, 50); };
+  // "compartir por enlace" (sin permisos): tambien al muro
+  window.fbFeedShareViaLink = function (url) {
+    console.log('[AG] fbFeedShareViaLink', url);
+    var q = {}; try { String(url).split('?')[1].split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) q[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, ' ')); }); } catch (e) { }
+    fromGame({ name: q.title, description: q.description, media: q.imageUrl ? [{ src: q.imageUrl }] : null }, []);
+  };
+  // pedidos nuevos (version 2.0): piezas, energia, ayuda de vecinos
+  window.sendRequest2_0 = function (req) {
+    console.log('[AG] sendRequest2_0', req);
+    var o = req; if (typeof o === 'string') { try { o = JSON.parse(o); } catch (e) { o = { message: o }; } } o = o || {};
+    var d = o.requestData || o.data || {}; if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = {}; } }
+    fromGame({ name: o.title || d.title || o.message || t.fromGame, description: o.message && o.title ? o.message : (d.message || ''), media: (o.image || d.image || d.img) ? [{ src: o.image || d.image || d.img }] : null }, o.action_links || []);
+    setTimeout(function () { flashCall('onRequestSent', { request: 'ag', to: [] }); }, 100);
+    return true;
+  };
+  // por si el juego usa el puente viejo de Facebook (FB.Facebook.apiClient)
+  if (!window.FB) window.FB = {};
+  if (!window.FB.Facebook) window.FB.Facebook = { apiClient: { callMethod: function (method, args, cb) {
+    var m = String(method || '').toLowerCase(), r = null;
+    if (m.indexOf('hasapppermission') >= 0) r = 1;
+    else if (m.indexOf('getappusers') >= 0 || m.indexOf('friends.get') >= 0) r = [];
+    else if (m.indexOf('users.getinfo') >= 0) { try { r = [getUserInfo()]; } catch (e) { r = []; } }
+    setTimeout(function () { try { if (cb) cb(r, null); } catch (e) { } }, 0);
+  } } };
   window.agOpenCommunity = function (which) { open(which); };
   window.agOpenSupport = function () { open('sup'); };
   function init() { addButton(); refreshMe(); setInterval(refreshMe, 10000); }

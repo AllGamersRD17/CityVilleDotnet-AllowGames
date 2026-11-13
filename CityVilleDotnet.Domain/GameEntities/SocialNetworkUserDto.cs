@@ -35,9 +35,22 @@ public static class SocialNetworkUserDtoMapper
             Snid = friend.Snuid,
             FirstName = friend.Username,
             Name = friend.Username,
-            Picture = friend.ProfilePictureUrl is not null ? $"{baseUrl}{friend.ProfilePictureUrl}" : $"{baseUrl}/blank.png",
+            Picture = $"{baseUrl}{GamePicture.For(friend.ProfilePictureUrl)}",
             Gender = "M",
             Locale = "EN"
         };
+    }
+}
+// Allow Games: el juego espera fotos cuadradas de 50x50. Los personajes del perfil son de 192px,
+// así que al juego se le manda la versión pequeña (ag/avatars/50/...).
+public static class GamePicture
+{
+    public static string For(string? url)
+    {
+        if (string.IsNullOrEmpty(url)) return "/blank.png";
+        const string prefix = "/ag/avatars/";
+        if (url.StartsWith(prefix) && !url.StartsWith(prefix + "50/"))
+            return prefix + "50/" + url[prefix.Length..];
+        return url;
     }
 }

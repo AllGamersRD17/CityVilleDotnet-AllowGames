@@ -117,7 +117,14 @@ public class ProfileModel(UserManager<ApplicationUser> userManager, SignInManage
 
         await using var uploadStream = PictureUpload.OpenReadStream();
 
-        var pictureUrl = await profilePictures.SaveAsync(uploadStream, UserName, ext);
+        string? pictureUrl;
+        try { pictureUrl = await profilePictures.SaveAsync(uploadStream, UserName, ext); }
+        catch (Exception ex)
+        {
+            HttpContext.RequestServices.GetRequiredService<ILogger<ProfileModel>>().LogError(ex, "Profile picture upload failed");
+            ErrorMessage = "No se pudo procesar la foto. Prueba con otra imagen PNG o JPG.";
+            return result;
+        }
 
         if (pictureUrl is null)
         {
