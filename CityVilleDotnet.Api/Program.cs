@@ -1,3 +1,5 @@
+﻿using Microsoft.AspNetCore.DataProtection;
+using CityVilleDotnet.Api.Features.AllowGames;
 using System.Globalization;
 using System.IO.Compression;
 using System.Threading.RateLimiting;
@@ -99,7 +101,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = LocaleUtils.SupportedLocales.Select(x => new CultureInfo(x)).ToList();
 
-    options.DefaultRequestCulture = new RequestCulture("en-US");
+    options.DefaultRequestCulture = new RequestCulture("es-ES");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
@@ -128,6 +130,15 @@ builder.Services.AddResponseCompression(options =>
 
 builder.Services.Configure<BrotliCompressionProviderOptions>(options => options.Level = CompressionLevel.Fastest);
 builder.Services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Fastest);
+
+// Allow Games: en el servidor las llaves de sesion se guardan en disco para que nadie pierda la sesion al reiniciar
+var agKeysDir = Environment.GetEnvironmentVariable("AG_KEYS_DIR");
+if (!string.IsNullOrWhiteSpace(agKeysDir))
+{
+    builder.Services.AddDataProtection()
+        .SetApplicationName("CityVilleRevived")
+        .PersistKeysToFileSystem(new DirectoryInfo(agKeysDir));
+}
 
 builder.Services.AddRateLimiter(options =>
 {
@@ -182,14 +193,25 @@ app.UseStaticFiles(new StaticFileOptions
     {
         if (ctx.Context.Request.Path.StartsWithSegments("/assets"))
         {
-            ctx.Context.Response.Headers.CacheControl = "public, max-age=2592000";
+            ctx.Context.Response.Headers.CacheControl = "public, max-age=86400";
+        }
+        else if (ctx.File.Name.EndsWith(".html"))
+        {
+            ctx.Context.Response.Headers.CacheControl = "no-cache";
         }
     }
 });
 app.UseMiddleware<FallbackAssetMiddleware>();
 app.UseRateLimiter();
 app.UseRouting();
-app.MapGet("/", () => Results.Redirect("/Game"));
+app.MapGet("/", (HttpContext http, IWebHostEnvironment env) =>
+{
+    http.Response.Headers.CacheControl = "no-cache";
+    return Results.File(Path.Combine(env.WebRootPath, "inicio.html"), "text/html; charset=utf-8");
+});
+app.MapAllowGames();
+app.MapCommunity();
+app.MapSupport();
 app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -213,6 +235,13 @@ GameSettingsManager.Instance.Initialize(scope.ServiceProvider.GetRequiredService
 QuestSettingsManager.Instance.Initialize(scope.ServiceProvider.GetRequiredService<ILogger<QuestSettingsManager>>());
 
 await SamanthaSeeder.SeedAsync(app.Services);
+
+CityVilleDotnet.Api.Features.AllowGames.SeasonService.Initialize(app.Environment.ContentRootPath);
+CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.Initialize(app.Environment.ContentRootPath);
+CityVilleDotnet.Api.Features.AllowGames.ChallengeService.Initialize(app.Environment.ContentRootPath);
+CityVilleDotnet.Api.Features.AllowGames.CommunityService.Initialize(app.Environment.ContentRootPath);
+CityVilleDotnet.Api.Features.AllowGames.SupportService.Initialize(app.Environment.ContentRootPath);
+await CityVilleDotnet.Api.Features.AllowGames.AllowGamesEndpoints.BootstrapAdminsAsync(app.Services, app.Configuration, logger);
 
 logger.LogInformation("Version {InformationalVersion} loaded", Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion);
 

@@ -34,6 +34,17 @@ public class FallbackAssetMiddleware(
                 _ => null
             };
 
+            // Allow Games: en Linux los nombres distinguen mayusculas; el juego se hizo para Windows
+            var sameFileOtherCase = FindIgnoringCase(requestPath);
+            if (sameFileOtherCase is not null)
+            {
+                context.Response.StatusCode = 200;
+                context.Response.ContentType = contentType ?? "application/octet-stream";
+                context.Response.Headers.CacheControl = "public, max-age=86400";
+                await context.Response.SendFileAsync(sameFileOtherCase);
+                return;
+            }
+
             if (contentType != null)
             {
                 var fallbackFile = GetConfiguredFallback(requestPath, logPath);
@@ -59,8 +70,11 @@ public class FallbackAssetMiddleware(
                     }
                     else
                     {
-                        var image = _resizedPlaceholders.GetOrAdd((placeholderFile, placeholder.Height.Value), x => RenderPlaceholder(x.File, x.Height));
+                        byte[]? image = null;
+                        try { image = _resizedPlaceholders.GetOrAdd((placeholderFile, placeholder.Height.Value), x => RenderPlaceholder(x.File, x.Height)); }
+                        catch (Exception e) { logger.LogWarning(e, "Placeholder render failed, sending it unresized"); }
 
+                        if (image is null) { await SendFallbackAsync(context, placeholderFile, contentType); return; }
                         SetFallbackHeaders(context, "image/png");
                         await context.Response.Body.WriteAsync(image);
                     }
@@ -82,6 +96,36 @@ public class FallbackAssetMiddleware(
                 }
             }
         }
+    }
+
+    private static Dictionary<string, string>? _caseIndex;
+    private static readonly object CaseLock = new();
+
+    private string? FindIgnoringCase(string requestPath)
+    {
+        if (OperatingSystem.IsWindows()) return null;
+        if (_caseIndex is null)
+        {
+            lock (CaseLock)
+            {
+                if (_caseIndex is null)
+                {
+                    var index = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                    var root = Path.Combine(env.WebRootPath, "assets");
+                    try
+                    {
+                        foreach (var file in Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories))
+                            index.TryAdd("/assets/" + Path.GetRelativePath(root, file).Replace('\\', '/'), file);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogWarning(e, "Could not index assets folder");
+                    }
+                    _caseIndex = index;
+                }
+            }
+        }
+        return _caseIndex.TryGetValue(Uri.UnescapeDataString(requestPath), out var real) ? real : null;
     }
 
     private string? GetConfiguredFallback(string requestPath, string logPath)

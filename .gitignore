@@ -11,3 +11,9 @@ logs/
 *.z
 data/
 pictures/
+# Allow Games: datos de jugadores en tiempo de ejecución (no se publican)
+CityVilleDotnet.Api/challenges.json
+CityVilleDotnet.Api/community.json
+CityVilleDotnet.Api/dailybonus.json
+CityVilleDotnet.Api/support.json
+CityVilleDotnet.Api/community_media/

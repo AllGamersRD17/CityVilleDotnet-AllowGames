@@ -147,6 +147,9 @@ internal sealed class GatewayService(IServiceProvider serviceProvider, CityVille
                     }
 
                     await worldUpdateTracker.AppendToAsync(response, ct);
+
+                    // Allow Games: progreso de desafios diarios
+                    CityVilleDotnet.Api.Features.AllowGames.ChallengeService.Track(playerId, upperClassName);
                 }
                 catch (DomainException de)
                 {

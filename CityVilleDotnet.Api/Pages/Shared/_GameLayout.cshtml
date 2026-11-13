@@ -1,4 +1,4 @@
-@using System.Reflection
+﻿@using System.Reflection
 @using CityVilleDotnet.Api.Common.Identity
 @using Microsoft.AspNetCore.Authorization
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resources.SharedResource> Localizer
@@ -12,8 +12,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>CityVilleDotnet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+    <title>CityVille Revived · Allow Games</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
@@ -23,15 +23,25 @@
         rel="stylesheet">
 
     <link type="text/css" rel="stylesheet" href="~/css/site.css"/>
+    <link rel="icon" href="/ag/favicon.ico"/>
+    <link type="text/css" rel="stylesheet" href="/ag/allowgames.css?v=8"/>
+    <link rel="manifest" href="/manifest.webmanifest"/>
+    <meta name="theme-color" content="#2f8fc4"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="CityVille"/>
+    <link rel="apple-touch-icon" href="/ag/icon_192.png"/>
 
     @await RenderSectionAsync("Header", required: false)
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
-<nav class="navbar navbar-expand-lg cv-navbar sticky-top border-bottom bg-white">
+<nav class="navbar navbar-expand-xl cv-navbar sticky-top border-bottom bg-white">
     <div class="container">
-        <a class="d-flex align-items-center text-decoration-none py-2" href="#">
-            <span class="font-outfit font-weight-bold h5 text-dark">CityVille<span
-                    class="text-primary">.NET</span></span>
+        <a class="ag-brand py-1" href="/Game" title="CityVille Revived · Allow Games">
+            <img class="ag-ag" src="/ag/allowgames_nav.png" alt="Allow Games" draggable="false"/>
+            <img class="ag-cv" src="/ag/logo_revived.png" alt="CityVille Revived" draggable="false"/>
+            <span class="ag-beta">BETA v0.11</span>
         </a>
 
         <button class="navbar-toggler border-secondary rounded" type="button" data-toggle="collapse"
@@ -40,7 +50,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="cvNavbar">
-            <ul class="navbar-nav mr-auto ml-lg-4">
+            <ul class="navbar-nav mr-auto ml-xl-3">
+@if (!string.Equals(Context.Request.Path.Value?.TrimEnd('/'), "/Game", StringComparison.OrdinalIgnoreCase))
+                {
                 <li class="nav-item">
                     <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover"
                        asp-page="/Game" title="Game">
@@ -48,12 +60,22 @@
                         @Localizer["Play"]
                     </a>
                 </li>
+                }
                 <li class="nav-item">
                     <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover"
                        asp-page="/Friends/List" title="Friends">
                         <i class="bi bi-people mr-2"></i>
                         @Localizer["Friends"]
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover"
+                       href="/ranking.html" title="Ranking">
+                        <i class="bi bi-trophy mr-2"></i>Ranking
+                    </a>
+                </li>
+                <li class="nav-item d-flex align-items-center px-3 py-2 my-2 mx-1 small font-weight-bold text-success ag-online" title="En línea">
+                    <span class="ag-dot"></span><span id="agOnline">…</span>
                 </li>
                 @if (isAdmin)
                 {
@@ -73,13 +95,13 @@
                 <div class="d-flex align-items-center p-2 rounded cv-hover" role="button"
                      data-toggle="dropdown" aria-expanded="false">
                     <img class="rounded mr-2" src="@(ViewData["ProfilePictureUrl"] ?? "/blank.png")" style="width: 50px; height: 50px" alt="Profile" />
-                    <div class="d-none d-lg-block">
+                    <div class="d-none d-xl-block">
                         <div class="font-weight-bold text-dark small">@ViewData["PlayerName"]</div>
                         <div class="text-info small"><i
                                 class="bi bi-star-fill"></i> @Localizer["Level"] @ViewData["PlayerLevel"]
                         </div>
                     </div>
-                    <svg class="cv-chevron d-none d-lg-block text-secondary ml-2" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="cv-chevron d-none d-xl-block text-secondary ml-2" xmlns="http://www.w3.org/2000/svg"
                          width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                         <path
                             d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
@@ -139,15 +161,38 @@
     </div>
 </div>
 
+@if (ViewData["PlayerName"] is string agName && !string.IsNullOrEmpty(agName))
+{
+    <div class="ag-invite" id="agInvite">
+        <span class="ag-invite-t" data-i="inv"></span>
+        <input id="agInviteUrl" readonly value="" aria-label="link">
+        <button type="button" id="agInviteBtn" class="btn btn-primary btn-sm" data-i="copy"></button>
+    </div>
+    <script>
+        (function () {
+            var u = location.origin + '/invitar/' + encodeURIComponent(@Html.Raw(System.Text.Json.JsonSerializer.Serialize(agName)));
+            var i = document.getElementById('agInviteUrl'); i.value = u;
+            document.getElementById('agInviteBtn').onclick = function () {
+                i.select(); try { navigator.clipboard.writeText(u); } catch (e) { document.execCommand('copy'); }
+                this.textContent = '✔';
+            };
+        })();
+    </script>
+}
+<div class="ag-banner" id="agBanner" hidden></div>
 <footer class="mt-auto">
     <div style="max-width:760px; margin: 0 auto;">
         <hr class="my-2">
         <p class="text-center text-muted small mb-3">
-            CityVilleDotnet
-            build: @(Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "dev")
+            CityVille Revived BETA v0.11 · <b>Allow Games</b> (AllGamersRD) ·
+            servidor basado en <a class="text-white" href="https://github.com/besuper/CityVilleDotnet" target="_blank" rel="noopener">CityVilleDotnet</a> ·
+            proyecto de fans sin fines de lucro, no afiliado a Zynga · <a href="/creditos.html" style="color:inherit;font-weight:700">Créditos</a>
         </p>
     </div>
 </footer>
+<script src="/ag/site.js?v=3"></script>
+<script src="/ag/community.js?v=6"></script>
+<script src="/ag/mobile.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

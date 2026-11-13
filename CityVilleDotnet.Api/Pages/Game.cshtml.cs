@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using CityVilleDotnet.Domain.Entities;
 using CityVilleDotnet.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -26,12 +26,13 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
     public string Uid { get; set; } = "333";
     public string UserName { get; set; } = "Steve";
     public int Level { get; set; } = 1;
+    public string DailyBonusJson { get; set; } = "null";
     public long ServerTime { get; set; } = 0;
     public string PictureUrl { get; set; } = "/blank.png";
 
     public string GameLocale => LocaleUtils.GameLocales.Contains(Request.Cookies["gameLocale"] ?? "")
         ? Request.Cookies["gameLocale"]!
-        : CultureInfo.CurrentCulture.Name.Replace("-", "_");
+        : "es_ES"; // Allow Games: el juego abre en espanol por defecto (se cambia con el selector de idioma)
 
     public bool EnableCheat => configuration.GetValue<bool>("enableCheat");
     public Dictionary<string, object> RuntimeVars => configuration.GetSection("runtimeVars").GetChildren()
@@ -53,6 +54,18 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
             .FirstOrDefaultAsync(x => x.AppUser!.Id.Equals(currentUser.Id));
 
         ServerTime = ServerUtils.GetCurrentTime();
+
+        // Allow Games: bono diario (se cobra antes de que cargue el juego)
+        if (user is not null && user.Snuid != -1)
+        {
+            var tracked = await dbContext.Set<Player>().FirstOrDefaultAsync(x => x.Id == user.Id);
+            var reward = tracked is null ? null : CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.TryClaim(tracked, DateTime.Now);
+            if (reward is not null)
+            {
+                await dbContext.SaveChangesAsync();
+                DailyBonusJson = JsonSerializer.Serialize(new { day = reward.Day, coins = reward.Coins, energy = reward.Energy, cash = reward.Cash, surprise = reward.Surprise });
+            }
+        }
 
         if (user is not null)
         {
@@ -97,7 +110,7 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
             ["generateSchema"] = "1",
             ["sn_app_url"] = "",
             ["snapiEnable"] = "1",
-            ["game_config_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/gameSettings.xml?v=2",
+            ["game_config_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/gameSettings.xml?v=3",
             ["quest_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/questSettings.xml?v=1",
             ["effects_config_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/effectsConfig.xml",
             ["font_mapper_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/FontMapper.swf",

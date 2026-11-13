@@ -1,0 +1,111 @@
+/* CityVille Revived · Allow Games — skin para las paginas del servidor 2012 */
+@font-face{font-family:"CV";src:url(/ag/fonts/fredoka-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"CV";src:url(/ag/fonts/fredoka-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"CV";src:url(/ag/fonts/fredoka-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{--ag-blue:#2f8fc4;--ag-blueLine:#1c6e9c;--ag-navy:#073b57;--ag-cream:#fbf6e6;--ag-creamLine:#d9c79a;--ag-green1:#9be24f;--ag-green2:#4fae1f;--ag-greenLine:#2c7710}
+
+body, .font-outfit{font-family:"CV",'Plus Jakarta Sans',system-ui,sans-serif !important}
+body.bg-light{
+  background:
+    linear-gradient(180deg,#7fd0f5 0,#c8ecfb 220px,transparent 220px),
+    url(/ag/grass.png) 0 0/128px 64px, url(/ag/grass.png) 64px 32px/128px 64px, #7ba344 !important;
+}
+.ag-stroke{color:#fff;text-shadow:-2px -2px 0 var(--ag-navy),2px -2px 0 var(--ag-navy),-2px 2px 0 var(--ag-navy),2px 2px 0 var(--ag-navy),0 3px 0 rgba(0,0,0,.25)}
+
+/* Barra de arriba */
+.cv-navbar{background:var(--ag-cream) !important;border-bottom:4px solid var(--ag-blueLine) !important;box-shadow:0 4px 0 rgba(0,0,0,.12)}
+.ag-brand{display:flex;align-items:center;gap:0;text-decoration:none !important;flex:0 0 auto;padding-right:18px;margin-right:16px;border-right:2px solid rgba(7,59,87,.12)}
+.ag-brand .ag-ag{height:40px;padding-right:16px;margin-right:16px;border-right:2px solid rgba(7,59,87,.12);filter:drop-shadow(0 2px 0 rgba(0,0,0,.15))}
+.ag-brand .ag-cv{height:44px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.12))}
+.ag-beta{margin-left:12px;align-self:center;background:var(--ag-navy);color:#fff;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:.5px;white-space:nowrap;line-height:1.4}
+.ag-brand img,.navbar img,img{-webkit-user-drag:none;user-drag:none}
+.cv-navbar .navbar-collapse{gap:4px}
+@media (max-width:1199px){.ag-brand{border-right:0;margin-right:8px;padding-right:0}}
+@media (max-width:520px){.ag-brand .ag-ag{height:32px;padding-right:10px;margin-right:10px}.ag-brand .ag-cv{height:34px}.ag-beta{margin-left:8px;font-size:10px;padding:2px 7px}}
+.cv-navbar .nav-link{color:var(--ag-navy) !important;font-weight:700}
+.cv-navbar .nav-link:hover{background:#fff}
+
+/* Paneles estilo dialogo del juego (login, registro, vecinos, perfil) */
+.card{border:4px solid var(--ag-blueLine) !important;border-radius:20px !important;overflow:hidden;box-shadow:0 8px 0 rgba(0,0,0,.18) !important;background:var(--ag-cream)}
+.card-header{background:var(--ag-blue) !important;border-bottom:4px solid var(--ag-blueLine) !important;color:#fff}
+.card-header h2,.card-header h3,.card-header h4,.card-header h5{color:#fff;font-weight:700;text-shadow:-2px -2px 0 var(--ag-navy),2px -2px 0 var(--ag-navy),-2px 2px 0 var(--ag-navy),2px 2px 0 var(--ag-navy)}
+.form-control{border:3px solid var(--ag-creamLine) !important;border-radius:12px !important}
+.form-control:focus{border-color:var(--ag-blue) !important;box-shadow:none !important}
+.btn-primary{background:linear-gradient(180deg,#c9f58c 0,var(--ag-green1) 18%,var(--ag-green2) 100%) !important;border:3px solid var(--ag-greenLine) !important;border-radius:14px !important;font-weight:700 !important;color:#fff !important;
+  text-shadow:-1px -1px 0 var(--ag-navy),1px -1px 0 var(--ag-navy),-1px 1px 0 var(--ag-navy),1px 1px 0 var(--ag-navy);box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 5px 0 var(--ag-greenLine) !important}
+.btn-primary:active{transform:translateY(3px)}
+a{color:#0a5f8c}
+
+/* Paginas de cuenta: logo arriba y Lowlitta al lado */
+.ag-auth-logo{display:block;margin:0 auto 10px;width:min(80vw,320px);filter:drop-shadow(0 5px 0 rgba(0,0,0,.15))}
+.ag-auth-wrap{display:flex;align-items:flex-end;justify-content:center;gap:8px}
+.ag-low{display:none;width:150px;filter:drop-shadow(0 4px 0 rgba(0,0,0,.15))}
+@media (min-width:820px){.ag-low{display:block}}
+.min-vh-100.bg-light{background:transparent !important}
+
+/* Pie */
+footer{color:#fff}
+footer .text-muted{color:#fff !important;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+footer hr{border-color:rgba(255,255,255,.4)}
+
+/* Intro animada de Allow Games */
+@keyframes agPop{0%{opacity:0;transform:scale(.5) rotate(-4deg)}60%{opacity:1;transform:scale(1.08) rotate(1deg);filter:drop-shadow(0 0 30px #b04dff)}100%{opacity:1;transform:scale(1) rotate(0);filter:drop-shadow(0 0 12px #4fc3ff)}}
+@keyframes agFade{to{opacity:1}}
+
+/* ---- v0.9: en linea, invitacion, banner (sin desbordes en movil) ---- */
+.ag-online{white-space:nowrap}
+.ag-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#3ccf4e;box-shadow:0 0 0 3px rgba(60,207,78,.25);margin-right:6px;flex:0 0 auto}
+.ag-invite{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:760px;margin:12px auto 0;padding:10px 12px;
+  background:#fbf6e6;border:3px solid #d9c79a;border-radius:16px;box-sizing:border-box;width:calc(100% - 24px)}
+.ag-invite-t{font-weight:600;color:#0a5f8c;text-align:center;flex:1 1 100%;overflow-wrap:anywhere}
+.ag-invite input{flex:1 1 220px;min-width:0;max-width:100%;border:2px solid #d9c79a;border-radius:999px;padding:5px 12px;font-size:14px;background:#fff;text-overflow:ellipsis}
+.ag-invite .btn{flex:0 0 auto;border-radius:999px;white-space:nowrap}
+.ag-banner{max-width:760px;width:calc(100% - 24px);margin:10px auto 0;padding:8px 14px;border-radius:14px;background:#2f8fc4;border:3px solid #1c6e9c;
+  color:#fff;font-weight:600;text-align:center;overflow-wrap:anywhere;box-sizing:border-box}
+@media (min-width:576px){.ag-invite-t{flex:0 1 auto}}
+.cv-navbar .navbar-nav .nav-link{padding-left:.6rem !important;padding-right:.6rem !important;white-space:nowrap}
+.cv-navbar .navbar-collapse{min-width:0}
+.cv-navbar select{max-width:170px}
+@media (max-width:1199.98px){.cv-navbar .navbar-collapse .dropdown,.cv-navbar .navbar-collapse select{margin:.25rem 0}}
+.cv-navbar .navbar-toggler{border-color:#1c6e9c !important;background:#fff}
+.cv-navbar .navbar-toggler-icon{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='%230a5f8c' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important}
+
+/* ---- v0.10: login / registro estilo CityVille ---- */
+body:has(.ag-auth-wrap){background:#6fae3a}
+.min-vh-100.bg-light:has(.ag-auth-wrap){
+  position:relative;padding-top:24px;padding-bottom:24px;
+  background:
+    radial-gradient(ellipse at 50% 120%,rgba(0,0,0,0) 55%,rgba(0,0,0,.22) 100%),
+    url(/ag/skyline.png) center calc(42vh - 150px)/540px 151px repeat-x,
+    linear-gradient(180deg,#4fb6ec 0,#8fd6f7 24vh,#d4f1fd 42vh,transparent 42vh),
+    linear-gradient(180deg,transparent 42vh,#e9dfc3 42vh,#e9dfc3 calc(42vh + 10px),#b9ab86 calc(42vh + 10px),#b9ab86 calc(42vh + 14px),transparent calc(42vh + 14px)),
+    url(/ag/grass.png) 0 0/128px 64px,url(/ag/grass.png) 64px 32px/128px 64px,#7ba344 !important;
+}
+/* nubes */
+.min-vh-100.bg-light:has(.ag-auth-wrap)::before,.min-vh-100.bg-light:has(.ag-auth-wrap)::after{
+  content:"";position:absolute;top:7vh;left:8%;width:150px;height:46px;border-radius:999px;background:#fff;opacity:.9;
+  box-shadow:40px -18px 0 6px #fff,85px 4px 0 -4px #fff;pointer-events:none}
+.min-vh-100.bg-light:has(.ag-auth-wrap)::after{top:15vh;left:auto;right:10%;transform:scale(.8);opacity:.85}
+.min-vh-100.bg-light:has(.ag-auth-wrap)>*{position:relative;z-index:1}
+/* panel centrado: Lowlitta no empuja la tarjeta */
+.ag-auth-wrap{position:relative;display:block;max-width:400px;margin:0 auto}
+.ag-auth-wrap>.card{margin:0 auto;box-shadow:0 10px 0 rgba(0,0,0,.18),0 18px 40px rgba(0,0,0,.25) !important}
+.ag-auth-wrap .ag-low{position:absolute;right:100%;bottom:-6px;margin-right:6px;width:170px}
+@media (max-width:819.98px){.ag-auth-wrap .ag-low{display:none}}
+.ag-auth-logo{width:min(84vw,360px);filter:drop-shadow(0 6px 0 rgba(0,0,0,.18)) drop-shadow(0 0 18px rgba(255,255,255,.6))}
+/* letras blancas legibles */
+.ag-auth-wrap~p.ag-stroke{display:inline-block;margin-top:18px !important;padding:6px 16px;border-radius:999px;
+  background:rgba(7,59,87,.72);border:2px solid rgba(255,255,255,.35);color:#fff;font-size:15px;letter-spacing:.2px;
+  text-shadow:0 1px 0 rgba(0,0,0,.35);box-shadow:0 4px 0 rgba(0,0,0,.15);text-align:center;max-width:92vw;overflow-wrap:anywhere}
+.ag-auth-wrap~p.ag-stroke a{color:#ffe36b !important;text-decoration:underline}
+
+/* ---- v0.11: no se puede seleccionar/arrastrar texto ni imagenes con el mouse ---- */
+html,body{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea,[contenteditable="true"]{-webkit-user-select:text;-moz-user-select:text;user-select:text}
+img,a{-webkit-user-drag:none;user-drag:none}
+/* catalogo de personajes */
+.ag-avatars{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:10px;max-width:760px}
+.ag-av{border:3px solid transparent;border-radius:50%;padding:2px;background:none;cursor:pointer;transition:transform .15s}
+.ag-av img{width:100%;height:auto;display:block;border-radius:50%}
+.ag-av:hover{transform:scale(1.08)}
+.ag-av.sel{border-color:#4fae1f;box-shadow:0 0 0 3px #c9f2a8}

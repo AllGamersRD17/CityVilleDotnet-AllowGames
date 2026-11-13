@@ -1,0 +1,17 @@
+{
+  "name": "CityVille Revived · Allow Games",
+  "short_name": "CityVille",
+  "description": "CityVille vuelve gratis. Construye tu ciudad y juega con tus vecinos. Nada se vende: todo se gana jugando.",
+  "start_url": "/Game?app=1",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#04050c",
+  "theme_color": "#2f8fc4",
+  "icons": [
+    { "src": "/ag/icon_192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/ag/icon_512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/ag/icon_192_maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/ag/icon_512_maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

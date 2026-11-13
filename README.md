@@ -1,3 +1,19 @@
+# CityVille Revived — Allow Games Edition
+
+Versión modificada de **[CityVille .NET](https://github.com/besuper/CityVilleDotnet)** de **besuper**, usada por **CityVille Revived** (Allow Games by AllGamersRD). Todo el crédito del servidor original es de besuper y de la comunidad de Raise the Empires. CityVille es de Zynga; este repo **no** incluye archivos del juego (SWF/XML): hay que conseguirlos por separado, igual que con el proyecto original.
+
+### Cambios de Allow Games
+- Lowlitta reemplaza a Samantha (`SamanthaSeeder`)
+- Bono diario, retos diarios, temporadas (con panel de admin), ranking y estadísticas (`Features/AllowGames`)
+- Comunidad (muro, chat global y mensajes privados) y soporte con tickets
+- Sistema de referidos y aviso opcional a Discord por webhook (`AllowGames:DiscordWebhook`)
+- Página de inicio, créditos, ranking, intro animada de Allow Games, versión para celular e instalable (PWA)
+- Avatares en el perfil y ajustes en login/registro
+
+Licencia: GPL-3.0, igual que el original.
+
+---
+
 # CityVille .NET
 > A .NET 11 backend recreation of the classic CityVille (2012) flash game
 

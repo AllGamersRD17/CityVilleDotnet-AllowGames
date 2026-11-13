@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CityVille Revived · ¡Vuelve a construir tu ciudad! · Allow Games</title>
+<meta name="description" content="CityVille vuelve gratis en tu navegador. Construye tu ciudad, visita a tus vecinos y gana todo jugando. Un proyecto de fans de Allow Games.">
+<meta property="og:title" content="CityVille Revived · Allow Games">
+<meta property="og:description" content="CityVille vuelve gratis en tu navegador. Nada se vende: todo se gana jugando.">
+<meta property="og:image" content="/ag/logo_revived.png">
+<link rel="icon" href="/ag/favicon.ico">
+<link rel="stylesheet" href="/ag/allowgames.css?v=8">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#2f8fc4">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CityVille">
+<link rel="apple-touch-icon" href="/ag/icon_192.png">
+<script src="/ag/intro.js?v=3"></script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;color:#21445a;overflow-x:hidden;
+    background:url(/ag/skyline.png) center calc(48vh - 150px)/540px 151px repeat-x,
+      linear-gradient(180deg,#4fb6ec 0,#8fd6f7 26vh,#d4f1fd 48vh,transparent 48vh),
+      linear-gradient(180deg,transparent 48vh,#e9dfc3 48vh,#e9dfc3 calc(48vh + 10px),#b9ab86 calc(48vh + 10px),#b9ab86 calc(48vh + 14px),transparent calc(48vh + 14px)),
+      url(/ag/grass.png) 0 0/128px 64px,url(/ag/grass.png) 64px 32px/128px 64px,#7ba344}
+  .cloud{position:absolute;width:150px;height:46px;border-radius:999px;background:#fff;opacity:.9;box-shadow:40px -18px 0 6px #fff,85px 4px 0 -4px #fff;pointer-events:none;animation:drift 60s linear infinite}
+  @keyframes drift{from{transform:translateX(-30px)}50%{transform:translateX(40px)}to{transform:translateX(-30px)}}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;position:relative;z-index:2;gap:10px;flex-wrap:wrap}
+  .top img{height:46px}
+  .top nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .top a.l{font-weight:700;color:#073b57;text-decoration:none;background:rgba(255,255,255,.75);padding:6px 12px;border-radius:999px;white-space:nowrap}
+  select{font-family:inherit;font-weight:600;border:3px solid #1c6e9c;border-radius:999px;padding:5px 12px;background:#fbf6e6}
+  main{max-width:980px;margin:0 auto;padding:0 16px 30px;position:relative;z-index:1}
+  .hero{text-align:center}
+  .logo{width:min(88vw,460px);filter:drop-shadow(0 6px 0 rgba(0,0,0,.18)) drop-shadow(0 0 22px rgba(255,255,255,.7))}
+  .row{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin-top:6px}
+  .low{width:min(34vw,190px);filter:drop-shadow(0 6px 0 rgba(0,0,0,.18))}
+  .bubble{position:relative;background:#fff;border:4px solid #1c6e9c;border-radius:20px;padding:14px 18px;max-width:420px;text-align:left;box-shadow:0 6px 0 rgba(0,0,0,.15);margin-bottom:40px}
+  .bubble:before{content:"";position:absolute;left:-18px;bottom:24px;border:10px solid transparent;border-right:14px solid #1c6e9c}
+  .bubble b{display:block;color:#0a5f8c;font-size:clamp(17px,3.6vw,22px)}
+  .bubble span{display:block;font-size:clamp(14px,3vw,16px);margin-top:4px;overflow-wrap:anywhere}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0 8px}
+  .btn{display:inline-block;padding:12px 30px;border-radius:999px;font:700 clamp(18px,4vw,22px) CV,sans-serif;text-decoration:none;color:#fff;
+    border:3px solid #2c7710;background:linear-gradient(#9be24f,#4fae1f);text-shadow:0 2px 0 #2c7710;box-shadow:0 5px 0 #2c7710;white-space:nowrap}
+  .btn.b{border-color:#1c6e9c;background:linear-gradient(#6cc6f5,#2f8fc4);text-shadow:0 2px 0 #1c6e9c;box-shadow:0 5px 0 #1c6e9c}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #2c7710}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .stat{background:#fbf6e6;border:3px solid #d9c79a;border-radius:14px;padding:6px 16px;font-weight:700;color:#0a5f8c}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:18px}
+  .card{background:#fbf6e6;border:4px solid #d9c79a;border-radius:18px;padding:14px;box-shadow:0 6px 0 rgba(0,0,0,.12);min-width:0}
+  .card .e{font-size:30px}
+  .card b{display:block;color:#0a5f8c;font-size:18px;margin:4px 0;overflow-wrap:anywhere}
+  .card p{margin:0;font-size:15px;overflow-wrap:anywhere}
+  footer{text-align:center;margin-top:22px}
+  footer p{display:inline-block;max-width:92vw;background:rgba(7,59,87,.75);color:#fff;border-radius:16px;padding:8px 16px;font-size:14px;overflow-wrap:anywhere}
+  footer a{color:#ffe36b}
+  @media (max-width:560px){.bubble{margin-bottom:20px}.row{flex-direction:column;align-items:center}.bubble:before{display:none}.low{width:150px}}
+</style>
+</head>
+<body>
+<div class="cloud" style="top:9vh;left:6%"></div><div class="cloud" style="top:17vh;right:9%;transform:scale(.8)"></div>
+<div class="top">
+  <img src="/ag/allowgames_nav.png" alt="Allow Games">
+  <nav>
+    <a class="l" href="/ranking.html" data-i="rank"></a>
+    <a class="l" href="/creditos.html" data-i="cred"></a>
+    <select id="lang" aria-label="Idioma / Language">
+      <option value="es">Español</option><option value="en">English</option><option value="pt">Português</option>
+      <option value="fr">Français</option><option value="it">Italiano</option><option value="de">Deutsch</option>
+    </select>
+  </nav>
+</div>
+<main>
+  <div class="hero">
+    <img class="logo" src="/ag/logo_revived.png" alt="CityVille Revived">
+    <div class="row">
+      <img class="low" src="/ag/lowlitta.png" alt="Lowlitta">
+      <div class="bubble"><b data-i="hi"></b><span data-i="pitch"></span></div>
+    </div>
+    <div class="cta">
+      <a class="btn" href="/Game" data-i="play"></a>
+      <a class="btn b" href="/Account/Register" data-i="reg"></a>
+    </div>
+    <div class="stats"><div class="stat" id="sP">…</div><div class="stat" id="sO">…</div></div>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="e">💸</div><b data-i="c1t"></b><p data-i="c1"></p></div>
+    <div class="card"><div class="e">🏘️</div><b data-i="c2t"></b><p data-i="c2"></p></div>
+    <div class="card"><div class="e">🎁</div><b data-i="c3t"></b><p data-i="c3"></p></div>
+    <div class="card"><div class="e">❄️</div><b data-i="c4t"></b><p data-i="c4"></p></div>
+  </div>
+  <footer><p><span data-i="legal"></span> · <a href="/creditos.html" data-i="cred"></a> · Allow Games (AllGamersRD) · BETA v0.11</p></footer>
+</main>
+<script>
+var T={
+ es:{rank:"🏆 Ranking",cred:"Créditos",hi:"¡Hola, alcalde! Soy Lowlitta",pitch:"CityVille ha vuelto, gratis y en tu navegador. Tu ciudad te está esperando.",play:"▶ JUGAR GRATIS",reg:"Crear cuenta",
+  p:"alcaldes",o:"en línea",c1t:"100% gratis",c1:"Nada se vende. Todo se gana jugando, como en los tiempos de antes.",c2t:"Vecinos de verdad",c2:"Invita a tus amigos con tu enlace y visiten sus ciudades para ayudarse.",
+  c3t:"Bono diario",c3:"Entra cada día y gana monedas y energía. ¡El quinto día trae regalo sorpresa!",c4t:"Temporadas",c4:"Nieve en invierno, carnaval, verano y más eventos durante el año.",
+  legal:"Proyecto de fans sin fines de lucro, no afiliado a Zynga"},
+ en:{rank:"🏆 Ranking",cred:"Credits",hi:"Hi, Mayor! I'm Lowlitta",pitch:"CityVille is back, free and in your browser. Your city is waiting for you.",play:"▶ PLAY FREE",reg:"Create account",
+  p:"mayors",o:"online",c1t:"100% free",c1:"Nothing is sold. Everything is earned by playing, like the old days.",c2t:"Real neighbors",c2:"Invite your friends with your link and visit each other's cities.",
+  c3t:"Daily bonus",c3:"Log in every day for coins and energy. Day five brings a surprise gift!",c4t:"Seasons",c4:"Snow in winter, carnival, summer and more events all year.",
+  legal:"Non-profit fan project, not affiliated with Zynga"},
+ pt:{rank:"🏆 Ranking",cred:"Créditos",hi:"Olá, prefeito! Eu sou a Lowlitta",pitch:"O CityVille voltou, grátis e no seu navegador. Sua cidade está esperando.",play:"▶ JOGAR GRÁTIS",reg:"Criar conta",
+  p:"prefeitos",o:"online",c1t:"100% grátis",c1:"Nada é vendido. Tudo se ganha jogando, como antigamente.",c2t:"Vizinhos de verdade",c2:"Convide seus amigos com seu link e visitem as cidades uns dos outros.",
+  c3t:"Bônus diário",c3:"Entre todo dia e ganhe moedas e energia. O quinto dia traz um presente surpresa!",c4t:"Temporadas",c4:"Neve no inverno, carnaval, verão e mais eventos o ano todo.",
+  legal:"Projeto de fãs sem fins lucrativos, não afiliado à Zynga"},
+ fr:{rank:"🏆 Classement",cred:"Crédits",hi:"Bonjour, Maire ! Je suis Lowlitta",pitch:"CityVille est de retour, gratuit dans ton navigateur. Ta ville t'attend.",play:"▶ JOUER GRATUIT",reg:"Créer un compte",
+  p:"maires",o:"en ligne",c1t:"100 % gratuit",c1:"Rien n'est vendu. Tout se gagne en jouant, comme avant.",c2t:"De vrais voisins",c2:"Invite tes amis avec ton lien et visitez vos villes.",
+  c3t:"Bonus du jour",c3:"Connecte-toi chaque jour pour des pièces et de l'énergie. Le 5e jour : cadeau surprise !",c4t:"Saisons",c4:"Neige en hiver, carnaval, été et d'autres événements toute l'année.",
+  legal:"Projet de fans à but non lucratif, non affilié à Zynga"},
+ it:{rank:"🏆 Classifica",cred:"Crediti",hi:"Ciao, Sindaco! Sono Lowlitta",pitch:"CityVille è tornato, gratis nel tuo browser. La tua città ti aspetta.",play:"▶ GIOCA GRATIS",reg:"Crea account",
+  p:"sindaci",o:"online",c1t:"100% gratis",c1:"Niente è in vendita. Tutto si guadagna giocando, come una volta.",c2t:"Vicini veri",c2:"Invita i tuoi amici con il tuo link e visitate le vostre città.",
+  c3t:"Bonus giornaliero",c3:"Entra ogni giorno per monete ed energia. Il quinto giorno c'è un regalo sorpresa!",c4t:"Stagioni",c4:"Neve d'inverno, carnevale, estate e altri eventi tutto l'anno.",
+  legal:"Progetto di fan senza scopo di lucro, non affiliato a Zynga"},
+ de:{rank:"🏆 Rangliste",cred:"Credits",hi:"Hallo, Bürgermeister! Ich bin Lowlitta",pitch:"CityVille ist zurück, kostenlos im Browser. Deine Stadt wartet auf dich.",play:"▶ GRATIS SPIELEN",reg:"Konto erstellen",
+  p:"Bürgermeister",o:"online",c1t:"100 % kostenlos",c1:"Nichts wird verkauft. Alles wird erspielt, wie früher.",c2t:"Echte Nachbarn",c2:"Lade Freunde mit deinem Link ein und besucht eure Städte.",
+  c3t:"Tagesbonus",c3:"Komm jeden Tag für Münzen und Energie. Am fünften Tag gibt es ein Überraschungsgeschenk!",c4t:"Jahreszeiten",c4:"Schnee im Winter, Karneval, Sommer und mehr Events das ganze Jahr.",
+  legal:"Nicht-kommerzielles Fanprojekt, nicht mit Zynga verbunden"}};
+var cur='es',S=null;
+function stats(){if(!S)return;document.getElementById('sP').textContent='🏙️ '+S.players+' '+T[cur].p;document.getElementById('sO').textContent='🟢 '+S.online+' '+T[cur].o;}
+function setLang(l){if(!T[l])l='es';cur=l;try{localStorage.setItem('lang',l)}catch(e){}document.documentElement.lang=l;document.getElementById('lang').value=l;
+ document.querySelectorAll('[data-i]').forEach(function(el){el.textContent=T[l][el.getAttribute('data-i')]});stats();}
+var s=null;try{s=localStorage.getItem('lang')}catch(e){}
+setLang(s||(navigator.language||'es').slice(0,2));
+document.getElementById('lang').onchange=function(){setLang(this.value)};
+fetch('/api/ag/stats').then(function(r){return r.json()}).then(function(x){S=x;stats()}).catch(function(){});
+</script>
+</body>
+</html>

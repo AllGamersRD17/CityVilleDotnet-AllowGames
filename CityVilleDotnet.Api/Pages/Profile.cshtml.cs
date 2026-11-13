@@ -1,4 +1,4 @@
-using CityVilleDotnet.Api.Common.Identity;
+﻿using CityVilleDotnet.Api.Common.Identity;
 using CityVilleDotnet.Common.Settings;
 using CityVilleDotnet.Domain.Entities;
 using CityVilleDotnet.Domain.Enums;
@@ -59,6 +59,35 @@ public class ProfileModel(UserManager<ApplicationUser> userManager, SignInManage
     {
         var result = await LoadProfileAsync(ct);
         
+        return result;
+    }
+
+    // Allow Games: catalogo de personajes para foto de perfil
+    public static readonly string[] Avatars = ["lowlitta", "arquitecta", "bombero", "capitan", "cientifico", "crucero", "doctora", "empresario", "entrenador", "estrella", "gobernador", "granjero", "investigadora", "jack", "maestra", "maquinista", "millonario", "nina", "nino", "panadero", "papa", "pizzero", "profe", "santa", "senora", "surfista"];
+
+    public async Task<IActionResult> OnPostAvatarAsync(string avatar, CancellationToken ct)
+    {
+        var result = await LoadProfileAsync(ct);
+
+        if (!Avatars.Contains(avatar))
+        {
+            ErrorMessage = "Personaje no válido";
+            return result;
+        }
+
+        var currentUser = await userManager.GetUserAsync(User);
+        var player = await dbContext.Set<Player>().FirstOrDefaultAsync(x => x.AppUser!.Id == currentUser!.Id, ct);
+
+        if (player is null)
+            return RedirectToPage("/Account/Login");
+
+        player.ProfilePictureUrl = $"/ag/avatars/{avatar}.png";
+        await dbContext.SaveChangesAsync(ct);
+
+        ProfilePictureUrl = player.ProfilePictureUrl;
+        SuccessMessage = localizer["PictureUpdated"];
+        ViewData["ProfilePictureUrl"] = ProfilePictureUrl;
+
         return result;
     }
 

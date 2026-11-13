@@ -1,4 +1,4 @@
-using CityVilleDotnet.Api.Common.Identity;
+﻿using CityVilleDotnet.Api.Common.Identity;
 using CityVilleDotnet.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,8 @@ namespace CityVilleDotnet.Api.Pages.Account;
 
 public class RegisterModel(
     SignInManager<ApplicationUser> signInManager,
-    PlayerRegistrationService playerRegistration) : PageModel
+    PlayerRegistrationService playerRegistration,
+    CityVilleDotnet.Persistence.CityVilleDbContext dbContext) : PageModel
 {
     [BindProperty] public required RegisterInputModel Input { get; set; }
 
@@ -38,6 +39,8 @@ public class RegisterModel(
 
         if (result.Succeeded)
         {
+            await CityVilleDotnet.Api.Features.AllowGames.AllowGamesEndpoints.ApplyReferralAsync(HttpContext, dbContext, user, HttpContext.RequestAborted);
+            await CityVilleDotnet.Api.Features.AllowGames.AllowGamesEndpoints.AnnounceNewPlayerAsync(HttpContext, dbContext, user.UserName ?? "");
             await signInManager.SignInAsync(user, isPersistent: false);
             return LocalRedirect(returnUrl);
         }

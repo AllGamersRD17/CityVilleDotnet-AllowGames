@@ -2,7 +2,10 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resources.SharedResource> Localizer
 @model CityVilleDotnet.Api.Pages.Account.RegisterModel
 
-<div class="d-flex align-items-center justify-content-center min-vh-100 bg-light px-3">
+<div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light px-3">
+    <img class="ag-auth-logo" src="/ag/logo_revived.png" alt="CityVille Revived"/>
+    <div class="ag-auth-wrap w-100">
+    <img class="ag-low" src="/ag/lowlitta.png" alt="Lowlitta"/>
     <div class="card shadow-sm" style="max-width: 400px; width: 100%;">
         <div class="card-header text-center">
             <h2 class="mb-0">@Localizer["Register"]</h2>
@@ -66,4 +69,6 @@
             </div>
         </div>
     </div>
+</div>
+    <p class="mt-3 ag-stroke" style="font-weight:600">Allow Games · BETA v0.11 · <a href="/creditos.html" style="color:#fff">Créditos</a></p>
 </div>

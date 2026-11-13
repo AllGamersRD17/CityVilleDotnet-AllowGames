@@ -1,4 +1,4 @@
-using CityVilleDotnet.Domain.Entities;
+﻿using CityVilleDotnet.Domain.Entities;
 using System.Text.Json.Serialization;
 using CityVilleDotnet.Common.Settings;
 using CityVilleDotnet.Domain.EnumExtensions;
@@ -56,7 +56,7 @@ public static class WorldDtoMapper
                 AppraisalSummary = model.ToAppraisalSummaryDto()
             },
             Objects = model.Objects.Where(x => x.StoredInId is null).Select(x => x.ToDto(model.Objects)).ToList(),
-            ThemeCollections = model.ThemeCollections,
+            ThemeCollections = model.ThemeCollections.Union(SeasonState.Collections).ToList(),
             LastExpansionTier = model.LastExpansionTier,
             WorldId = model.Type.ToDescriptionString(),
             WorldCreated = model.WorldCreated,

@@ -1,0 +1,67 @@
+@page
+@using CityVilleDotnet.Api.Features.AllowGames
+@model CityVilleDotnet.Api.Pages.Admin.TemporadasModel
+
+@{
+	var active = SeasonService.Active();
+	var presets = new (string Key, string Label, string Icon)[]
+	{
+		("normal", "Normal", "bi-sun"), ("invierno", "Invierno / Navidad ❄️", "bi-snow"), ("nieve_suave", "Nieve suave 🌨️", "bi-cloud-snow"),
+		("verano", "Verano ☀️", "bi-brightness-high"), ("sanpatricio", "San Patricio ☘️", "bi-flower1"), ("carnaval", "Carnaval 🎉", "bi-music-note-beamed"),
+		("circo", "Circo 🎪", "bi-stars"), ("grecia", "Grecia 🏛️", "bi-bank")
+	};
+}
+
+<h4 class="font-outfit font-weight-bold text-dark mb-2">
+	<i class="bi bi-snow mr-2 text-primary"></i>Temporadas y eventos
+</h4>
+<p class="text-muted small mb-4">Cambia cómo se ven todas las ciudades. Los jugadores lo ven al recargar el juego.</p>
+
+@if (TempData["agMsg"] is not null)
+{
+	<div class="alert alert-success py-2">Guardado. Activo ahora: <b>@(active.Length == 0 ? "normal" : string.Join(", ", active))</b></div>
+}
+
+<div class="card border-0 shadow-sm mb-4">
+	<div class="card-body">
+		<h6 class="font-weight-bold text-dark mb-3">Cambio rápido</h6>
+		<form method="post" asp-page-handler="Preset" class="d-flex flex-wrap">
+			@foreach (var p in presets)
+			{
+				<button type="submit" name="preset" value="@p.Key" class="btn btn-outline-primary btn-sm font-weight-bold mr-2 mb-2 text-wrap">
+					<i class="bi @p.Icon mr-1"></i>@p.Label
+				</button>
+			}
+		</form>
+		<div class="small text-muted mt-1" style="overflow-wrap:anywhere">Activo ahora: <b>@(active.Length == 0 ? "normal" : string.Join(", ", active))</b> @(Model.Auto ? "(automático)" : "(manual)")</div>
+	</div>
+</div>
+
+<div class="card border-0 shadow-sm">
+	<div class="card-body">
+		<h6 class="font-weight-bold text-dark mb-3">Ajuste fino</h6>
+		<form method="post">
+			<div class="custom-control custom-switch mb-3">
+				<input type="checkbox" class="custom-control-input" id="auto" asp-for="Auto">
+				<label class="custom-control-label" for="auto">Automático por fecha (nieve en diciembre-enero, nieve suave en febrero, San Patricio en marzo, verano en junio-agosto)</label>
+			</div>
+			<div class="row">
+				@foreach (var o in SeasonService.Options)
+				{
+					<div class="col-12 col-md-6 col-lg-4 mb-2">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="t_@o.Name" name="Selected" value="@o.Name" checked="@Model.Selected.Contains(o.Name)">
+							<label class="custom-control-label" for="t_@o.Name" style="overflow-wrap:anywhere">@o.Es <span class="text-muted small">(@o.Name)</span></label>
+						</div>
+					</div>
+				}
+			</div>
+			<div class="form-group mt-3">
+				<label class="font-weight-bold small" for="banner">Mensaje para todos los jugadores (opcional)</label>
+				<input class="form-control" id="banner" asp-for="Banner" maxlength="200" placeholder="Ej: ¡Llegó la Navidad a CityVille Revived! ❄️">
+			</div>
+			<p class="small text-muted">Si el modo automático está encendido, las casillas se ignoran. Otoño, Halloween y noche no están porque a los archivos del juego les faltan sus gráficos (salían cuadros morados).</p>
+			<button type="submit" class="btn btn-primary font-weight-bold"><i class="bi bi-save mr-1"></i>Guardar</button>
+		</form>
+	</div>
+</div>

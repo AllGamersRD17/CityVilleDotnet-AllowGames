@@ -10,7 +10,7 @@ public static class SamanthaSeeder
     private static readonly Guid SamanthaUserId = Guid.Parse("00000000-0000-0000-0000-000000000001");
     private const string SamanthaAppUserId = "00000000-0000-0000-0000-000000000001";
     public const int SamanthaSnuid = -1;
-    private const int WorldVersion = 1;
+    private const int WorldVersion = 2; // Allow Games: 2 = ciudad renombrada a Lowlitta City
 
     public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
@@ -53,7 +53,7 @@ public static class SamanthaSeeder
                 context.Remove(existingWorld);
             }
 
-            var world = new World("City Sam", 36, 36, 0, 0, 0, 0, 0, mapRects, objects);
+            var world = new World("Lowlitta City", 36, 36, 0, 0, 0, 0, 0, mapRects, objects);
             samanthaUser.SetWorld(world);
 
             samanthaUser.SetLevel(80);
@@ -73,7 +73,7 @@ public static class SamanthaSeeder
             NormalizedUserName = "SAM"
         };
 
-        var newWorld = new World("City Sam", 36, 36, 0, 0, 0, 0, 0, mapRects, objects);
+        var newWorld = new World("Lowlitta City", 36, 36, 0, 0, 0, 0, 0, mapRects, objects);
         var newPlayer = new Player(appUser, newWorld);
         
         newPlayer.Snuid = SamanthaSnuid;
