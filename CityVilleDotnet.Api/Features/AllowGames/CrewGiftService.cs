@@ -52,7 +52,7 @@ public static class CrewGiftService
         }
 
         async Task<List<Player>> Friends(CityVilleDbContext db, Guid me) =>
-            await db.Set<Friend>().AsNoTracking().Where(f => f.Player!.Id == me && f.Status == FriendshipStatus.Accepted)
+            await db.Set<Friend>().AsNoTracking().Where(f => f.Player!.Id == me && f.Status == FriendshipStatus.Accepted && f.FriendPlayer!.Snuid != -1)
                 .Select(f => f.FriendPlayer!).ToListAsync();
 
         // ---------- contratar amigos ----------
@@ -96,7 +96,7 @@ public static class CrewGiftService
             var (p, b, need) = await Building(db, me.Id, mId);
             if (p is null || b is null) return Results.NotFound();
             if (need > 0 && b.CrewMembers.Count >= need) return Results.Json(new { error = "full" }, statusCode: 400);
-            var friend = await db.Set<Friend>().Where(f => f.Player!.Id == me.Id && f.Status == FriendshipStatus.Accepted && f.FriendPlayer!.Username == body.Name)
+            var friend = await db.Set<Friend>().Where(f => f.Player!.Id == me.Id && f.Status == FriendshipStatus.Accepted && f.FriendPlayer!.Snuid != -1 && f.FriendPlayer!.Username == body.Name)
                 .Select(f => f.FriendPlayer!).FirstOrDefaultAsync();
             if (friend is null) return Results.Json(new { error = "notfriend" }, statusCode: 400);
             if (b.CrewMembers.Any(c => c.Player?.Id == friend.Id)) return Results.Json(new { error = "already" }, statusCode: 400);
@@ -113,7 +113,7 @@ public static class CrewGiftService
             var me = await Me(h, db, u);
             if (me is null) return Results.Unauthorized();
             var today = DateOnly.FromDateTime(DateTime.UtcNow);
-            var friends = await db.Set<Friend>().AsNoTracking().Where(f => f.Player!.Id == me.Id && f.Status == FriendshipStatus.Accepted)
+            var friends = await db.Set<Friend>().AsNoTracking().Where(f => f.Player!.Id == me.Id && f.Status == FriendshipStatus.Accepted && f.FriendPlayer!.Snuid != -1)
                 .Select(f => new { f.FriendPlayer!.Username, f.FriendPlayer.ProfilePictureUrl, f.FriendPlayer.Level, Wish = f.FriendPlayer.Wishlist.Select(w => w.ItemName).ToList() }).ToListAsync();
             return Results.Json(new
             {
@@ -133,7 +133,7 @@ public static class CrewGiftService
             if (me is null) return Results.Unauthorized();
             var name = body.Item ?? "";
             var free = FreeGifts.FirstOrDefault(g => g.Name == name);
-            var friendIds = await db.Set<Friend>().Where(f => f.Player!.Id == me.Id && f.Status == FriendshipStatus.Accepted && body.To != null && body.To.Contains(f.FriendPlayer!.Username))
+            var friendIds = await db.Set<Friend>().Where(f => f.Player!.Id == me.Id && f.Status == FriendshipStatus.Accepted && f.FriendPlayer!.Snuid != -1 && body.To != null && body.To.Contains(f.FriendPlayer!.Username))
                 .Select(f => f.FriendPlayer!.Id).ToListAsync();
             if (friendIds.Count == 0) return Results.Json(new { error = "nofriends" }, statusCode: 400);
             var today = DateOnly.FromDateTime(DateTime.UtcNow);
