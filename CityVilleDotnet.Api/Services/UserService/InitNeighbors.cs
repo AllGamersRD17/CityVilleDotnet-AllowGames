@@ -38,7 +38,7 @@ internal sealed class InitNeighbors(CityVilleDbContext context) : AmfService
 
         return new CityVilleResponse().Data(new ASObject
         {
-            ["neighbors"] = AmfConverter.Convert(neighborList.OrderByDescending(x => x.Xp).ToList()),
+            ["neighbors"] = AmfConverter.Convert(neighborList.OrderByDescending(x => x.Xp).ToList().WithEmptySlots()),
             ["neighborMax"] = 10,
         });
     }

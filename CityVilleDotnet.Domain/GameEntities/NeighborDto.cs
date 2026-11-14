@@ -40,6 +40,17 @@ public class NeighborDto
 
 public static class NeighborDtoMapper
 {
+    // Allow Games: espacios vacios ("Add friend") con nivel 0. Asi el juego ordena a los amigos
+    // pegados a tu foto y deja los espacios vacios al final, en vez de mezclarlos.
+    public const int MinFriendSlots = 6;
+    public static List<NeighborDto> WithEmptySlots(this List<NeighborDto> neighbors)
+    {
+        var real = neighbors.Count(n => n.Fake is null);
+        for (var i = real; i < MinFriendSlots; i++)
+            neighbors.Add(new NeighborDto { Uid = (-2 - i).ToString(), Fake = 1, Empty = true, Level = 0, Xp = 0, CityName = string.Empty });
+        return neighbors;
+    }
+
     public static NeighborDto ToNeighborDto(this Friend model)
     {
         var friend = model.GetFriend();
