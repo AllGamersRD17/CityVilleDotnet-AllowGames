@@ -183,7 +183,16 @@
 		return @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Experiments));
 	}
 
+	// Allow Games: textos que faltaban en los archivos de idioma del juego (nombres de objetos, expansiones, promos...).
+	// Salen de la lista de textos mas nueva del juego; si un idioma no tiene la traduccion, va en ingles en vez del codigo.
 	function getLocaleOverrides() {
+		if (/[?&]loc=0/.test(location.search)) return null;
+		try {
+			var x = new XMLHttpRequest();
+			x.open("GET", "/ag/loc/@(Model.GameLocale).json?v=1", false);
+			x.send();
+			if (x.status === 200) return JSON.parse(x.responseText);
+		} catch (e) { console.warn("[AG] locale overrides", e); }
 		return null;
 	}
 
