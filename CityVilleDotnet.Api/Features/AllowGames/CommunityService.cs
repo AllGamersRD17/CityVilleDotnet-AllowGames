@@ -545,6 +545,7 @@ public static class CommunityService
     {
         if (string.IsNullOrWhiteSpace(src)) return null;
         var i = src.IndexOf("/assets/", StringComparison.OrdinalIgnoreCase);
+        if (i < 0 && src.EndsWith("/ag/logo_revived.png", StringComparison.OrdinalIgnoreCase)) return "/ag/logo_revived.png";
         if (i < 0) return Img(src);
         var path = src[i..];
         return Regex.IsMatch(path, @"^/assets/[A-Za-z0-9_\-/\.]+\.(png|jpg|gif)$", RegexOptions.IgnoreCase) && !path.Contains("..") ? path : null;
