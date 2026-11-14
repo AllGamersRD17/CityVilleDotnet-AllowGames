@@ -189,7 +189,7 @@
 		if (/[?&]loc=0/.test(location.search)) return null;
 		try {
 			var x = new XMLHttpRequest();
-			x.open("GET", "/ag/loc/@(Model.GameLocale).json?v=2", false);
+			x.open("GET", "/ag/loc/@(Model.GameLocale).json?v=3", false);
 			x.send();
 			if (x.status === 200) return JSON.parse(x.responseText);
 		} catch (e) { console.warn("[AG] locale overrides", e); }
@@ -245,8 +245,46 @@
 		"switchToTab": function (a) {
 			console.log("Switch To Tab" + a);
 			agRoute(a);
-		}
+		},
+		// anuncios de "ver para ganar": aqui no hay anuncios
+		"showScreenshot": function () { },
+		"hideScreenshot": function () { },
+		"setIsShowingAds": function () { },
+		"unsetIsShowingAds": function () { }
 	}
+
+	// Allow Games: funciones que el juego le pedia a Facebook o a Zynga. Aqui no hay Facebook, ni anuncios,
+	// ni compras con dinero real: se responden sin hacer nada o se mandan a nuestro sistema.
+	(function () {
+		function f() { var a = getFlashApp(); try { if (a && a.thawGame) a.thawGame(); } catch (e) { } try { if (a && a.enableAllInput) a.enableAllInput(); } catch (e) { } }
+		function nada() { return false; }
+		// suscripciones y compras -> desafios
+		window.openSubscriptionFBPop = function () { if (window.agOpenChallenges) window.agOpenChallenges(); f(); return true; };
+		window.refresh_app_on_purchase = nada;
+		// anuncios, encuestas y "me gusta" de Facebook
+		window.showInterstitialAd = nada;
+		window.theFarmOverlay = { showFBLikeOverlay: function () { f(); }, showSurveyOverlay: function () { f(); } };
+		window.renderFlashUpgradeExperience = nada;
+		// actividades de Facebook / estadisticas de Zynga
+		window.startActivity = nada; window.hasActivities = nada; window.getProviderId = function () { return "allowgames"; };
+		window.snapiAwardXp = nada; window.recordLoadStats = nada; window.broadcastHeartbeat = nada;
+		window.getCiproConfig = function () { return null; }; window.getCiproSessionId = function () { return ""; };
+		window.getWatchedCounters = function () { return {}; }; window.notifyJSClientIsReady = nada;
+		window.getPreviousGPUResults = function () { return null; }; window.getGPUResults = function () { return null; }; window.setGPUResults = nada;
+		window.Javascript = { execute: nada };
+		window.bridgeFacebookReply = nada;
+		window.SNAPI = window.SNAPI || {};
+		window.SNAPI.getAllConnections = window.SNAPI.getAllConnections || function () { return { session: { access_token: "allowgames" } }; };
+		// amigos conectados: los de la barra que tengan el juego abierto
+		window.getOnlineFriends = function () { return window.agOnlineFriends || []; };
+		window.getSupportedLanguages = function () { return ["en_US", "es_ES", "fr_FR", "it_IT"]; };
+		// el juego perdio la conexion con el servidor: recargar una sola vez, sin bucles
+		window.showStaleAuthError = function () {
+			var n = 0; try { n = +sessionStorage.getItem("agStale") || 0; sessionStorage.setItem("agStale", n + 1); } catch (e) { }
+			if (n < 1) setTimeout(function () { location.reload(); }, 1500);
+		};
+		window.addEventListener("ag:loaded", function () { try { sessionStorage.removeItem("agStale"); } catch (e) { } });
+	})();
 
 	// Resize the game for mobile clients
 	if (cvTouch) {

@@ -213,6 +213,7 @@ app.MapAllowGames();
 app.MapCommunity();
 app.MapSupport();
 app.MapCrewGifts();
+app.MapMissingHandlers();
 app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();

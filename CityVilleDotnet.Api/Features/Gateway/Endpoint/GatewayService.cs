@@ -140,6 +140,7 @@ internal sealed class GatewayService(IServiceProvider serviceProvider, CityVille
 
                     if (response is null)
                     {
+                        CityVilleDotnet.Api.Features.AllowGames.MissingHandlers.Record($"{packageName}.{upperClassName}", functionName, parameters);
                         logger.LogError("Something went wrong while processing the request. {PackageName}.{UpperClassName}", packageName, upperClassName);
                         logger.LogDebug("Parameters {Objects}", (object?)parameters);
 
