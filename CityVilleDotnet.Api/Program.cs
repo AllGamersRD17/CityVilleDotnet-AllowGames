@@ -212,6 +212,7 @@ app.MapGet("/", (HttpContext http, IWebHostEnvironment env) =>
 app.MapAllowGames();
 app.MapCommunity();
 app.MapSupport();
+app.MapCrewGifts();
 app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -201,9 +201,11 @@
 
 	// Allow Games: los botones del juego que antes abrian paginas de Facebook (agregar vecinos, invitar)
 	function agRoute() {
-		var u = [].slice.call(arguments).join(" ").toLowerCase();
+		var raw = [].slice.call(arguments).join(" "), u = raw.toLowerCase();
+		var crew = u.match(/crew\.php\?[^ ]*mid=(\d+)/);
+		if (crew && window.agOpenCrew) { window.agOpenCrew(crew[1]); return true; }
+		if (/gift/.test(u) && window.agOpenGifts) { var g = raw.match(/[?&]gift=([^& ]+)/i); window.agOpenGifts(g ? decodeURIComponent(g[1]) : null); return true; }
 		if (/invite|neighbor|friend|vecin/.test(u) && window.agOpenFriends) { window.agOpenFriends(); return true; }
-		if (/gift/.test(u) && window.agOpenCommunity) { window.agOpenCommunity("wall"); return true; }
 		return false;
 	}
 

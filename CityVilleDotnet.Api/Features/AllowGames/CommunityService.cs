@@ -42,6 +42,7 @@ public static class CommunityService
         public long Id { get; set; }
         public string Kind { get; set; } = "";   // req = te mandaron solicitud, acc = aceptaron la tuya
         public string From { get; set; } = "";
+        public string? Item { get; set; }        // regalo recibido
         public DateTime At { get; set; }
     }
 
@@ -157,14 +158,14 @@ public static class CommunityService
     }
 
     // avisos de amistad (como Facebook): solicitud recibida y solicitud aceptada
-    public static void AddNote(string to, string kind, string from)
+    public static void AddNote(string to, string kind, string from, string? item = null)
     {
         lock (Lock)
         {
             var k = to.ToLowerInvariant();
             if (!_s.Notes.TryGetValue(k, out var l)) _s.Notes[k] = l = [];
             l.RemoveAll(n => n.Kind == kind && n.From.Equals(from, StringComparison.OrdinalIgnoreCase));
-            l.Add(new Note { Id = _s.NextId++, Kind = kind, From = from, At = DateTime.UtcNow });
+            l.Add(new Note { Id = _s.NextId++, Kind = kind, From = from, Item = item, At = DateTime.UtcNow });
             if (l.Count > 30) l.RemoveRange(0, l.Count - 30);
             _dirty = true;
         }
@@ -179,7 +180,7 @@ public static class CommunityService
         {
             if (!_s.Notes.TryGetValue(me.ToLowerInvariant(), out var l) || l.Count == 0) return null!;
             var n = l[^1];
-            return new { id = n.Id, kind = n.Kind, from = Who(n.From), at = n.At };
+            return new { id = n.Id, kind = n.Kind, from = Who(n.From), item = n.Item is null ? null : ItemInfo(n.Item), at = n.At };
         }
     }
 
