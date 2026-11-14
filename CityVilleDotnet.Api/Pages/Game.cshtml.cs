@@ -32,7 +32,7 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
 
     public string GameLocale => LocaleUtils.GameLocales.Contains(Request.Cookies["gameLocale"] ?? "")
         ? Request.Cookies["gameLocale"]!
-        : "es_ES"; // Allow Games: el juego abre en espanol por defecto (se cambia con el selector de idioma)
+        : LocaleUtils.FromAcceptLanguage(Request.Headers.AcceptLanguage); // Allow Games: si no eligio idioma, el del navegador/PC
 
     public bool EnableCheat => configuration.GetValue<bool>("enableCheat");
     public Dictionary<string, object> RuntimeVars => configuration.GetSection("runtimeVars").GetChildren()
