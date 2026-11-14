@@ -189,7 +189,7 @@
 		if (/[?&]loc=0/.test(location.search)) return null;
 		try {
 			var x = new XMLHttpRequest();
-			x.open("GET", "/ag/loc/@(Model.GameLocale).json?v=1", false);
+			x.open("GET", "/ag/loc/@(Model.GameLocale).json?v=2", false);
 			x.send();
 			if (x.status === 200) return JSON.parse(x.responseText);
 		} catch (e) { console.warn("[AG] locale overrides", e); }
@@ -215,8 +215,19 @@
 		if (crew && window.agOpenCrew) { window.agOpenCrew(crew[1]); return true; }
 		if (/gift/.test(u) && window.agOpenGifts) { var g = raw.match(/[?&]gift=([^& ]+)/i); window.agOpenGifts(g ? decodeURIComponent(g[1]) : null); return true; }
 		if (/invite|neighbor|friend|vecin/.test(u) && window.agOpenFriends) { window.agOpenFriends(); return true; }
+		if (/money\.php|payment|getcash|buy_?cash/.test(u) && window.agOpenChallenges) { window.agOpenChallenges(); return true; }
 		return false;
 	}
+
+	// Allow Games: comprar City Cash con dinero real no existe aqui; esos botones abren los Desafios
+	window.fbc_popup_open = window.fbc_popup_open_no_reload = window.openPaymentsFrame_overlayManager = window.buy_inapp = function () {
+		console.log("[AG] compra -> desafios", [].slice.call(arguments));
+		if (window.agOpenChallenges) window.agOpenChallenges();
+		var f = getFlashApp();
+		try { if (f && f.thawGame) f.thawGame(); } catch (e) { }
+		try { if (f && f.enableAllInput) f.enableAllInput(); } catch (e) { }
+		return true;
+	};
 
 	ZYFrameManager = {
 		"reloadApp": function () {
