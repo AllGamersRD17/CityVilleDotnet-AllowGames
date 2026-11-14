@@ -2,6 +2,8 @@ namespace CityVilleDotnet.Common.Settings.GameSettings;
 
 public record AssetPlaceholder(string Path, int? Height, string? Icon = null);
 
+public record ImageLayer(string State, string Direction, string Kind, string Url);
+
 public static class AssetPlaceholders
 {
     private static readonly Dictionary<(int X, int Y), string> Constructions = new()
@@ -64,6 +66,25 @@ public static class AssetPlaceholders
         {
             yield return ($"/{baseImage.Url}", new AssetPlaceholder(basePlaceholder, GetHeight(image, baseImage)));
         }
+    }
+
+    // todas las capas con dibujo de un objeto (estado, lado, tipo de capa), sin iconos
+    public static List<ImageLayer> Layers(IEnumerable<ImageItem> images)
+    {
+        var list = new List<ImageLayer>();
+        foreach (var state in images)
+        {
+            if (state.Name is null || state.Name.Contains("icon", StringComparison.OrdinalIgnoreCase)) continue;
+            var dir = state.Direction ?? "ALL";
+            if (state.Url is not null && state.Url.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                list.Add(new ImageLayer(state.Name, dir, "main", state.Url));
+            foreach (var child in state.Images)
+            {
+                if (child.Url is null || !child.Url.EndsWith(".png", StringComparison.OrdinalIgnoreCase)) continue;
+                list.Add(new ImageLayer(state.Name, dir, child.Type == "base" ? "base" : "main", child.Url));
+            }
+        }
+        return list;
     }
 
     private static int? GetHeight(ImageItem state, ImageItem layer)

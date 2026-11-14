@@ -21,6 +21,7 @@ public class GameSettingsManager
     private readonly Dictionary<string, ValidateItem> _validators;
     private readonly Dictionary<string, TieredValueItem> _tieredValues;
     private readonly Dictionary<string, AssetPlaceholder> _assetPlaceholders;
+    private readonly Dictionary<string, string[]> _assetAlternates = new(StringComparer.OrdinalIgnoreCase);
 
     // Allow Games: tipos que, sin arte en el mapa, se dibujan con su icono en vez del andamio
     private static readonly HashSet<string> IconFallbackTypes = new(StringComparer.OrdinalIgnoreCase)
@@ -142,12 +143,40 @@ public class GameSettingsManager
                     foreach (var large in item.Images.Where(x => x.Name == "large_icon" && x.Url is not null))
                         _assetPlaceholders.TryAdd($"/{large.Url}", new AssetPlaceholder($"/{smallIcon}", null));
 
-                foreach (var image in item.Images.Where(x => x.Name == "static"))
+                foreach (var image in item.Images.Where(x => x.Name is "static" or "planted" or "grown"))
                 {
                     foreach (var (url, placeholder) in AssetPlaceholders.FromStaticImage(image, item.SizeX.Value, item.SizeY.Value, icon))
                     {
                         _assetPlaceholders.TryAdd(url, placeholder);
                     }
+                }
+            }
+
+            // Allow Games: muchas "skins" (remodelaciones) y objetos solo traen el dibujo de un lado (SW) o ninguno.
+            // Para cada imagen que falte se busca otra que si exista: la misma vista del objeto original
+            // (derivesFrom) o la misma skin vista desde otro lado.
+            foreach (var item in _items.Values)
+            {
+                if (item is null) continue;
+                var own = AssetPlaceholders.Layers(item.Images);
+                if (own.Count == 0) continue;
+                var parent = item.DerivesFrom is not null ? _items.GetValueOrDefault(item.DerivesFrom) : null;
+                var parentLayers = parent is not null ? AssetPlaceholders.Layers(parent.Images) : new List<ImageLayer>();
+
+                foreach (var layer in own)
+                {
+                    // primero la misma skin desde otro lado (lo que el jugador eligio), luego el objeto original
+                    var candidates = own.Where(x => x.State == layer.State && x.Kind == layer.Kind && x.Direction != layer.Direction)
+                        .Concat(own.Where(x => x.Kind == layer.Kind && x.Direction == layer.Direction))
+                        .Concat(parentLayers.Where(x => x.State == layer.State && x.Direction == layer.Direction && x.Kind == layer.Kind))
+                        .Concat(parentLayers.Where(x => x.Direction == layer.Direction && x.Kind == layer.Kind))
+                        .Concat(parentLayers.Where(x => x.Kind == layer.Kind))
+                        .Select(x => "/" + x.Url)
+                        .Where(x => !x.Equals("/" + layer.Url, StringComparison.OrdinalIgnoreCase))
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .ToArray();
+
+                    if (candidates.Length > 0) _assetAlternates.TryAdd("/" + layer.Url, candidates);
                 }
             }
 
@@ -343,6 +372,11 @@ public class GameSettingsManager
             throw new InvalidOperationException("GameSettingsManager not initialized");
 
         return _preyGroups.FirstOrDefault(x => x.GetHubByName(itemName) is not null);
+    }
+
+    public string[] GetAssetAlternates(string url)
+    {
+        return _isInitialized ? _assetAlternates.GetValueOrDefault(url) ?? [] : [];
     }
 
     public AssetPlaceholder? GetAssetPlaceholder(string url)

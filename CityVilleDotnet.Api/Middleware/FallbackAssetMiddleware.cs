@@ -58,6 +58,20 @@ public class FallbackAssetMiddleware(
                     return;
                 }
 
+                // Allow Games: si existe el mismo objeto visto desde otro lado, o el objeto original de la skin, se usa ese dibujo
+                if (extension == ".png")
+                {
+                    var alternate = GameSettingsManager.Instance.GetAssetAlternates(requestPath)
+                        .Select(FindIgnoringCase)
+                        .FirstOrDefault(x => x is not null);
+                    if (alternate is not null)
+                    {
+                        logger.LogInformation("Asset not found: {RequestPath}, serving alternate: {Alternate}", logPath, alternate);
+                        await SendFallbackAsync(context, alternate, contentType);
+                        return;
+                    }
+                }
+
                 var placeholder = GameSettingsManager.Instance.GetAssetPlaceholder(requestPath);
 
                 // Allow Games: decoracion sin arte en el mapa -> se dibuja su icono con el tamano del andamio
