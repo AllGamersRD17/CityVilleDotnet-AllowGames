@@ -11,6 +11,16 @@
     de: { title: 'Community', wall: 'Pinnwand', chat: 'Chat', dm: 'Privat', post: 'Posten', wallPh: 'Was passiert in deiner Stadt?', send: 'Senden', chatPh: 'Nachricht schreiben…', comment: 'Kommentieren', commentPh: 'Kommentar schreiben…', like: 'Gefällt mir', more: 'Mehr laden', empty: 'Noch nichts hier. Sei der Erste!', search: 'Bürgermeister suchen…', noDm: 'Keine privaten Nachrichten. Suche einen Bürgermeister.', back: 'Zurück', block: 'Blockieren', unblock: 'Entsperren', blocked: 'Du kannst diesem Bürgermeister nicht schreiben.', report: 'Melden', reported: 'Danke, wir prüfen das.', del: 'Löschen', confirmDel: 'Löschen?', slow: 'Warte kurz, bevor du erneut sendest.', login: 'Melde dich an, um die Community zu nutzen.', rules: 'Sei nett. Teile keine persönlichen Daten.', lvl: 'Lv.', now: 'jetzt', min: 'Min', h: 'Std', d: 'T', msg: 'Nachricht', close: 'Schließen', online: 'Online', busy: 'Nicht stören', invisible: 'Unsichtbar', offline: 'Offline', seenAgo: 'Gesehen vor', contacts: 'Bürgermeister', convs: 'Unterhaltungen', photo: 'Foto', photoErr: 'Foto konnte nicht hochgeladen werden.', newMsg: 'Neue Nachricht', status: 'Status', sup: 'Support', newReq: 'Neue Anfrage', myReqs: 'Meine Anfragen', allReqs: 'Alle (Admin)', noReqs: 'Etwas kaputt oder eine Idee? Erstelle eine Anfrage, das Team antwortet hier.', kBug: 'Bug / Fehler', kAyuda: 'Hilfe', kSug: 'Vorschlag', kCuenta: 'Mein Konto', kOtro: 'Sonstiges', reqTitle: 'Kurzer Titel (z. B. Ernten geht nicht)', reqText: 'Beschreibe, was passiert ist, was du gemacht hast und auf welchem Gerät du spielst…', sendReq: 'Senden', sent: 'Gesendet! Wir antworten hier.', reply: 'Antworten', team: 'Allow Games Team', closeReq: 'Anfrage schließen', stAbierto: 'Offen', stEn_progreso: 'In Prüfung', stResuelto: 'Gelöst', stCerrado: 'Geschlossen', all: 'Alle', attach: 'Screenshot anhängen', fromGame: 'Aus dem Spiel geteilt', helpBtn: 'Helfen!', helpedOk: 'Danke fürs Helfen! Du erhältst', helpedAlready: 'Du hast hier schon geholfen', full: 'Hat schon alle Hilfe bekommen', helpers: 'halfen', sendItem: 'Senden', wishTitle: 'Wunschliste', shareTitle: 'In der Community teilen', shareBtn: 'Teilen', cancel: 'Abbrechen', shareWait: 'Du hast gerade erst geteilt. Versuch es später.', wishEmpty: 'Deine Wunschliste ist leer.', shared: 'An der Pinnwand gepostet!', coins: 'Münzen', reloadNote: 'Wird nach dem Neuladen angezeigt.', old: 'Dieser Beitrag ist abgelaufen.', sharedFrom: 'hat aus CityVille Revived geteilt', needs: 'braucht diese Gegenstände', collection: 'Sammlung', viaGame: 'CityVille Revived · Allow Games' }
   };
   var t = L[lang] || L.es;
+  // textos del panel de agregar amigos
+  var FR = {
+    es: { fr: 'Amigos', frAdd: 'Agregar', frTitle: 'Agregar amigos', frBy: 'Agregar por nombre de usuario', frPh: 'Escribe el usuario…', frAll: 'Agregar a todos los registrados', frAllQ: '¿Mandar solicitud de amistad a todos los alcaldes registrados?', frAllOk: 'Solicitudes enviadas', frAccepted: 'aceptadas', frSent: 'Enviada', frFriend: 'Amigos', frAccept: 'Aceptar', frPrivate: 'Privado', frNotFound: 'No existe ese usuario.', frNoAdd: 'Este alcalde no acepta solicitudes.', frSentOk: 'Solicitud enviada a', frNow: 'Ahora son amigos:', frList: 'Alcaldes registrados', frPending: 'por agregar', frReload: 'Tus vecinos nuevos salen en la barra al recargar el juego.' },
+    en: { fr: 'Friends', frAdd: 'Add', frTitle: 'Add friends', frBy: 'Add by username', frPh: 'Type the username…', frAll: 'Add everyone registered', frAllQ: 'Send a friend request to every registered mayor?', frAllOk: 'Requests sent', frAccepted: 'accepted', frSent: 'Sent', frFriend: 'Friends', frAccept: 'Accept', frPrivate: 'Private', frNotFound: 'That user does not exist.', frNoAdd: 'This mayor does not accept requests.', frSentOk: 'Request sent to', frNow: 'You are now friends:', frList: 'Registered mayors', frPending: 'to add', frReload: 'New neighbors show in the bar when the game reloads.' },
+    pt: { fr: 'Amigos', frAdd: 'Adicionar', frTitle: 'Adicionar amigos', frBy: 'Adicionar por nome de usuário', frPh: 'Digite o usuário…', frAll: 'Adicionar todos os registrados', frAllQ: 'Enviar pedido de amizade para todos os prefeitos registrados?', frAllOk: 'Pedidos enviados', frAccepted: 'aceitos', frSent: 'Enviado', frFriend: 'Amigos', frAccept: 'Aceitar', frPrivate: 'Privado', frNotFound: 'Esse usuário não existe.', frNoAdd: 'Este prefeito não aceita pedidos.', frSentOk: 'Pedido enviado para', frNow: 'Agora são amigos:', frList: 'Prefeitos registrados', frPending: 'para adicionar', frReload: 'Os novos vizinhos aparecem na barra ao recarregar o jogo.' },
+    fr: { fr: 'Amis', frAdd: 'Ajouter', frTitle: 'Ajouter des amis', frBy: 'Ajouter par pseudo', frPh: 'Écris le pseudo…', frAll: 'Ajouter tous les inscrits', frAllQ: 'Envoyer une demande d\'ami à tous les maires inscrits ?', frAllOk: 'Demandes envoyées', frAccepted: 'acceptées', frSent: 'Envoyée', frFriend: 'Amis', frAccept: 'Accepter', frPrivate: 'Privé', frNotFound: 'Ce pseudo n\'existe pas.', frNoAdd: 'Ce maire n\'accepte pas les demandes.', frSentOk: 'Demande envoyée à', frNow: 'Vous êtes amis :', frList: 'Maires inscrits', frPending: 'à ajouter', frReload: 'Les nouveaux voisins apparaissent dans la barre en rechargeant le jeu.' },
+    it: { fr: 'Amici', frAdd: 'Aggiungi', frTitle: 'Aggiungi amici', frBy: 'Aggiungi per nome utente', frPh: 'Scrivi il nome utente…', frAll: 'Aggiungi tutti i registrati', frAllQ: 'Inviare una richiesta di amicizia a tutti i sindaci registrati?', frAllOk: 'Richieste inviate', frAccepted: 'accettate', frSent: 'Inviata', frFriend: 'Amici', frAccept: 'Accetta', frPrivate: 'Privato', frNotFound: 'Questo utente non esiste.', frNoAdd: 'Questo sindaco non accetta richieste.', frSentOk: 'Richiesta inviata a', frNow: 'Ora siete amici:', frList: 'Sindaci registrati', frPending: 'da aggiungere', frReload: 'I nuovi vicini appaiono nella barra ricaricando il gioco.' },
+    de: { fr: 'Freunde', frAdd: 'Hinzufügen', frTitle: 'Freunde hinzufügen', frBy: 'Per Benutzername hinzufügen', frPh: 'Benutzername eingeben…', frAll: 'Alle Registrierten hinzufügen', frAllQ: 'Allen registrierten Bürgermeistern eine Anfrage senden?', frAllOk: 'Anfragen gesendet', frAccepted: 'angenommen', frSent: 'Gesendet', frFriend: 'Freunde', frAccept: 'Annehmen', frPrivate: 'Privat', frNotFound: 'Diesen Benutzer gibt es nicht.', frNoAdd: 'Dieser Bürgermeister nimmt keine Anfragen an.', frSentOk: 'Anfrage gesendet an', frNow: 'Ihr seid jetzt Freunde:', frList: 'Registrierte Bürgermeister', frPending: 'hinzuzufügen', frReload: 'Neue Nachbarn erscheinen nach dem Neuladen in der Leiste.' }
+  };
+  var fx = FR[lang] || FR.es; for (var k in fx) t[k] = fx[k];
 
   var css = '#agCm{position:fixed;top:0;right:0;bottom:0;width:min(430px,100vw);z-index:99995;display:none;flex-direction:column;background:#2f8fc4;border-left:4px solid #1c6e9c;box-shadow:-8px 0 0 rgba(0,0,0,.18);font-family:CV,sans-serif;color:#21445a;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}' +
     '#agCm input,#agCm textarea{-webkit-user-select:text;user-select:text}#agNt,#agCmBtn,#agLb{-webkit-user-select:none;user-select:none}' +
@@ -55,6 +65,7 @@
     '#agCm .toast{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);background:#073b57;color:#fff;border-radius:999px;padding:6px 14px;font-size:14px;display:none;max-width:90%;text-align:center}' +
     '#agCmBtn{display:inline-flex;align-items:center;gap:5px;margin:0 12px 0 0;border:2px solid #1c6e9c;border-radius:999px;background:linear-gradient(#6cc6f5,#2f8fc4);color:#fff;font:700 13px CV,sans-serif;padding:5px 14px;cursor:pointer;white-space:nowrap;text-shadow:0 1px 0 #1c6e9c;position:relative;vertical-align:middle;box-shadow:0 3px 0 #1c6e9c;flex:0 0 auto}#agCmBtn:active{transform:translateY(2px);box-shadow:0 1px 0 #1c6e9c}' +
     '#agCmBtn .badge{background:#e8382f;color:#fff;border-radius:999px;font-size:11px;padding:0 6px;text-shadow:none}' +
+    '#agCmBtn .badge.pop{animation:agPop .5s ease}@keyframes agPop{0%{transform:scale(1)}40%{transform:scale(1.6)}100%{transform:scale(1)}}' +
     '#agCm .avw{position:relative;display:inline-block;flex:0 0 auto;line-height:0}' +
     '#agCm .avw .dot{position:absolute;right:-2px;bottom:-2px;width:13px;height:13px;border-radius:50%;border:2px solid #fff}' +
     '#agCm .dot.online,#agCm .sd.online{background:#42b72a}#agCm .dot.busy,#agCm .sd.busy{background:#e8382f}#agCm .dot.offline{display:none}#agCm .sd.offline,#agCm .sd.invisible{background:#b9c3c9}' +
@@ -164,7 +175,7 @@
   function build() {
     root = document.createElement('div'); root.id = 'agCm'; root.setAttribute('role', 'dialog');
     root.innerHTML = '<div class="hd"><h2>💬 ' + t.title + '</h2><select class="stsel" title="' + t.status + '"><option value="online">🟢 ' + t.online + '</option><option value="busy">🔴 ' + t.busy + '</option><option value="invisible">⚪ ' + t.invisible + '</option></select><button class="x" aria-label="' + t.close + '"></button></div>' +
-      '<div class="tabs"><button data-t="wall">📰 ' + t.wall + '</button><button data-t="chat">💬 ' + t.chat + '</button><button data-t="dm">✉️ ' + t.dm + '<span class="badge" id="agCmTabBadge" style="display:none"></span></button><button data-t="sup">🆘 ' + t.sup + '<span class="badge" id="agCmSupBadge" style="display:none"></span></button></div>' +
+      '<div class="tabs"><button data-t="wall">📰 ' + t.wall + '</button><button data-t="chat">💬 ' + t.chat + '</button><button data-t="dm">✉️ ' + t.dm + '<span class="badge" id="agCmTabBadge" style="display:none"></span></button><button data-t="add">👥 ' + t.fr + '</button><button data-t="sup">🆘 ' + t.sup + '<span class="badge" id="agCmSupBadge" style="display:none"></span></button></div>' +
       '<div class="rules">🛡️ ' + t.rules + '</div><div class="bd"></div><div class="toast"></div>';
     document.body.appendChild(root);
     body = root.querySelector('.bd');
@@ -186,7 +197,7 @@
     tab = which || tab; dmWith = which === 'dm' ? dmWith : null;
     root.querySelectorAll('.tabs button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-t') === tab); });
     clearInterval(poll); poll = null;
-    if (tab === 'wall') showWall(); else if (tab === 'chat') showChat(); else if (tab === 'sup') showSupport(); else if (dmWith) showDm(dmWith); else showDms();
+    if (tab === 'wall') showWall(); else if (tab === 'chat') showChat(); else if (tab === 'add') showAdd(); else if (tab === 'sup') showSupport(); else if (dmWith) showDm(dmWith); else showDms();
   }
   function close() { if (root) root.classList.remove('on'); clearInterval(poll); poll = null; }
 
@@ -294,6 +305,31 @@
     inp.onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); go(); } };
     return body.querySelector('.sc');
   }
+  // ---------- sonidos (hechos aqui mismo, sin archivos) ----------
+  var actx = null;
+  function snd(kind) {
+    if (me && me.status === 'busy') return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === 'suspended') actx.resume();
+      var now = actx.currentTime;
+      var notes = kind === 'send' ? [[880, 0, .07], [1320, .05, .09]]
+        : kind === 'recv' ? [[660, 0, .09], [990, .07, .12]]
+        : [[784, 0, .12], [1047, .13, .12], [1319, .26, .22]]; // aviso de mensaje nuevo
+      notes.forEach(function (n) {
+        var o = actx.createOscillator(), g = actx.createGain();
+        o.type = kind === 'notify' ? 'triangle' : 'sine'; o.frequency.value = n[0];
+        g.gain.setValueAtTime(0.0001, now + n[1]);
+        g.gain.exponentialRampToValueAtTime(kind === 'send' ? 0.12 : 0.18, now + n[1] + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + n[1] + n[2]);
+        o.connect(g); g.connect(actx.destination); o.start(now + n[1]); o.stop(now + n[1] + n[2] + 0.02);
+      });
+    } catch (e) { }
+  }
+  // el navegador solo deja sonar despues de que el jugador toca algo
+  ['pointerdown', 'keydown'].forEach(function (ev) { addEventListener(ev, function () { try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === 'suspended') actx.resume(); } catch (e) { } }, { once: true, capture: true }); });
+  function incoming(list) { return me && list.some(function (m) { return m.from && m.from.name && m.from.name.toLowerCase() !== me.name.toLowerCase(); }); }
+
   function append(sc, list, showDel) {
     var atBottom = sc.scrollHeight - sc.scrollTop - sc.clientHeight < 60;
     var em = sc.querySelector('.empty'); if (list.length && em) em.remove();
@@ -302,7 +338,7 @@
   }
   function showChat() {
     lastChat = 0;
-    var sc = chatBox(function (v, img) { api('POST', '/api/ag/chat', { text: v, image: img }).then(pull).catch(function () { }); });
+    var sc = chatBox(function (v, img) { api('POST', '/api/ag/chat', { text: v, image: img }).then(function () { snd('send'); pull(); }).catch(function () { }); });
     sc.innerHTML = '<div class="empty">' + t.empty + '</div>';
     sc.onclick = function (e) {
       var a = e.target.closest('[data-a],.nm'); if (!a) return;
@@ -312,11 +348,53 @@
     };
     function pull() {
       api('GET', '/api/ag/chat?after=' + lastChat).then(function (list) {
+        if (lastChat && incoming(list)) snd('recv');
         if (list.length) lastChat = list[list.length - 1].id; append(sc, list, true);
       }).catch(function () { });
     }
     pull(); poll = setInterval(pull, 3000);
   }
+  // ---------- agregar amigos ----------
+  function showAdd() {
+    body.innerHTML = '<div style="padding:10px 10px 0"><div class="card"><div class="nm" style="margin-bottom:6px">🔎 ' + t.frBy + '</div>' +
+      '<div style="display:flex;gap:6px"><input class="frq" maxlength="40" placeholder="' + t.frPh + '" style="flex:1;min-width:0;border:2px solid #d9c79a;border-radius:999px;padding:6px 12px;font:600 15px CV,sans-serif"><button class="go fradd">' + t.frAdd + '</button></div></div>' +
+      '<div class="card" style="text-align:center"><button class="go frall" style="width:100%">👥 ' + t.frAll + '</button><div class="meta frcount" style="margin-top:6px"></div></div></div>' +
+      '<div class="sub" style="padding:0 14px">' + t.frList + '</div><div class="sc"></div>';
+    var inp = body.querySelector('.frq'), sc = body.querySelector('.sc'), timer;
+    function badge(p) {
+      if (p.rel === 'friend') return '<span class="meta">✔ ' + t.frFriend + '</span>';
+      if (p.rel === 'sent') return '<span class="meta">⏳ ' + t.frSent + '</span>';
+      if (p.rel === 'private') return '<span class="meta">🔒 ' + t.frPrivate + '</span>';
+      return '<button class="sm" data-add="' + esc(p.name) + '">' + (p.rel === 'received' ? t.frAccept : '+ ' + t.frAdd) + '</button>';
+    }
+    function load() {
+      api('GET', '/api/ag/friends/find?q=' + encodeURIComponent(inp.value.trim())).then(function (r) {
+        body.querySelector('.frcount').textContent = r.pending + ' ' + t.frPending;
+        sc.innerHTML = r.players.length ? r.players.map(function (p) {
+          return '<div class="row" data-u="' + esc(p.name) + '">' + av(p) + '<div class="bb"><div class="nm">' + esc(p.name) + '</div><div class="last">' + t.lvl + ' ' + p.level + '</div></div><div>' + badge(p) + '</div></div>';
+        }).join('') : '<div class="empty">' + t.empty + '</div>';
+      }).catch(function () { });
+    }
+    function add(name) {
+      return api('POST', '/api/ag/friends/add', { text: name }).then(function (r) {
+        toast(r.rel === 'friend' ? t.frNow + ' ' + r.name + ' 🎉' : t.frSentOk + ' ' + r.name + ' ✉️'); load();
+      }).catch(function (j) { if (j && j.error) toast(j.error === 'notfound' ? t.frNotFound : j.error === 'private' ? t.frNoAdd : '⚠️'); });
+    }
+    body.querySelector('.fradd').onclick = function () { var v = inp.value.trim(); if (v) add(v); };
+    inp.onkeydown = function (e) { if (e.key === 'Enter') { var v = inp.value.trim(); if (v) add(v); } };
+    inp.oninput = function () { clearTimeout(timer); timer = setTimeout(load, 300); };
+    body.querySelector('.frall').onclick = function () {
+      if (!confirm(t.frAllQ)) return;
+      var b = this; b.disabled = true;
+      api('POST', '/api/ag/friends/addall').then(function (r) {
+        toast(t.frAllOk + ': ' + r.sent + (r.accepted ? ' · ' + r.accepted + ' ' + t.frAccepted : '') + ' · ' + t.frReload); b.disabled = false; load();
+      }).catch(function () { b.disabled = false; });
+    };
+    sc.onclick = function (e) { var b = e.target.closest('[data-add]'); if (b) { b.disabled = true; add(b.getAttribute('data-add')); } };
+    load();
+  }
+  window.agOpenFriends = function () { open('add'); };
+
   function showDms() {
     body.innerHTML = '<div class="bar" style="border-top:0;border-bottom:2px solid #e6d7ad"><input placeholder="🔎 ' + t.search + '"></div><div class="sc"></div>';
     var inp = body.querySelector('input'), sc = body.querySelector('.sc'), timer;
@@ -452,7 +530,7 @@
   function showDm(name) {
     lastDm = 0;
     var sc = chatBox(function (v, img) {
-      api('POST', '/api/ag/dm/' + encodeURIComponent(name), { text: v, image: img }).then(pull).catch(function (j) { if (j && j.error === 'blocked') toast(t.blocked); });
+      api('POST', '/api/ag/dm/' + encodeURIComponent(name), { text: v, image: img }).then(function () { snd('send'); pull(); }).catch(function (j) { if (j && j.error === 'blocked') toast(t.blocked); });
     });
     sc.insertAdjacentHTML('beforebegin', '<div class="dmh"><button class="sm" data-a="back">‹ ' + t.back + '</button><div class="sp"><div class="nm"></div></div><button class="sm" data-a="block"></button></div>');
     var hd = body.querySelector('.dmh');
@@ -464,6 +542,7 @@
       api('GET', '/api/ag/dm/' + encodeURIComponent(name) + '?after=' + lastDm).then(function (d) {
         hd.querySelector('.sp').innerHTML = '<div class="nm">' + esc(d.with.name) + '</div><div class="meta"><span class="sd ' + d.with.status + '"></span>' + stText(d.with) + ' · ' + t.lvl + ' ' + d.with.level + '</div>';
         hd.querySelector('[data-a=block]').textContent = d.blocked ? t.unblock : t.block;
+        if (lastDm && incoming(d.messages)) snd('recv');
         if (d.messages.length) lastDm = d.messages[d.messages.length - 1].id;
         append(sc, d.messages, false);
         if (!lastDm && !sc.children.length) sc.innerHTML = '<div class="empty">✉️</div>';
@@ -475,7 +554,10 @@
   // ---------- boton al lado del BETA + aviso de mensajes nuevos ----------
   function setBadge(n) {
     var b = document.getElementById('agCmBadge'), tb = document.getElementById('agCmTabBadge');
-    if (b) { b.textContent = n; b.style.display = n ? '' : 'none'; }
+    if (b) { b.textContent = n > 99 ? '99+' : n; b.style.display = n ? '' : 'none'; if (n && n > (setBadge.last || 0)) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); } }
+    setBadge.last = n;
+    if (!setBadge.title) setBadge.title = document.title.replace(/^\(\d+\+?\) /, '');
+    document.title = (n ? '(' + (n > 99 ? '99+' : n) + ') ' : '') + setBadge.title;
     var dmN = me ? me.unread : n; if (tb) { tb.textContent = dmN; tb.style.display = dmN ? '' : 'none'; }
   }
   var lastNotified = null;
@@ -486,6 +568,7 @@
     if (!m || (me && me.status === 'busy')) return;
     if (root && root.classList.contains('on') && tab === 'dm' && dmWith && dmWith.toLowerCase() === m.from.name.toLowerCase()) return;
     var old = document.getElementById('agNt'); if (old) old.remove();
+    snd('notify');
     var n = document.createElement('div'); n.id = 'agNt';
     n.innerHTML = '<img src="' + esc(m.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">✉️ ' + t.newMsg + '</div><b>' + esc(m.from.name) + '</b><span>' + esc(m.text) + '</span></div>';
     n.onclick = function () { n.remove(); openDmWith(m.from.name); };
@@ -609,6 +692,6 @@
   } } };
   window.agOpenCommunity = function (which) { open(which); };
   window.agOpenSupport = function () { open('sup'); };
-  function init() { addButton(); refreshMe(); setInterval(refreshMe, 10000); }
+  function init() { addButton(); refreshMe(); setInterval(refreshMe, 5000); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

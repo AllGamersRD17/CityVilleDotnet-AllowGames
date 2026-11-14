@@ -1,4 +1,4 @@
-using CityVilleDotnet.Domain.Entities;
+﻿using CityVilleDotnet.Domain.Entities;
 using CityVilleDotnet.Domain.GameEntities;
 using CityVilleDotnet.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -112,6 +112,12 @@ public class ListModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
         if (player.HasFriend(targetPlayer))
         {
             TempData["Error"] = localizer["FriendAlreadyInList"].Value;
+            return RedirectToPage("/Friends/List");
+        }
+
+        if (CityVilleDotnet.Api.Features.AllowGames.CommunityService.Private(targetPlayer.Username, "noadd"))
+        {
+            TempData["Error"] = "Este alcalde no acepta solicitudes de amistad.";
             return RedirectToPage("/Friends/List");
         }
 

@@ -199,6 +199,14 @@
 		console.log("completeSendRequest called:", b)
 	}
 
+	// Allow Games: los botones del juego que antes abrian paginas de Facebook (agregar vecinos, invitar)
+	function agRoute() {
+		var u = [].slice.call(arguments).join(" ").toLowerCase();
+		if (/invite|neighbor|friend|vecin/.test(u) && window.agOpenFriends) { window.agOpenFriends(); return true; }
+		if (/gift/.test(u) && window.agOpenCommunity) { window.agOpenCommunity("wall"); return true; }
+		return false;
+	}
+
 	ZYFrameManager = {
 		"reloadApp": function () {
 			console.log("Reload App");
@@ -206,12 +214,15 @@
 		},
 		"navigateTo": function (a, b, c) {
 			console.log("Navigate To" + a + " - " + b + " - " + c);
+			agRoute(a, b, c);
 		},
 		"openTab": function (a, b, c) {
 			console.log("Open Tab" + a + " - " + b + " - " + c);
+			agRoute(a, b, c);
 		},
 		"switchToTab": function (a) {
 			console.log("Switch To Tab" + a);
+			agRoute(a);
 		}
 	}
 

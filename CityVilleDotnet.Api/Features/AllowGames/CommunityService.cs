@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using CityVilleDotnet.Domain.Entities;
@@ -59,6 +59,7 @@ public static class CommunityService
         public Dictionary<string, int> Levels { get; set; } = new();
         public List<string> Reports { get; set; } = [];
         public Dictionary<string, string> Status { get; set; } = new();          // usuario -> online | busy | invisible
+        public Dictionary<string, HashSet<string>> Privacy { get; set; } = new(); // usuario -> nomsg | noadd
     }
 
     private static Store _s = new();
@@ -114,6 +115,24 @@ public static class CommunityService
     {
         var x = a.ToLowerInvariant(); var y = b.ToLowerInvariant();
         return string.CompareOrdinal(x, y) < 0 ? x + "|" + y : y + "|" + x;
+    }
+
+    // privacidad del perfil: "nomsg" = nadie le puede escribir, "noadd" = nadie lo puede agregar
+    public static bool Private(string user, string flag)
+    {
+        lock (Lock) return _s.Privacy.TryGetValue(user.ToLowerInvariant(), out var f) && f.Contains(flag);
+    }
+    public static object PrivacyOf(string user) => new { noMsg = Private(user, "nomsg"), noAdd = Private(user, "noadd") };
+    public static void SetPrivacy(string user, bool noMsg, bool noAdd)
+    {
+        lock (Lock)
+        {
+            var f = new HashSet<string>();
+            if (noMsg) f.Add("nomsg");
+            if (noAdd) f.Add("noadd");
+            if (f.Count == 0) _s.Privacy.Remove(user.ToLowerInvariant()); else _s.Privacy[user.ToLowerInvariant()] = f;
+            _dirty = true;
+        }
     }
 
     private static bool Blocked(string by, string who) =>
@@ -319,7 +338,7 @@ public static class CommunityService
         {
             List<object> list = _s.Dms.TryGetValue(k, out var l) ? l.Where(m => m.Id > after).TakeLast(100).Select(Out).ToList() : new List<object>();
             if (_s.Dms.TryGetValue(k, out var all) && all.Count > 0) MarkRead(me, k, all[^1].Id);
-            return new { with = Who(other), blocked = Blocked(me, other), messages = list };
+            return new { with = Who(other), blocked = Blocked(me, other) || (_s.Privacy.TryGetValue(other.ToLowerInvariant(), out var pv) && pv.Contains("nomsg")), messages = list };
         }
     }
 
@@ -333,6 +352,7 @@ public static class CommunityService
         lock (Lock)
         {
             if (Blocked(other, me) || Blocked(me, other)) return "blocked";
+            if (_s.Privacy.TryGetValue(other.ToLowerInvariant(), out var pv) && pv.Contains("nomsg")) return "blocked";
             var k = Key(me, other);
             if (!_s.Dms.TryGetValue(k, out var l)) _s.Dms[k] = l = [];
             var m = new Msg { Id = _s.NextId++, From = me, To = other, Text = t, Image = img, At = DateTime.UtcNow };
@@ -516,6 +536,7 @@ public static class CommunityService
 
     // ---------- endpoints ----------
     private sealed record TextBody(string? Text, string? Image = null);
+    private sealed record PrivacyBody(bool NoMsg, bool NoAdd);
     private sealed record ShareBody(string? Title, string? Text, string? Image, string? Action, bool? Wishlist);
     private sealed record HelpBody(string? Item);
 
@@ -679,6 +700,97 @@ public static class CommunityService
                 .Select(x => new { x.name, x.avatar, x.level, status = Presence(x.name), seen = Seen(x.name) })
                 .OrderBy(x => x.status == "online" ? 0 : x.status == "busy" ? 1 : 2).ToList();
             return Results.Json(outList);
+        });
+
+        // ---------- agregar amigos (boton "Add Friends" del juego) ----------
+        async Task<Dictionary<string, string>> Relations(CityVilleDbContext db, Guid me) =>
+            (await db.Set<Friend>().AsNoTracking().Where(f => f.Player!.Id == me)
+                .Select(f => new { n = f.FriendPlayer!.Username, f.Status, f.Requested }).ToListAsync())
+            .GroupBy(x => x.n, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(g => g.Key, g => { var x = g.First(); return x.Status == FriendshipStatus.Accepted ? "friend" : x.Requested ? "received" : "sent"; }, StringComparer.OrdinalIgnoreCase);
+
+        app.MapGet("/api/ag/friends/find", async (string? q, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            var s = (q ?? "").Trim();
+            var rel = await Relations(db, p.Id);
+            var list = await db.Set<Player>().AsNoTracking()
+                .Where(x => x.Snuid != -1 && x.Id != p.Id && (s == "" || x.Username.Contains(s)))
+                .OrderByDescending(x => x.LastTrackingTimestamp).Take(60)
+                .Select(x => new { name = x.Username, avatar = x.ProfilePictureUrl ?? "/blank.png", level = x.Level })
+                .ToListAsync();
+            var total = await db.Set<Player>().CountAsync(x => x.Snuid != -1 && x.Id != p.Id);
+            var pending = total - rel.Count(r => r.Value is "friend" or "sent");
+            return Results.Json(new
+            {
+                total, pending,
+                players = list.Select(x => new { x.name, x.avatar, x.level, rel = rel.TryGetValue(x.name, out var r) ? r : Private(x.name, "noadd") ? "private" : "none" })
+            });
+        });
+
+        app.MapPost("/api/ag/friends/add", async (TextBody b, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            var name = (b.Text ?? "").Trim();
+            if (name == "") return Results.Json(new { error = "empty" }, statusCode: 400);
+            var me = await db.Set<Player>().Include(x => x.Friends).ThenInclude(x => x.FriendPlayer).FirstAsync(x => x.Id == p.Id);
+            var target = await db.Set<Player>().FirstOrDefaultAsync(x => x.Username == name && x.Snuid != -1);
+            if (target is null) return Results.Json(new { error = "notfound" }, statusCode: 404);
+            if (target.Id == me.Id) return Results.Json(new { error = "self" }, statusCode: 400);
+            var mine = me.Friends.FirstOrDefault(f => f.FriendPlayer!.Id == target.Id);
+            if (mine is not null)
+            {
+                if (mine.Status == FriendshipStatus.Pending && mine.Requested)
+                {
+                    var theirs = await db.Set<Friend>().FirstOrDefaultAsync(f => f.Player!.Id == target.Id && f.FriendPlayer!.Id == me.Id);
+                    mine.Status = FriendshipStatus.Accepted;
+                    if (theirs is not null) theirs.Status = FriendshipStatus.Accepted;
+                    await db.SaveChangesAsync();
+                    return Results.Json(new { rel = "friend", name = target.Username });
+                }
+                return Results.Json(new { rel = mine.Status == FriendshipStatus.Accepted ? "friend" : "sent", name = target.Username });
+            }
+            if (Private(target.Username, "noadd")) return Results.Json(new { error = "private" }, statusCode: 403);
+            me.SendFriendRequest(target);
+            await db.SaveChangesAsync();
+            return Results.Json(new { rel = "sent", name = target.Username });
+        });
+
+        app.MapPost("/api/ag/friends/addall", async (HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            if (TooFast(p.Username)) return Results.StatusCode(429);
+            var me = await db.Set<Player>().Include(x => x.Friends).ThenInclude(x => x.FriendPlayer).FirstAsync(x => x.Id == p.Id);
+            var known = me.Friends.Select(f => f.FriendPlayer!.Id).ToHashSet();
+            int sent = 0, accepted = 0;
+            // primero aceptar las solicitudes que ya me mandaron
+            foreach (var mine in me.Friends.Where(f => f.Status == FriendshipStatus.Pending && f.Requested))
+            {
+                var theirs = await db.Set<Friend>().FirstOrDefaultAsync(f => f.Player!.Id == mine.FriendPlayer!.Id && f.FriendPlayer!.Id == me.Id);
+                mine.Status = FriendshipStatus.Accepted;
+                if (theirs is not null) theirs.Status = FriendshipStatus.Accepted;
+                accepted++;
+            }
+            var others = await db.Set<Player>().Where(x => x.Snuid != -1 && x.Id != me.Id && !known.Contains(x.Id)).Take(500).ToListAsync();
+            foreach (var t in others) { if (Private(t.Username, "noadd")) continue; me.SendFriendRequest(t); sent++; }
+            await db.SaveChangesAsync();
+            return Results.Json(new { sent, accepted });
+        });
+
+        app.MapGet("/api/ag/privacy", async (HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            return p is null ? Results.Unauthorized() : Results.Json(PrivacyOf(p.Username));
+        });
+        app.MapPost("/api/ag/privacy", async (PrivacyBody b, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            SetPrivacy(p.Username, b.NoMsg, b.NoAdd);
+            return Results.Json(PrivacyOf(p.Username));
         });
 
         app.MapPost("/api/ag/status", async (TextBody b, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
