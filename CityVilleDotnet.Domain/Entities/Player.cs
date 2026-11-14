@@ -1122,7 +1122,7 @@ public partial class Player
 
     public List<SocialNetworkUserDto> GetSocialNetworkUserFriendsList(string baseUrl)
     {
-        return Friends.Where(f => f.FriendPlayer is not null && !f.FriendPlayer.IsSamantha()).Select(friend => friend.ToSocialNetworkUserDto(baseUrl)).ToList();
+        return Friends.Where(f => f.FriendPlayer is not null && !f.FriendPlayer.IsSamantha() && f.Status == FriendshipStatus.Accepted).Select(friend => friend.ToSocialNetworkUserDto(baseUrl)).ToList();
     }
 
     public bool HasFriend(Player friend)
