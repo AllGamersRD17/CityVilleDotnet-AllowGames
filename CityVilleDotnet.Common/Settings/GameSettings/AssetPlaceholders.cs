@@ -1,6 +1,6 @@
 namespace CityVilleDotnet.Common.Settings.GameSettings;
 
-public record AssetPlaceholder(string Path, int? Height);
+public record AssetPlaceholder(string Path, int? Height, string? Icon = null);
 
 public static class AssetPlaceholders
 {
@@ -42,21 +42,21 @@ public static class AssetPlaceholders
         [(12, 6)] = "/assets/bases/base_tanconcrete/base_tanconcrete_6x12_SE.png"
     };
 
-    public static IEnumerable<(string Url, AssetPlaceholder Placeholder)> FromStaticImage(ImageItem image, int sizeX, int sizeY)
+    public static IEnumerable<(string Url, AssetPlaceholder Placeholder)> FromStaticImage(ImageItem image, int sizeX, int sizeY, string? icon = null)
     {
         var footprint = image.Direction is "SE" or "NW" ? (sizeY, sizeX) : (sizeX, sizeY);
         var construction = GetConstruction(footprint);
 
         if (image.Url is not null)
         {
-            yield return ($"/{image.Url}", new AssetPlaceholder(construction, GetHeight(image, image)));
+            yield return ($"/{image.Url}", new AssetPlaceholder(construction, GetHeight(image, image), icon));
             yield break;
         }
 
         var building = image.Images.FirstOrDefault(x => x.Type == "building") ?? image.Images.FirstOrDefault(x => x.Type != "base");
 
         if (building?.Url is not null)
-            yield return ($"/{building.Url}", new AssetPlaceholder(construction, GetHeight(image, building)));
+            yield return ($"/{building.Url}", new AssetPlaceholder(construction, GetHeight(image, building), icon));
 
         if (!Bases.TryGetValue(footprint, out var basePlaceholder)) yield break;
 

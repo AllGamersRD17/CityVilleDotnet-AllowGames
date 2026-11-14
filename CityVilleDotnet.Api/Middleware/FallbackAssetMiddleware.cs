@@ -13,6 +13,7 @@ public class FallbackAssetMiddleware(
 {
     private readonly Dictionary<string, string> _fallbacks = new(configuration.GetSection("assetFallbacks").Get<Dictionary<string, string>>() ?? [], StringComparer.OrdinalIgnoreCase);
     private readonly ConcurrentDictionary<(string File, int Height), byte[]> _resizedPlaceholders = new();
+    private readonly ConcurrentDictionary<(string Icon, string Frame, int Height), byte[]> _iconImages = new();
 
     public async Task InvokeAsync(HttpContext context)
     {
@@ -58,6 +59,25 @@ public class FallbackAssetMiddleware(
                 }
 
                 var placeholder = GameSettingsManager.Instance.GetAssetPlaceholder(requestPath);
+
+                // Allow Games: decoracion sin arte en el mapa -> se dibuja su icono con el tamano del andamio
+                if (placeholder?.Icon is not null && extension == ".png")
+                {
+                    var iconFile = FindIgnoringCase("/" + placeholder.Icon.TrimStart('/'));
+                    var frameFile = FindIgnoringCase(placeholder.Path);
+                    if (iconFile is not null && frameFile is not null)
+                    {
+                        byte[]? drawn = null;
+                        try { drawn = _iconImages.GetOrAdd((iconFile, frameFile, placeholder.Height ?? 0), x => RenderIcon(x.Icon, x.Frame, x.Height)); }
+                        catch (Exception e) { logger.LogWarning(e, "Icon render failed for {RequestPath}", logPath); }
+                        if (drawn is not null)
+                        {
+                            SetFallbackHeaders(context, "image/png");
+                            await context.Response.Body.WriteAsync(drawn);
+                            return;
+                        }
+                    }
+                }
                 var placeholderFile = placeholder is not null ? ResolveFallbackFile(logPath, placeholder.Path) : null;
 
                 if (placeholder is not null && placeholderFile is not null)
@@ -159,6 +179,53 @@ public class FallbackAssetMiddleware(
         return data.ToArray();
     }
 
+    private static byte[] RenderIcon(string iconFile, string frameFile, int height)
+    {
+        using var frame = SKBitmap.Decode(frameFile);
+        using var icon = SKBitmap.Decode(iconFile);
+        // el juego centra la imagen en la casilla; un arbol de 1x1 original mide ~100px de ancho
+        var w = Math.Max(frame.Width, 96);
+        var lift = frame.Width / 4f;
+
+        // recorta lo transparente del icono
+        int minX = icon.Width, minY = icon.Height, maxX = -1, maxY = -1;
+        for (var y = 0; y < icon.Height; y++)
+            for (var x = 0; x < icon.Width; x++)
+                if (icon.GetPixel(x, y).Alpha > 16)
+                {
+                    minX = Math.Min(minX, x); maxX = Math.Max(maxX, x);
+                    minY = Math.Min(minY, y); maxY = Math.Max(maxY, y);
+                }
+        if (maxX < 0) { minX = 0; minY = 0; maxX = icon.Width - 1; maxY = icon.Height - 1; }
+        var src = new SKRect(minX, minY, maxX + 1, maxY + 1);
+
+        // la base del objeto va cerca del centro del rombo de la casilla
+        var scale = w * 0.95f / src.Width;
+        int h;
+        if (height > 0)
+        {
+            scale = Math.Min(scale, Math.Max(height - lift, 8) / src.Height);
+            h = height;
+        }
+        else
+        {
+            h = (int)Math.Ceiling(src.Height * scale + lift);
+        }
+        var dw = src.Width * scale;
+        var dh = src.Height * scale;
+        var dst = SKRect.Create((w - dw) / 2f, h - lift - dh, dw, dh);
+
+        using var outBmp = new SKBitmap(w, h);
+        using var canvas = new SKCanvas(outBmp);
+        canvas.Clear(SKColors.Transparent);
+        using var img = SKImage.FromBitmap(icon);
+        canvas.DrawImage(img, src, dst, new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
+
+        using var image = SKImage.FromBitmap(outBmp);
+        using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+        return data.ToArray();
+    }
+
     private static async Task SendFallbackAsync(HttpContext context, string file, string contentType)
     {
         SetFallbackHeaders(context, contentType);
@@ -169,7 +236,7 @@ public class FallbackAssetMiddleware(
     {
         context.Response.StatusCode = 200;
         context.Response.ContentType = contentType;
-        context.Response.Headers.CacheControl = "public, max-age=2592000"; // 1 month
-        context.Response.Headers.Expires = DateTime.UtcNow.AddMonths(1).ToString("R");
+        context.Response.Headers.CacheControl = "public, max-age=86400"; // Allow Games: 1 dia, para que los arreglos de arte lleguen rapido
+        context.Response.Headers.Expires = DateTime.UtcNow.AddDays(1).ToString("R");
     }
 }

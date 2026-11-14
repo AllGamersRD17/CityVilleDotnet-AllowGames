@@ -121,9 +121,19 @@ public class GameSettingsManager
             {
                 if (item?.SizeX is null || item.SizeY is null) continue;
 
+                // Allow Games: a las decoraciones sin arte en el mapa se les dibuja su icono en vez del andamio
+                var icon = item.Type is "decoration" or "rainbowDecoration"
+                    ? item.Images.FirstOrDefault(x => x.Name == "icon")?.Url
+                    : null;
+
+                var smallIcon = item.Images.FirstOrDefault(x => x.Name == "icon")?.Url;
+                if (smallIcon is not null)
+                    foreach (var large in item.Images.Where(x => x.Name == "large_icon" && x.Url is not null))
+                        _assetPlaceholders.TryAdd($"/{large.Url}", new AssetPlaceholder($"/{smallIcon}", null));
+
                 foreach (var image in item.Images.Where(x => x.Name == "static"))
                 {
-                    foreach (var (url, placeholder) in AssetPlaceholders.FromStaticImage(image, item.SizeX.Value, item.SizeY.Value))
+                    foreach (var (url, placeholder) in AssetPlaceholders.FromStaticImage(image, item.SizeX.Value, item.SizeY.Value, icon))
                     {
                         _assetPlaceholders.TryAdd(url, placeholder);
                     }
