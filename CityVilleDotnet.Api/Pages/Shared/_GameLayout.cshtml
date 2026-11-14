@@ -198,6 +198,34 @@
 <script src="/ag/site.js?v=3"></script>
 <script src="/ag/community.js?v=7"></script>
 <script src="/ag/mobile.js?v=1"></script>
+<style>@media (min-width:1200px){.cv-navbar>.container{max-width:1720px}}</style>
+<script>
+// Allow Games: la barra de arriba nunca se corta. Si no cabe, se achica entera (igual que se ve en grande).
+(function () {
+    var n = document.querySelector('.cv-navbar>.container'), tg = document.querySelector('.cv-navbar .navbar-toggler');
+    if (!n) return;
+    var busy = false;
+    function fit() {
+        if (busy) return; busy = true;
+        n.style.zoom = '';
+        if (!tg || getComputedStyle(tg).display === 'none') {
+            var cs = getComputedStyle(n), avail = n.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            n.style.width = 'max-content'; n.style.maxWidth = 'none';
+            var need = n.scrollWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            n.style.width = ''; n.style.maxWidth = '';
+            if (need > avail + 1) n.style.zoom = Math.max(0.6, (avail - 4) / need).toFixed(3);
+        }
+        var nav = document.querySelector('.cv-navbar');
+        if (nav) document.documentElement.style.setProperty('--ag-nav-h', nav.offsetHeight + 'px');
+        busy = false;
+    }
+    var t; function later() { clearTimeout(t); t = setTimeout(fit, 60); }
+    addEventListener('resize', later); addEventListener('load', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    [300, 1500, 4000].forEach(function (ms) { setTimeout(fit, ms); });
+    fit();
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
