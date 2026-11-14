@@ -37,6 +37,14 @@ public static class CommunityService
         public List<Comment> Comments { get; set; } = [];
     }
 
+    public sealed class Note
+    {
+        public long Id { get; set; }
+        public string Kind { get; set; } = "";   // req = te mandaron solicitud, acc = aceptaron la tuya
+        public string From { get; set; } = "";
+        public DateTime At { get; set; }
+    }
+
     public sealed class Msg
     {
         public long Id { get; set; }
@@ -60,6 +68,7 @@ public static class CommunityService
         public List<string> Reports { get; set; } = [];
         public Dictionary<string, string> Status { get; set; } = new();          // usuario -> online | busy | invisible
         public Dictionary<string, HashSet<string>> Privacy { get; set; } = new(); // usuario -> nomsg | noadd
+        public Dictionary<string, List<Note>> Notes { get; set; } = new();        // usuario -> avisos de amistad
     }
 
     private static Store _s = new();
@@ -115,6 +124,29 @@ public static class CommunityService
     {
         var x = a.ToLowerInvariant(); var y = b.ToLowerInvariant();
         return string.CompareOrdinal(x, y) < 0 ? x + "|" + y : y + "|" + x;
+    }
+
+    // avisos de amistad (como Facebook): solicitud recibida y solicitud aceptada
+    public static void AddNote(string to, string kind, string from)
+    {
+        lock (Lock)
+        {
+            var k = to.ToLowerInvariant();
+            if (!_s.Notes.TryGetValue(k, out var l)) _s.Notes[k] = l = [];
+            l.RemoveAll(n => n.Kind == kind && n.From.Equals(from, StringComparison.OrdinalIgnoreCase));
+            l.Add(new Note { Id = _s.NextId++, Kind = kind, From = from, At = DateTime.UtcNow });
+            if (l.Count > 30) l.RemoveRange(0, l.Count - 30);
+            _dirty = true;
+        }
+    }
+    public static object LastNote(string me)
+    {
+        lock (Lock)
+        {
+            if (!_s.Notes.TryGetValue(me.ToLowerInvariant(), out var l) || l.Count == 0) return null!;
+            var n = l[^1];
+            return new { id = n.Id, kind = n.Kind, from = Who(n.From), at = n.At };
+        }
     }
 
     // privacidad del perfil: "nomsg" = nadie le puede escribir, "noadd" = nadie lo puede agregar
@@ -555,7 +587,8 @@ public static class CommunityService
         {
             var (p, admin) = await Me(h, db, u);
             if (p is null) return Results.Unauthorized();
-            return Results.Json(new { name = p.Username, avatar = p.ProfilePictureUrl ?? "/blank.png", level = p.Level, admin, unread = Unread(p.Username), status = MyStatus(p.Username), lastUnread = LastUnread(p.Username), support = SupportService.Counts(p.Username, admin).Mine, supportAdmin = SupportService.Counts(p.Username, admin).AdminOpen });
+            var reqs = await db.Set<Friend>().CountAsync(f => f.Player!.Id == p.Id && f.Status == FriendshipStatus.Pending && f.Requested);
+            return Results.Json(new { name = p.Username, avatar = p.ProfilePictureUrl ?? "/blank.png", level = p.Level, admin, unread = Unread(p.Username), requests = reqs, lastNote = LastNote(p.Username), status = MyStatus(p.Username), lastUnread = LastUnread(p.Username), support = SupportService.Counts(p.Username, admin).Mine, supportAdmin = SupportService.Counts(p.Username, admin).AdminOpen });
         });
 
         app.MapGet("/api/ag/wall", async (long? before, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
@@ -722,9 +755,12 @@ public static class CommunityService
                 .ToListAsync();
             var total = await db.Set<Player>().CountAsync(x => x.Snuid != -1 && x.Id != p.Id);
             var pending = total - rel.Count(r => r.Value is "friend" or "sent");
+            var inNames = rel.Where(r => r.Value == "received").Select(r => r.Key).ToList();
+            var incoming = await db.Set<Player>().AsNoTracking().Where(x => inNames.Contains(x.Username))
+                .Select(x => new { name = x.Username, avatar = x.ProfilePictureUrl ?? "/blank.png", level = x.Level, rel = "received" }).ToListAsync();
             return Results.Json(new
             {
-                total, pending,
+                total, pending, incoming,
                 players = list.Select(x => new { x.name, x.avatar, x.level, rel = rel.TryGetValue(x.name, out var r) ? r : Private(x.name, "noadd") ? "private" : "none" })
             });
         });
@@ -748,6 +784,7 @@ public static class CommunityService
                     mine.Status = FriendshipStatus.Accepted;
                     if (theirs is not null) theirs.Status = FriendshipStatus.Accepted;
                     await db.SaveChangesAsync();
+                    AddNote(target.Username, "acc", me.Username);
                     return Results.Json(new { rel = "friend", name = target.Username });
                 }
                 return Results.Json(new { rel = mine.Status == FriendshipStatus.Accepted ? "friend" : "sent", name = target.Username });
@@ -755,6 +792,7 @@ public static class CommunityService
             if (Private(target.Username, "noadd")) return Results.Json(new { error = "private" }, statusCode: 403);
             me.SendFriendRequest(target);
             await db.SaveChangesAsync();
+            AddNote(target.Username, "req", me.Username);
             return Results.Json(new { rel = "sent", name = target.Username });
         });
 
@@ -772,10 +810,11 @@ public static class CommunityService
                 var theirs = await db.Set<Friend>().FirstOrDefaultAsync(f => f.Player!.Id == mine.FriendPlayer!.Id && f.FriendPlayer!.Id == me.Id);
                 mine.Status = FriendshipStatus.Accepted;
                 if (theirs is not null) theirs.Status = FriendshipStatus.Accepted;
+                AddNote(mine.FriendPlayer!.Username, "acc", me.Username);
                 accepted++;
             }
             var others = await db.Set<Player>().Where(x => x.Snuid != -1 && x.Id != me.Id && !known.Contains(x.Id)).Take(500).ToListAsync();
-            foreach (var t in others) { if (Private(t.Username, "noadd")) continue; me.SendFriendRequest(t); sent++; }
+            foreach (var t in others) { if (Private(t.Username, "noadd")) continue; me.SendFriendRequest(t); AddNote(t.Username, "req", me.Username); sent++; }
             await db.SaveChangesAsync();
             return Results.Json(new { sent, accepted });
         });

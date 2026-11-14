@@ -122,6 +122,7 @@ public class ListModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
         }
 
         player.SendFriendRequest(targetPlayer);
+        CityVilleDotnet.Api.Features.AllowGames.CommunityService.AddNote(targetPlayer.Username, "req", player.Username);
 
         TempData["Success"] = localizer["FriendRequestSent", Username].Value;
 
@@ -171,6 +172,7 @@ public class ListModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
 
         friendship.Status = FriendshipStatus.Accepted;
         targetFriendship.Status = FriendshipStatus.Accepted;
+        CityVilleDotnet.Api.Features.AllowGames.CommunityService.AddNote(userName, "acc", user.Username);
 
         TempData["Success"] = localizer["FriendNowFriends", userName].Value;
 

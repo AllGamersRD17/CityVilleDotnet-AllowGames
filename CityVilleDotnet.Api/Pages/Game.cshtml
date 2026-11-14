@@ -44,7 +44,7 @@
 	}
 	else
 	{
-		<script type="text/javascript" src="ruffle/ruffle.js?v=3"></script>
+		<script type="text/javascript" src="@(Context.Request.Query["rf"] == "2" ? "ruffle2/ruffle.js?v=1" : "ruffle/ruffle.js?v=3")"></script>
 	}
 
 	<style>
