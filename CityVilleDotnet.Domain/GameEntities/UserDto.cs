@@ -1,4 +1,4 @@
-﻿using CityVilleDotnet.Common.Settings;
+using CityVilleDotnet.Common.Settings;
 using CityVilleDotnet.Domain.Entities;
 using System.Text.Json.Serialization;
 using CityVilleDotnet.Domain.EnumExtensions;
@@ -96,7 +96,7 @@ public static class UserDtoMapper
                     Licenses = new ASObject(model.Licenses.ToDictionary(x => x.Name, x => (object)x.Amount)),
                     Neighbors = model.Friends
                         .Where(f => !f.GetFriend().IsSamantha() &&f.Status == FriendshipStatus.Accepted)
-                        .Select(friend => friend.ToNeighborDto()).ToList().WithEmptySlots(), // TODO: Change this after moving friends to player
+                        .Select(friend => friend.ToNeighborDto()).ToList(), // TODO: Change this after moving friends to player
                     Options = new OptionsDto
                     {
                         MusicDisabled = model.MusicDisabled,
