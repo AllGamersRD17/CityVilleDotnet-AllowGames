@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novedades · CityVille Revived · Allow Games</title>
+<link rel="icon" href="/ag/favicon.ico">
+<link rel="stylesheet" href="/ag/allowgames.css?v=8">
+<style>
+  body{margin:0;min-height:100vh;background:linear-gradient(180deg,#7fd0f5 0,#c8ecfb 220px,transparent 220px),url(/ag/grass.png) 0 0/128px 64px,url(/ag/grass.png) 64px 32px/128px 64px,#7ba344}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px}
+  .top a img{height:46px}
+  select{font-family:inherit;font-weight:600;border:3px solid #1c6e9c;border-radius:999px;padding:5px 12px;background:#fbf6e6}
+  .wrap{max-width:880px;margin:0 auto;padding:0 16px 40px}
+  .logo{display:block;margin:6px auto 0;width:min(80vw,340px)}
+  h1{text-align:center;font-size:30px;margin:14px 0 4px}
+  .sub{text-align:center;color:#21445a;font-weight:600;margin:0 0 6px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 4px}
+  .filters button{font-family:inherit;font-weight:700;font-size:14px;border:3px solid #1c6e9c;border-radius:999px;padding:5px 14px;background:#fbf6e6;color:#0a5f8c;cursor:pointer}
+  .filters button.on{background:#2f8fc4;color:#fff}
+  .ev{background:#2f8fc4;border:4px solid #1c6e9c;border-radius:22px;margin-top:22px;box-shadow:0 8px 0 rgba(0,0,0,.18);overflow:hidden}
+  .ev header{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;color:#fff;background:linear-gradient(90deg,rgba(0,0,0,.18),transparent)}
+  .ev header .ver{flex:none;background:#fbf6e6;color:#0a5f8c;border:3px solid #d9c79a;border-radius:14px;padding:6px 10px;font-weight:800;font-size:18px;text-align:center;min-width:64px}
+  .ev header .hd{flex:1;min-width:0}
+  .ev header h2{margin:0;font-size:22px;line-height:1.15;overflow-wrap:anywhere}
+  .ev header .meta{font-size:14px;font-weight:600;opacity:.95;margin-top:3px}
+  .tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.04em;border-radius:6px;padding:2px 8px;margin-right:6px;vertical-align:middle;color:#fff}
+  .t-major{background:#e8572a}.t-update{background:#3aa34a}.t-patch{background:#7a5ad6}.t-new{background:#e83a6a}
+  .ev header .arr{flex:none;font-size:22px;transition:transform .2s}
+  .ev.closed header .arr{transform:rotate(-90deg)}
+  .ev.closed .body{display:none}
+  .body{background:#fbf6e6;border-top:4px solid #1c6e9c;padding:12px 14px}
+  .intro{margin:2px 2px 10px;color:#21445a;font-weight:600}
+  .sec{margin:10px 0 2px}
+  .sec h3{margin:0 0 6px;font-size:17px;color:#0a5f8c;display:flex;align-items:center;gap:8px}
+  .it{display:flex;gap:10px;align-items:flex-start;background:#fff;border:3px solid #d9c79a;border-radius:12px;padding:8px 10px;margin:6px 0}
+  .it .k{flex:none;font-size:12px;font-weight:800;border-radius:6px;padding:2px 7px;color:#fff;margin-top:2px}
+  .k-add{background:#3aa34a}.k-fix{background:#2f8fc4}.k-chg{background:#d98a12}.k-del{background:#c0392b}
+  .it span{color:#21445a;min-width:0;overflow-wrap:anywhere}
+  .soon{background:#fff8d8;border:3px dashed #d9b84a;border-radius:14px;padding:10px 12px;margin-top:22px;color:#6b5512}
+  .soon h3{margin:0 0 6px;color:#8a6b0c}
+  .soon li{margin:4px 0}
+  .back{display:table;margin:24px auto 0}
+  .foot{text-align:center;color:#21445a;font-weight:600;margin-top:16px;font-size:14px}
+  @media (max-width:520px){.filters{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding-bottom:6px}.filters button{flex:none}.ev header{gap:10px;padding:12px}.ev header h2{font-size:18px}.ev header .ver{font-size:15px;min-width:52px;padding:5px 7px}.body{padding:10px 8px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a href="/Game"><img src="/ag/allowgames_nav.png" alt="Allow Games"></a>
+  <select id="lang" aria-label="Idioma / Language">
+    <option value="es">Español</option><option value="en">English</option><option value="pt">Português</option>
+    <option value="fr">Français</option><option value="it">Italiano</option><option value="de">Deutsch</option>
+  </select>
+</div>
+<div class="wrap">
+  <img class="logo" src="/ag/logo_revived.png" alt="CityVille Revived">
+  <h1 class="ag-stroke" data-i="t"></h1>
+  <p class="sub" data-i="s"></p>
+  <div class="filters" id="filters"></div>
+  <div id="list"></div>
+  <div class="soon" id="soon"></div>
+  <a class="btn btn-primary back" style="padding:10px 30px;text-decoration:none" href="/Game" data-i="play"></a>
+  <p class="foot">Allow Games (AllGamersRD) · <a href="/creditos.html" style="color:#0a5f8c" data-i="cred"></a></p>
+</div>
+<script>
+// Allow Games: novedades estilo Steam. Para agregar una version nueva, se pone arriba del todo en UPD.
+var T={
+ es:{t:"Novedades y parches",s:"Todo lo que hemos agregado y arreglado en CityVille Revived",play:"▶ A JUGAR",cred:"Créditos",all:"Todo",add:"NUEVO",fix:"ARREGLO",chg:"CAMBIO",del:"QUITADO",major:"ACTUALIZACIÓN GRANDE",update:"ACTUALIZACIÓN",patch:"PARCHE",nw:"NUEVO",items:"cambios",soon:"🔜 Estamos trabajando en"},
+ en:{t:"News & patch notes",s:"Everything we've added and fixed in CityVille Revived",play:"▶ PLAY",cred:"Credits",all:"All",add:"NEW",fix:"FIX",chg:"CHANGE",del:"REMOVED",major:"MAJOR UPDATE",update:"UPDATE",patch:"PATCH",nw:"NEW",items:"changes",soon:"🔜 We're working on"},
+ pt:{t:"Novidades e patches",s:"Tudo o que adicionamos e corrigimos no CityVille Revived",play:"▶ JOGAR",cred:"Créditos",all:"Tudo",add:"NOVO",fix:"CORREÇÃO",chg:"MUDANÇA",del:"REMOVIDO",major:"GRANDE ATUALIZAÇÃO",update:"ATUALIZAÇÃO",patch:"PATCH",nw:"NOVO",items:"mudanças",soon:"🔜 Estamos trabalhando em"},
+ fr:{t:"Nouveautés et correctifs",s:"Tout ce que nous avons ajouté et corrigé dans CityVille Revived",play:"▶ JOUER",cred:"Crédits",all:"Tout",add:"NOUVEAU",fix:"CORRECTIF",chg:"CHANGEMENT",del:"RETIRÉ",major:"GRANDE MISE À JOUR",update:"MISE À JOUR",patch:"CORRECTIF",nw:"NOUVEAU",items:"changements",soon:"🔜 En cours"},
+ it:{t:"Novità e patch",s:"Tutto ciò che abbiamo aggiunto e sistemato in CityVille Revived",play:"▶ GIOCA",cred:"Crediti",all:"Tutto",add:"NUOVO",fix:"FIX",chg:"MODIFICA",del:"RIMOSSO",major:"GRANDE AGGIORNAMENTO",update:"AGGIORNAMENTO",patch:"PATCH",nw:"NUOVO",items:"modifiche",soon:"🔜 Ci stiamo lavorando"},
+ de:{t:"Neuigkeiten & Patchnotes",s:"Alles, was wir in CityVille Revived hinzugefügt und repariert haben",play:"▶ SPIELEN",cred:"Credits",all:"Alles",add:"NEU",fix:"FIX",chg:"ÄNDERUNG",del:"ENTFERNT",major:"GROSSES UPDATE",update:"UPDATE",patch:"PATCH",nw:"NEU",items:"Änderungen",soon:"🔜 Daran arbeiten wir"}
+};
+// categorias
+var C={
+ map:{i:"🌳",es:"Mapa y objetos",en:"Map & items",pt:"Mapa e objetos",fr:"Carte et objets",it:"Mappa e oggetti",de:"Karte & Objekte"},
+ fr_:{i:"👥",es:"Amigos",en:"Friends",pt:"Amigos",fr:"Amis",it:"Amici",de:"Freunde"},
+ com:{i:"💬",es:"Comunidad y chat",en:"Community & chat",pt:"Comunidade e chat",fr:"Communauté et chat",it:"Comunità e chat",de:"Community & Chat"},
+ eco:{i:"🏆",es:"Desafíos y recompensas",en:"Challenges & rewards",pt:"Desafios e recompensas",fr:"Défis et récompenses",it:"Sfide e ricompense",de:"Herausforderungen & Belohnungen"},
+ acc:{i:"⚙️",es:"Cuenta y ajustes",en:"Account & settings",pt:"Conta e ajustes",fr:"Compte et réglages",it:"Account e impostazioni",de:"Konto & Einstellungen"},
+ lang:{i:"🌍",es:"Idiomas",en:"Languages",pt:"Idiomas",fr:"Langues",it:"Lingue",de:"Sprachen"},
+ fb:{i:"🚫",es:"Sin Facebook y sin dinero real",en:"No Facebook, no real money",pt:"Sem Facebook e sem dinheiro real",fr:"Sans Facebook ni argent réel",it:"Niente Facebook né soldi veri",de:"Kein Facebook, kein Echtgeld"},
+ play:{i:"🎮",es:"Juego",en:"Gameplay",pt:"Jogo",fr:"Jeu",it:"Gioco",de:"Spiel"},
+ srv:{i:"🛠️",es:"Servidor y web",en:"Server & website",pt:"Servidor e site",fr:"Serveur et site",it:"Server e sito",de:"Server & Website"}
+};
+// k: add | fix | chg | del
+var UPD=[
+{v:"0.17",d:"2026-11-13",tag:"major",
+ h:{es:"Adiós andamios, adiós Facebook",en:"Goodbye scaffolds, goodbye Facebook",pt:"Adeus andaimes, adeus Facebook",fr:"Adieu échafaudages, adieu Facebook",it:"Addio impalcature, addio Facebook",de:"Tschüss Gerüste, tschüss Facebook"},
+ x:{es:"Los árboles y edificios sin dibujo ya se ven, el juego habla tu idioma y no queda nada de Facebook ni de pagos.",en:"Trees and buildings without art now show up, the game speaks your language and there's nothing left of Facebook or payments.",pt:"Árvores e prédios sem arte agora aparecem, o jogo fala seu idioma e não sobrou nada do Facebook nem de pagamentos.",fr:"Les arbres et bâtiments sans image s'affichent, le jeu parle ta langue et il ne reste rien de Facebook ni des paiements.",it:"Alberi ed edifici senza grafica ora si vedono, il gioco parla la tua lingua e non resta nulla di Facebook o dei pagamenti.",de:"Bäume und Gebäude ohne Grafik werden jetzt angezeigt, das Spiel spricht deine Sprache und von Facebook oder Zahlungen ist nichts mehr übrig."},
+ it:[
+ ["map","fix",{es:"Los árboles y decoraciones que salían como andamios de madera ahora se ven con su propia imagen.",en:"Trees and decorations that showed as wooden scaffolds now show their own picture.",pt:"Árvores e decorações que apareciam como andaimes agora mostram sua própria imagem.",fr:"Les arbres et décorations qui apparaissaient en échafaudages s'affichent avec leur propre image.",it:"Alberi e decorazioni che apparivano come impalcature ora mostrano la loro immagine.",de:"Bäume und Deko, die als Holzgerüst erschienen, zeigen jetzt ihr eigenes Bild."}],
+ ["map","fix",{es:"Los edificios terminados que seguían viéndose \"en construcción\" ahora se ven terminados.",en:"Finished buildings that still looked \"under construction\" now look finished.",pt:"Prédios prontos que ainda pareciam \"em construção\" agora aparecem prontos.",fr:"Les bâtiments terminés qui semblaient encore \"en construction\" apparaissent terminés.",it:"Gli edifici finiti che sembravano ancora \"in costruzione\" ora appaiono completati.",de:"Fertige Gebäude, die noch \"im Bau\" aussahen, sehen jetzt fertig aus."}],
+ ["map","fix",{es:"Las expansiones y objetos que mostraban nombres en código ahora tienen su nombre real (más de 13.000 textos nuevos por idioma).",en:"Expansions and items that showed code names now have their real names (13,000+ new texts per language).",pt:"Expansões e objetos que mostravam nomes em código agora têm seus nomes reais (mais de 13.000 textos por idioma).",fr:"Les extensions et objets qui affichaient des noms en code ont leur vrai nom (plus de 13 000 textes par langue).",it:"Espansioni e oggetti con nomi in codice ora hanno il loro vero nome (oltre 13.000 testi per lingua).",de:"Erweiterungen und Objekte mit Code-Namen haben jetzt ihren echten Namen (über 13.000 neue Texte pro Sprache)."}],
+ ["lang","add",{es:"El juego detecta solo el idioma de tu navegador: español, inglés, francés o italiano.",en:"The game detects your browser language automatically: Spanish, English, French or Italian.",pt:"O jogo detecta o idioma do navegador: espanhol, inglês, francês ou italiano.",fr:"Le jeu détecte la langue de ton navigateur : espagnol, anglais, français ou italien.",it:"Il gioco rileva la lingua del browser: spagnolo, inglese, francese o italiano.",de:"Das Spiel erkennt die Browsersprache: Spanisch, Englisch, Französisch oder Italienisch."}],
+ ["fb","del",{es:"Se quitó Facebook de todos los textos del juego. Ahora dice \"amigos\" y \"la Comunidad\".",en:"Facebook was removed from all game texts. It now says \"friends\" and \"the Community\".",pt:"O Facebook foi removido de todos os textos. Agora diz \"amigos\" e \"a Comunidade\".",fr:"Facebook a été retiré de tous les textes. On parle maintenant d'\"amis\" et de \"la Communauté\".",it:"Facebook è stato tolto da tutti i testi. Ora si parla di \"amici\" e della \"Comunità\".",de:"Facebook wurde aus allen Texten entfernt. Jetzt heißt es \"Freunde\" und \"Community\"."}],
+ ["fb","del",{es:"Anuncios, encuestas, el \"Me gusta\" de Facebook y las suscripciones de pago están desactivados.",en:"Ads, surveys, the Facebook \"Like\" and paid subscriptions are disabled.",pt:"Anúncios, pesquisas, o \"Curtir\" do Facebook e assinaturas pagas foram desativados.",fr:"Publicités, sondages, le \"J'aime\" Facebook et les abonnements payants sont désactivés.",it:"Pubblicità, sondaggi, il \"Mi piace\" di Facebook e gli abbonamenti a pagamento sono disattivati.",de:"Werbung, Umfragen, das Facebook-\"Gefällt mir\" und Bezahl-Abos sind deaktiviert."}],
+ ["fb","chg",{es:"Las promos y \"comprar City Cash\" de la tienda ahora son Desafíos: todo se gana jugando.",en:"Store promos and \"buy City Cash\" are now Challenges: everything is earned by playing.",pt:"Promos e \"comprar City Cash\" da loja agora são Desafios: tudo se ganha jogando.",fr:"Les promos et \"acheter des City Cash\" sont devenus des Défis : tout se gagne en jouant.",it:"Le promo e \"compra City Cash\" ora sono Sfide: tutto si guadagna giocando.",de:"Shop-Aktionen und \"City Cash kaufen\" sind jetzt Herausforderungen: Alles wird erspielt."}],
+ ["fr_","fix",{es:"Lowlitta ya no aparece en contratar amigos ni en regalos.",en:"Lowlitta no longer shows up in hire friends or gifts.",pt:"A Lowlitta não aparece mais em contratar amigos nem em presentes.",fr:"Lowlitta n'apparaît plus dans l'embauche d'amis ni les cadeaux.",it:"Lowlitta non compare più in assumi amici e regali.",de:"Lowlitta erscheint nicht mehr bei Freunde anheuern und Geschenken."}],
+ ["srv","add",{es:"Página de mantenimiento con el estilo del juego, en todos los idiomas, cuando el servidor se actualiza. Entra sola cuando vuelve.",en:"Maintenance page in the game's style, in every language, while the server updates. It reconnects by itself.",pt:"Página de manutenção no estilo do jogo, em todos os idiomas, enquanto o servidor atualiza. Volta sozinha.",fr:"Page de maintenance au style du jeu, dans toutes les langues, pendant les mises à jour. Elle se reconnecte seule.",it:"Pagina di manutenzione in stile gioco, in tutte le lingue, durante gli aggiornamenti. Si ricollega da sola.",de:"Wartungsseite im Spielstil in allen Sprachen während Updates. Sie verbindet sich selbst wieder."}],
+ ["srv","fix",{es:"Si el juego pierde la conexión, la página se recarga sola.",en:"If the game loses connection, the page reloads by itself.",pt:"Se o jogo perder a conexão, a página recarrega sozinha.",fr:"Si le jeu perd la connexion, la page se recharge seule.",it:"Se il gioco perde la connessione, la pagina si ricarica da sola.",de:"Verliert das Spiel die Verbindung, lädt die Seite selbst neu."}],
+ ["play","fix",{es:"El audio del juego ya suena bien.",en:"Game audio now sounds right.",pt:"O áudio do jogo agora está certo.",fr:"Le son du jeu fonctionne bien.",it:"L'audio del gioco ora funziona bene.",de:"Der Spielsound funktioniert jetzt richtig."}],
+ ["srv","add",{es:"Página de Novedades (esta) para ver cada cambio.",en:"News page (this one) to see every change.",pt:"Página de Novidades (esta) para ver cada mudança.",fr:"Page Nouveautés (celle-ci) pour voir chaque changement.",it:"Pagina Novità (questa) per vedere ogni modifica.",de:"Neuigkeiten-Seite (diese) für jede Änderung."}]
+ ]},
+{v:"0.16",d:"2026-11-13",tag:"update",
+ h:{es:"Contratar amigos y regalos",en:"Hire friends & gifts",pt:"Contratar amigos e presentes",fr:"Embaucher des amis et cadeaux",it:"Assumi amici e regali",de:"Freunde anheuern & Geschenke"},
+ it:[
+ ["fr_","add",{es:"\"Contratar amigos\" en los edificios comunitarios funciona: tus amigos ocupan los puestos.",en:"\"Hire friends\" on community buildings works: your friends fill the jobs.",pt:"\"Contratar amigos\" nos prédios comunitários funciona: seus amigos ocupam os cargos.",fr:"\"Embaucher des amis\" dans les bâtiments communautaires fonctionne : tes amis occupent les postes.",it:"\"Assumi amici\" negli edifici comunitari funziona: i tuoi amici occupano i posti.",de:"\"Freunde anheuern\" bei Gemeinschaftsgebäuden funktioniert: Deine Freunde besetzen die Stellen."}],
+ ["fr_","add",{es:"Regalos gratis a tus amigos (uno por amigo al día) y lista de deseos, desde el botón de regalo del juego.",en:"Free gifts to your friends (one per friend per day) and wishlists, from the game's gift button.",pt:"Presentes grátis para amigos (um por amigo por dia) e lista de desejos, pelo botão de presente.",fr:"Cadeaux gratuits pour tes amis (un par ami et par jour) et listes de souhaits, via le bouton cadeau.",it:"Regali gratis agli amici (uno per amico al giorno) e lista dei desideri, dal pulsante regalo.",de:"Kostenlose Geschenke an Freunde (eins pro Freund und Tag) und Wunschlisten über den Geschenk-Button."}],
+ ["play","add",{es:"Arreglos del proyecto original: colecciones con premio al recoger, descuento de la terminal de carga, monedas de la plaza nocturna y más.",en:"Fixes from the original project: collection pick-up rewards, cargo terminal discount, night plaza coins and more.",pt:"Correções do projeto original: prêmios de coleções, desconto do terminal de carga, moedas da praça noturna e mais.",fr:"Correctifs du projet d'origine : récompenses de collections, réduction du terminal cargo, pièces de la place nocturne, etc.",it:"Fix dal progetto originale: premi delle collezioni, sconto del terminal merci, monete della piazza notturna e altro.",de:"Fixes aus dem Originalprojekt: Sammlungsbelohnungen, Frachtterminal-Rabatt, Münzen der Nacht-Plaza und mehr."}]
+ ]},
+{v:"0.15",d:"2026-11-13",tag:"update",
+ h:{es:"Página de Ajustes",en:"Settings page",pt:"Página de Ajustes",fr:"Page Réglages",it:"Pagina Impostazioni",de:"Einstellungsseite"},
+ it:[
+ ["acc","add",{es:"Ajustes: calidad del juego (baja, media, alta), sonidos y notificaciones.",en:"Settings: game quality (low, medium, high), sounds and notifications.",pt:"Ajustes: qualidade do jogo (baixa, média, alta), sons e notificações.",fr:"Réglages : qualité du jeu (basse, moyenne, haute), sons et notifications.",it:"Impostazioni: qualità del gioco (bassa, media, alta), suoni e notifiche.",de:"Einstellungen: Spielqualität (niedrig, mittel, hoch), Sounds und Benachrichtigungen."}],
+ ["acc","add",{es:"Elige quién puede ayudarte en el muro, tu privacidad y tu lista de bloqueados.",en:"Choose who can help you on the wall, your privacy and your blocked list.",pt:"Escolha quem pode ajudar no mural, sua privacidade e sua lista de bloqueados.",fr:"Choisis qui peut t'aider sur le mur, ta confidentialité et ta liste de bloqués.",it:"Scegli chi può aiutarti in bacheca, la privacy e la lista dei bloccati.",de:"Wähle, wer dir an der Pinnwand helfen darf, deine Privatsphäre und deine Blockliste."}],
+ ["acc","add",{es:"Puedes borrar tu cuenta desde Ajustes.",en:"You can delete your account from Settings.",pt:"Você pode excluir sua conta nos Ajustes.",fr:"Tu peux supprimer ton compte depuis les Réglages.",it:"Puoi eliminare l'account dalle Impostazioni.",de:"Du kannst dein Konto in den Einstellungen löschen."}],
+ ["fr_","fix",{es:"Si un amigo cambia su foto, la ves al momento, sin recargar.",en:"If a friend changes their picture, you see it right away, no reload.",pt:"Se um amigo trocar a foto, você vê na hora, sem recarregar.",fr:"Si un ami change sa photo, tu la vois tout de suite, sans recharger.",it:"Se un amico cambia foto, la vedi subito, senza ricaricare.",de:"Ändert ein Freund sein Bild, siehst du es sofort, ohne Neuladen."}],
+ ["fr_","fix",{es:"En el juego solo salen tus amigos aceptados.",en:"Only accepted friends show up in the game.",pt:"No jogo só aparecem amigos aceitos.",fr:"Seuls les amis acceptés apparaissent dans le jeu.",it:"Nel gioco compaiono solo gli amici accettati.",de:"Im Spiel erscheinen nur bestätigte Freunde."}],
+ ["map","del",{es:"Quitado de la tienda un objeto sin nombre que no se podía usar.",en:"Removed an unnamed, unusable item from the store.",pt:"Removido da loja um objeto sem nome que não funcionava.",fr:"Retrait de la boutique d'un objet sans nom inutilisable.",it:"Rimosso dal negozio un oggetto senza nome inutilizzabile.",de:"Ein namenloses, unbrauchbares Objekt wurde aus dem Shop entfernt."}]
+ ]},
+{v:"0.14",d:"2026-11-13",tag:"update",
+ h:{es:"Amigos, privacidad y mensajes con sonido",en:"Friends, privacy and messages with sound",pt:"Amigos, privacidade e mensagens com som",fr:"Amis, confidentialité et messages sonores",it:"Amici, privacy e messaggi con suono",de:"Freunde, Privatsphäre und Nachrichten mit Ton"},
+ it:[
+ ["fr_","add",{es:"Panel para agregar amigos por nombre de usuario o agregar a todos los jugadores de una vez.",en:"Panel to add friends by username or add every player at once.",pt:"Painel para adicionar amigos pelo nome de usuário ou todos os jogadores de uma vez.",fr:"Panneau pour ajouter des amis par pseudo ou tous les joueurs d'un coup.",it:"Pannello per aggiungere amici per nome utente o tutti i giocatori in una volta.",de:"Panel zum Hinzufügen von Freunden per Name oder aller Spieler auf einmal."}],
+ ["fr_","add",{es:"Las solicitudes de amistad y cuando te aceptan te avisan, como en Facebook.",en:"Friend requests and acceptances notify you, Facebook style.",pt:"Pedidos de amizade e aceitações avisam você, estilo Facebook.",fr:"Les demandes d'amis et acceptations te notifient, façon Facebook.",it:"Richieste di amicizia e accettazioni ti avvisano, stile Facebook.",de:"Freundschaftsanfragen und Annahmen benachrichtigen dich, wie bei Facebook."}],
+ ["acc","add",{es:"Privacidad: que nadie te escriba o que nadie te agregue.",en:"Privacy: nobody can message you or nobody can add you.",pt:"Privacidade: ninguém pode te escrever ou te adicionar.",fr:"Confidentialité : personne ne peut t'écrire ou t'ajouter.",it:"Privacy: nessuno può scriverti o aggiungerti.",de:"Privatsphäre: Niemand kann dir schreiben oder dich hinzufügen."}],
+ ["com","add",{es:"Sonido al enviar y recibir mensajes, y aviso tipo Messenger con contador de no leídos.",en:"Send/receive sounds, plus a Messenger-style alert with an unread counter.",pt:"Som ao enviar e receber, e aviso estilo Messenger com contador de não lidas.",fr:"Sons d'envoi et de réception, et alerte façon Messenger avec compteur de non lus.",it:"Suoni di invio e ricezione e avviso stile Messenger con contatore dei non letti.",de:"Sende-/Empfangstöne und Messenger-Hinweis mit Zähler für Ungelesenes."}],
+ ["com","add",{es:"Publicar en el muro desde el juego, para que todos se ayuden.",en:"Post to the wall from the game so everyone can help each other.",pt:"Publicar no mural pelo jogo para todos se ajudarem.",fr:"Publier sur le mur depuis le jeu pour s'entraider.",it:"Pubblica in bacheca dal gioco per aiutarsi a vicenda.",de:"Aus dem Spiel an die Pinnwand posten, damit alle sich helfen."}],
+ ["fr_","fix",{es:"Las fotos de perfil se ven solo en círculo, sin el cuadro blanco atrás.",en:"Profile pictures are just a circle, no white square behind.",pt:"Fotos de perfil só em círculo, sem o quadrado branco atrás.",fr:"Les photos de profil sont un simple cercle, sans carré blanc derrière.",it:"Le foto profilo sono solo un cerchio, senza quadrato bianco dietro.",de:"Profilbilder sind nur noch ein Kreis, ohne weißes Quadrat."}],
+ ["srv","fix",{es:"La barra de arriba se ajusta a tu pantalla y ya no se corta a la derecha.",en:"The top bar fits your screen and no longer gets cut off on the right.",pt:"A barra de cima se ajusta à tela e não corta mais à direita.",fr:"La barre du haut s'adapte à l'écran et n'est plus coupée à droite.",it:"La barra in alto si adatta allo schermo e non viene più tagliata a destra.",de:"Die obere Leiste passt sich an und wird rechts nicht mehr abgeschnitten."}]
+ ]},
+{v:"0.13",d:"2026-11-13",tag:"patch",
+ h:{es:"Muro y fotos de perfil en el juego",en:"Wall and profile pictures in game",pt:"Mural e fotos de perfil no jogo",fr:"Mur et photos de profil en jeu",it:"Bacheca e foto profilo nel gioco",de:"Pinnwand und Profilbilder im Spiel"},
+ it:[
+ ["com","fix",{es:"El muro recibe las publicaciones que haces desde el juego.",en:"The wall receives the posts you make from the game.",pt:"O mural recebe as publicações feitas no jogo.",fr:"Le mur reçoit les publications faites depuis le jeu.",it:"La bacheca riceve i post fatti dal gioco.",de:"Die Pinnwand empfängt Beiträge aus dem Spiel."}],
+ ["fr_","add",{es:"Tu foto de perfil aparece dentro del juego.",en:"Your profile picture shows inside the game.",pt:"Sua foto de perfil aparece dentro do jogo.",fr:"Ta photo de profil apparaît dans le jeu.",it:"La tua foto profilo appare nel gioco.",de:"Dein Profilbild erscheint im Spiel."}],
+ ["acc","fix",{es:"Subir fotos de perfil funciona.",en:"Uploading profile pictures works.",pt:"Enviar fotos de perfil funciona.",fr:"L'envoi de photos de profil fonctionne.",it:"Il caricamento delle foto profilo funziona.",de:"Profilbilder hochladen funktioniert."}]
+ ]},
+{v:"0.12",d:"2026-11-13",tag:"patch",
+ h:{es:"Recuperar contraseña",en:"Password recovery",pt:"Recuperar senha",fr:"Récupération du mot de passe",it:"Recupero password",de:"Passwort-Wiederherstellung"},
+ it:[
+ ["acc","add",{es:"Códigos para recuperar la contraseña y página para cambiarla.",en:"Password reset codes and a page to change your password.",pt:"Códigos para recuperar a senha e página para trocá-la.",fr:"Codes de réinitialisation et page pour changer le mot de passe.",it:"Codici di recupero e pagina per cambiare la password.",de:"Codes zum Zurücksetzen und Seite zum Ändern des Passworts."}],
+ ["play","fix",{es:"Volvimos a la versión estable del reproductor del juego (la nueva congelaba la página).",en:"Back to the stable game player build (the newer one froze the page).",pt:"Voltamos à versão estável do player (a nova travava a página).",fr:"Retour à la version stable du lecteur (la nouvelle figeait la page).",it:"Tornati alla versione stabile del player (la nuova bloccava la pagina).",de:"Zurück zur stabilen Player-Version (die neue fror die Seite ein)."}]
+ ]},
+{v:"0.11",d:"2026-11-13",tag:"major",
+ h:{es:"¡CityVille Revived abre sus puertas!",en:"CityVille Revived opens its doors!",pt:"CityVille Revived abre as portas!",fr:"CityVille Revived ouvre ses portes !",it:"CityVille Revived apre le porte!",de:"CityVille Revived öffnet seine Tore!"},
+ x:{es:"CityVille vuelve gratis, en tu navegador y sin Facebook.",en:"CityVille is back, free, in your browser and without Facebook.",pt:"CityVille voltou, grátis, no navegador e sem Facebook.",fr:"CityVille revient, gratuit, dans ton navigateur et sans Facebook.",it:"CityVille torna, gratis, nel browser e senza Facebook.",de:"CityVille ist zurück, kostenlos, im Browser und ohne Facebook."},
+ it:[
+ ["play","add",{es:"Lowlitta es tu vecina y guía en lugar de Samantha.",en:"Lowlitta is your neighbor and guide instead of Samantha.",pt:"Lowlitta é sua vizinha e guia no lugar da Samantha.",fr:"Lowlitta est ta voisine et guide à la place de Samantha.",it:"Lowlitta è la tua vicina e guida al posto di Samantha.",de:"Lowlitta ist statt Samantha deine Nachbarin und Begleiterin."}],
+ ["eco","add",{es:"Bono diario, desafíos diarios y temporadas con premios.",en:"Daily bonus, daily challenges and seasons with prizes.",pt:"Bônus diário, desafios diários e temporadas com prêmios.",fr:"Bonus quotidien, défis quotidiens et saisons avec récompenses.",it:"Bonus giornaliero, sfide giornaliere e stagioni con premi.",de:"Täglicher Bonus, tägliche Herausforderungen und Saisons mit Preisen."}],
+ ["com","add",{es:"Comunidad con muro y chat, y tickets de soporte.",en:"Community with wall and chat, plus support tickets.",pt:"Comunidade com mural e chat, e tickets de suporte.",fr:"Communauté avec mur et chat, et tickets d'assistance.",it:"Comunità con bacheca e chat, e ticket di supporto.",de:"Community mit Pinnwand und Chat sowie Support-Tickets."}],
+ ["eco","add",{es:"Ranking de los mejores alcaldes e invitaciones a amigos.",en:"Top mayors ranking and friend invites.",pt:"Ranking dos melhores prefeitos e convites a amigos.",fr:"Classement des meilleurs maires et invitations d'amis.",it:"Classifica dei migliori sindaci e inviti agli amici.",de:"Bürgermeister-Rangliste und Freundeseinladungen."}],
+ ["srv","add",{es:"Se juega en PC, tablet y celular, y se puede instalar como app.",en:"Play on PC, tablet and phone, and install it as an app.",pt:"Jogue no PC, tablet e celular, e instale como app.",fr:"Joue sur PC, tablette et mobile, et installe-le comme une appli.",it:"Gioca su PC, tablet e telefono, e installalo come app.",de:"Spiele auf PC, Tablet und Handy und installiere es als App."}],
+ ["lang","add",{es:"Web en español, inglés, portugués, francés, italiano y alemán.",en:"Website in Spanish, English, Portuguese, French, Italian and German.",pt:"Site em espanhol, inglês, português, francês, italiano e alemão.",fr:"Site en espagnol, anglais, portugais, français, italien et allemand.",it:"Sito in spagnolo, inglese, portoghese, francese, italiano e tedesco.",de:"Website auf Spanisch, Englisch, Portugiesisch, Französisch, Italienisch und Deutsch."}]
+ ]}
+];
+var SOON={
+ es:["Funciones del juego que todavía no se guardan bien (vender del inventario, mejoras, misiones, logros).","Amigos en orden en la barra de abajo, al lado tuyo.","Globos de texto de los personajes.","Que el juego no se trabe al abrir construir."],
+ en:["Game features that don't save correctly yet (selling from inventory, upgrades, missions, achievements).","Friends in order in the bottom bar, right next to you.","Character speech bubbles.","No stutter when opening the build menu."],
+ pt:["Funções do jogo que ainda não salvam direito (vender do inventário, melhorias, missões, conquistas).","Amigos em ordem na barra de baixo, ao seu lado.","Balões de fala dos personagens.","Sem travadas ao abrir construir."],
+ fr:["Fonctions du jeu qui ne s'enregistrent pas encore bien (vente depuis l'inventaire, améliorations, missions, succès).","Amis dans l'ordre dans la barre du bas, à côté de toi.","Bulles de dialogue des personnages.","Plus de saccades à l'ouverture du menu construire."],
+ it:["Funzioni del gioco che non si salvano ancora bene (vendita dall'inventario, miglioramenti, missioni, obiettivi).","Amici in ordine nella barra in basso, accanto a te.","Fumetti dei personaggi.","Niente scatti aprendo il menu costruisci."],
+ de:["Spielfunktionen, die noch nicht richtig speichern (Verkauf aus dem Inventar, Upgrades, Missionen, Erfolge).","Freunde der Reihe nach in der unteren Leiste, direkt neben dir.","Sprechblasen der Figuren.","Kein Ruckeln beim Öffnen des Baumenüs."]
+};
+var cur="es",cat="";
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function tr(o){return o[cur]||o.en||o.es}
+function fdate(d){try{return new Date(d+"T12:00:00").toLocaleDateString(cur,{year:"numeric",month:"long",day:"numeric"})}catch(e){return d}}
+var seen=null;try{seen=localStorage.getItem("agNewsSeen")}catch(e){}
+function render(){
+ var L=T[cur],h="";
+ // filtros
+ var f='<button data-c="" class="'+(cat?"":"on")+'">'+L.all+'</button>';
+ Object.keys(C).forEach(function(k){f+='<button data-c="'+k+'" class="'+(cat===k?"on":"")+'">'+C[k].i+" "+esc(C[k][cur])+'</button>'});
+ document.getElementById("filters").innerHTML=f;
+ UPD.forEach(function(u,i){
+  var items=u.it.filter(function(x){return !cat||x[0]===cat});
+  if(!items.length)return;
+  var isNew=i===0&&seen!==u.v;
+  h+='<article class="ev'+(i>1&&!cat?" closed":"")+'"><header><div class="ver">v'+u.v+'</div><div class="hd"><h2 class="ag-stroke">'+esc(tr(u.h))+'</h2><div class="meta">'+
+   (isNew?'<span class="tag t-new">'+L.nw+'</span>':"")+'<span class="tag t-'+u.tag+'">'+L[u.tag]+'</span>'+fdate(u.d)+" · "+items.length+" "+L.items+'</div></div><div class="arr">▾</div></header><div class="body">';
+  if(u.x&&!cat)h+='<p class="intro">'+esc(tr(u.x))+'</p>';
+  var groups={},order=[];
+  items.forEach(function(x){if(!groups[x[0]]){groups[x[0]]=[];order.push(x[0])}groups[x[0]].push(x)});
+  order.forEach(function(g){
+   h+='<div class="sec"><h3>'+C[g].i+" "+esc(C[g][cur])+'</h3>';
+   groups[g].forEach(function(x){h+='<div class="it"><span class="k k-'+x[1]+'">'+L[x[1]]+'</span><span>'+esc(tr(x[2]))+'</span></div>'});
+   h+="</div>";
+  });
+  h+="</div></article>";
+ });
+ document.getElementById("list").innerHTML=h;
+ document.getElementById("soon").innerHTML="<h3>"+L.soon+"</h3><ul>"+SOON[cur].map(function(s){return"<li>"+esc(s)+"</li>"}).join("")+"</ul>";
+ document.querySelectorAll("#list header").forEach(function(el){el.onclick=function(){el.parentNode.classList.toggle("closed")}});
+ document.querySelectorAll("#filters button").forEach(function(b){b.onclick=function(){cat=b.getAttribute("data-c");render()}});
+}
+function setLang(l){if(!T[l])l="es";cur=l;try{localStorage.setItem("lang",l)}catch(e){}document.documentElement.lang=l;document.getElementById("lang").value=l;
+ document.querySelectorAll("[data-i]").forEach(function(el){el.textContent=T[l][el.getAttribute("data-i")]});document.title=T[l].t+" · CityVille Revived · Allow Games";render();}
+var s=null;try{s=localStorage.getItem("lang")}catch(e){}
+setLang(s||(navigator.language||"es").slice(0,2));
+document.getElementById("lang").onchange=function(){setLang(this.value)};
+// ya vio la ultima version: quitar el punto rojo del menu
+try{localStorage.setItem("agNewsSeen",UPD[0].v)}catch(e){}
+</script>
+</body>
+</html>
