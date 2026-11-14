@@ -819,6 +819,18 @@ public static class CommunityService
             return Results.Json(new { sent, accepted });
         });
 
+        // foto de perfil siempre al dia para el juego: la direccion no cambia, la imagen si
+        app.MapGet("/api/ag/pic/{snuid:int}", async (int snuid, HttpContext h, CityVilleDbContext db, IWebHostEnvironment env) =>
+        {
+            var url = await db.Set<Player>().AsNoTracking().Where(x => x.Snuid == snuid).Select(x => x.ProfilePictureUrl).FirstOrDefaultAsync();
+            var rel = CityVilleDotnet.Domain.GameEntities.GamePicture.For(url).Split('?')[0].TrimStart('/');
+            var file = Path.GetFullPath(Path.Combine(env.WebRootPath, rel));
+            if (!file.StartsWith(Path.GetFullPath(env.WebRootPath)) || !File.Exists(file)) file = Path.Combine(env.WebRootPath, "blank.png");
+            h.Response.Headers.CacheControl = "no-cache, no-store, must-revalidate";
+            var type = file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ? "image/jpeg" : "image/png";
+            return Results.File(file, type);
+        });
+
         app.MapGet("/api/ag/privacy", async (HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
         {
             var (p, _) = await Me(h, db, u);

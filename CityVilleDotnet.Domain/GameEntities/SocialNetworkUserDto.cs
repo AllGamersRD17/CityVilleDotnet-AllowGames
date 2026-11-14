@@ -35,7 +35,7 @@ public static class SocialNetworkUserDtoMapper
             Snid = friend.Snuid,
             FirstName = friend.Username,
             Name = friend.Username,
-            Picture = $"{baseUrl}{GamePicture.For(friend.ProfilePictureUrl)}",
+            Picture = $"{baseUrl}/api/ag/pic/{friend.Snuid}", // siempre la foto actual
             Gender = "M",
             Locale = "EN"
         };

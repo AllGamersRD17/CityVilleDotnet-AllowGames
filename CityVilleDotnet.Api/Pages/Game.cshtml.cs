@@ -72,7 +72,7 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
             Uid = user.Snuid.ToString();
             UserName = user.Username;
             Level = user.Level;
-            PictureUrl = CityVilleDotnet.Domain.GameEntities.GamePicture.For(user.ProfilePictureUrl);
+            PictureUrl = $"/api/ag/pic/{user.Snuid}?t={ServerTime}";
             ViewData["ProfilePictureUrl"] = user.ProfilePictureUrl ?? "/blank.png";
             FriendList = JsonSerializer.Serialize(user.GetSocialNetworkUserFriendsList($"{Request.Scheme}://{Request.Host}{Request.PathBase}"),
                 new JsonSerializerOptions { WriteIndented = false, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
