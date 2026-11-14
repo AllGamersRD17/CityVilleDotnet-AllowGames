@@ -69,6 +69,7 @@ public static class CommunityService
         public Dictionary<string, string> Status { get; set; } = new();          // usuario -> online | busy | invisible
         public Dictionary<string, HashSet<string>> Privacy { get; set; } = new(); // usuario -> nomsg | noadd
         public Dictionary<string, List<Note>> Notes { get; set; } = new();        // usuario -> avisos de amistad
+        public Dictionary<string, Dictionary<string, string>> Prefs { get; set; } = new(); // usuario -> ajustes
     }
 
     private static Store _s = new();
@@ -126,6 +127,35 @@ public static class CommunityService
         return string.CompareOrdinal(x, y) < 0 ? x + "|" + y : y + "|" + x;
     }
 
+    // ---------- ajustes del jugador ----------
+    public static readonly Dictionary<string, string[]> PrefValues = new()
+    {
+        ["sndMsg"] = ["on", "off"], ["sndReq"] = ["on", "off"], ["sndChat"] = ["on", "off"],
+        ["ntMsg"] = ["on", "off"], ["ntReq"] = ["on", "off"], ["ntHelp"] = ["on", "off"], ["ntDaily"] = ["on", "off"],
+        ["wallHelp"] = ["all", "friends", "none"],
+    };
+    public static string Pref(string user, string key)
+    {
+        lock (Lock)
+            return _s.Prefs.TryGetValue(user.ToLowerInvariant(), out var d) && d.TryGetValue(key, out var v) ? v : PrefValues[key][0];
+    }
+    public static Dictionary<string, string> PrefsOf(string user) => PrefValues.Keys.ToDictionary(k => k, k => Pref(user, k));
+    public static bool SetPref(string user, string key, string? value)
+    {
+        if (!PrefValues.TryGetValue(key, out var ok) || value is null || !ok.Contains(value)) return false;
+        lock (Lock)
+        {
+            var k = user.ToLowerInvariant();
+            if (!_s.Prefs.TryGetValue(k, out var d)) _s.Prefs[k] = d = new();
+            d[key] = value; _dirty = true;
+        }
+        return true;
+    }
+    public static List<string> BlockedBy(string user)
+    {
+        lock (Lock) return _s.Blocks.TryGetValue(user.ToLowerInvariant(), out var b) ? b.OrderBy(x => x).ToList() : [];
+    }
+
     // avisos de amistad (como Facebook): solicitud recibida y solicitud aceptada
     public static void AddNote(string to, string kind, string from)
     {
@@ -138,6 +168,10 @@ public static class CommunityService
             if (l.Count > 30) l.RemoveRange(0, l.Count - 30);
             _dirty = true;
         }
+    }
+    public static string? AuthorOf(long id)
+    {
+        lock (Lock) return _s.Wall.FirstOrDefault(p => p.Id == id)?.Author;
     }
     public static object LastNote(string me)
     {
@@ -569,6 +603,7 @@ public static class CommunityService
     // ---------- endpoints ----------
     private sealed record TextBody(string? Text, string? Image = null);
     private sealed record PrivacyBody(bool NoMsg, bool NoAdd);
+    private sealed record PrefBody(string? Key, string? Value);
     private sealed record ShareBody(string? Title, string? Text, string? Image, string? Action, bool? Wishlist);
     private sealed record HelpBody(string? Item);
 
@@ -588,7 +623,7 @@ public static class CommunityService
             var (p, admin) = await Me(h, db, u);
             if (p is null) return Results.Unauthorized();
             var reqs = await db.Set<Friend>().CountAsync(f => f.Player!.Id == p.Id && f.Status == FriendshipStatus.Pending && f.Requested);
-            return Results.Json(new { name = p.Username, avatar = p.ProfilePictureUrl ?? "/blank.png", level = p.Level, admin, unread = Unread(p.Username), requests = reqs, lastNote = LastNote(p.Username), status = MyStatus(p.Username), lastUnread = LastUnread(p.Username), support = SupportService.Counts(p.Username, admin).Mine, supportAdmin = SupportService.Counts(p.Username, admin).AdminOpen });
+            return Results.Json(new { name = p.Username, avatar = p.ProfilePictureUrl ?? "/blank.png", level = p.Level, admin, unread = Unread(p.Username), requests = reqs, lastNote = LastNote(p.Username), prefs = PrefsOf(p.Username), status = MyStatus(p.Username), lastUnread = LastUnread(p.Username), support = SupportService.Counts(p.Username, admin).Mine, supportAdmin = SupportService.Counts(p.Username, admin).AdminOpen });
         });
 
         app.MapGet("/api/ag/wall", async (long? before, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
@@ -625,6 +660,15 @@ public static class CommunityService
         {
             var (me, _) = await Me(h, db, u);
             if (me is null) return Results.Unauthorized();
+            // ajuste del autor: quien le puede ayudar
+            var postAuthor = AuthorOf(id);
+            if (postAuthor is not null && !postAuthor.Equals(me.Username, StringComparison.OrdinalIgnoreCase))
+            {
+                var who = Pref(postAuthor, "wallHelp");
+                if (who == "none") return Results.Json(new { error = "closed" }, statusCode: 400);
+                if (who == "friends" && !await db.Set<Friend>().AnyAsync(f => f.Player!.Id == me.Id && f.FriendPlayer!.Username == postAuthor && f.Status == FriendshipStatus.Accepted))
+                    return Results.Json(new { error = "friendsOnly" }, statusCode: 400);
+            }
             var (author, kind, error) = Help(me.Username, id, b.Item);
             if (error is not null) return Results.Json(new { error }, statusCode: 400);
             try
@@ -649,6 +693,7 @@ public static class CommunityService
                     reward = new { coins = 50 };
                 }
                 await db.SaveChangesAsync();
+                if (author is not null) AddNote(author, "help", me.Username);
                 return Results.Json(reward);
             }
             catch
@@ -829,6 +874,22 @@ public static class CommunityService
             h.Response.Headers.CacheControl = "no-cache, no-store, must-revalidate";
             var type = file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ? "image/jpeg" : "image/png";
             return Results.File(file, type);
+        });
+
+        app.MapGet("/api/ag/settings", async (HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            var blocked = BlockedBy(p.Username);
+            var info = await db.Set<Player>().AsNoTracking().Where(x => blocked.Contains(x.Username.ToLower()))
+                .Select(x => new { name = x.Username, avatar = x.ProfilePictureUrl ?? "/blank.png", level = x.Level }).ToListAsync();
+            return Results.Json(new { prefs = PrefsOf(p.Username), privacy = PrivacyOf(p.Username), blocked = info });
+        });
+        app.MapPost("/api/ag/settings", async (PrefBody b, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            return SetPref(p.Username, b.Key ?? "", b.Value) ? Results.Json(PrefsOf(p.Username)) : Results.BadRequest();
         });
 
         app.MapGet("/api/ag/privacy", async (HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>

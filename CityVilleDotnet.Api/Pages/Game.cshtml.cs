@@ -63,6 +63,7 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
             if (reward is not null)
             {
                 await dbContext.SaveChangesAsync();
+                if (CityVilleDotnet.Api.Features.AllowGames.CommunityService.Pref(tracked!.Username, "ntDaily") == "on")
                 DailyBonusJson = JsonSerializer.Serialize(new { day = reward.Day, coins = reward.Coins, energy = reward.Energy, cash = reward.Cash, surprise = reward.Surprise });
             }
         }

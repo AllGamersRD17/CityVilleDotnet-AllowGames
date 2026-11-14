@@ -13,12 +13,12 @@
   var t = L[lang] || L.es;
   // textos del panel de agregar amigos
   var FR = {
-    es: { fr: 'Amigos', frReqs: 'Solicitudes de amistad', frGotReq: 'te mandó una solicitud de amistad', frGotAcc: 'aceptó tu solicitud de amistad 🎉', frNewReq: 'Nueva solicitud', frNewFriend: '¡Nuevo amigo!', frAdd: 'Agregar', frTitle: 'Agregar amigos', frBy: 'Agregar por nombre de usuario', frPh: 'Escribe el usuario…', frAll: 'Agregar a todos los registrados', frAllQ: '¿Mandar solicitud de amistad a todos los alcaldes registrados?', frAllOk: 'Solicitudes enviadas', frAccepted: 'aceptadas', frSent: 'Enviada', frFriend: 'Amigos', frAccept: 'Aceptar', frPrivate: 'Privado', frNotFound: 'No existe ese usuario.', frNoAdd: 'Este alcalde no acepta solicitudes.', frSentOk: 'Solicitud enviada a', frNow: 'Ahora son amigos:', frList: 'Alcaldes registrados', frPending: 'por agregar', frReload: 'Tus vecinos nuevos salen en la barra al recargar el juego.' },
-    en: { fr: 'Friends', frReqs: 'Friend requests', frGotReq: 'sent you a friend request', frGotAcc: 'accepted your friend request 🎉', frNewReq: 'New request', frNewFriend: 'New friend!', frAdd: 'Add', frTitle: 'Add friends', frBy: 'Add by username', frPh: 'Type the username…', frAll: 'Add everyone registered', frAllQ: 'Send a friend request to every registered mayor?', frAllOk: 'Requests sent', frAccepted: 'accepted', frSent: 'Sent', frFriend: 'Friends', frAccept: 'Accept', frPrivate: 'Private', frNotFound: 'That user does not exist.', frNoAdd: 'This mayor does not accept requests.', frSentOk: 'Request sent to', frNow: 'You are now friends:', frList: 'Registered mayors', frPending: 'to add', frReload: 'New neighbors show in the bar when the game reloads.' },
-    pt: { fr: 'Amigos', frReqs: 'Pedidos de amizade', frGotReq: 'te enviou um pedido de amizade', frGotAcc: 'aceitou seu pedido de amizade 🎉', frNewReq: 'Novo pedido', frNewFriend: 'Novo amigo!', frAdd: 'Adicionar', frTitle: 'Adicionar amigos', frBy: 'Adicionar por nome de usuário', frPh: 'Digite o usuário…', frAll: 'Adicionar todos os registrados', frAllQ: 'Enviar pedido de amizade para todos os prefeitos registrados?', frAllOk: 'Pedidos enviados', frAccepted: 'aceitos', frSent: 'Enviado', frFriend: 'Amigos', frAccept: 'Aceitar', frPrivate: 'Privado', frNotFound: 'Esse usuário não existe.', frNoAdd: 'Este prefeito não aceita pedidos.', frSentOk: 'Pedido enviado para', frNow: 'Agora são amigos:', frList: 'Prefeitos registrados', frPending: 'para adicionar', frReload: 'Os novos vizinhos aparecem na barra ao recarregar o jogo.' },
-    fr: { fr: 'Amis', frReqs: "Demandes d'ami", frGotReq: "t'a envoyé une demande d'ami", frGotAcc: "a accepté ta demande d'ami 🎉", frNewReq: 'Nouvelle demande', frNewFriend: 'Nouvel ami !', frAdd: 'Ajouter', frTitle: 'Ajouter des amis', frBy: 'Ajouter par pseudo', frPh: 'Écris le pseudo…', frAll: 'Ajouter tous les inscrits', frAllQ: 'Envoyer une demande d\'ami à tous les maires inscrits ?', frAllOk: 'Demandes envoyées', frAccepted: 'acceptées', frSent: 'Envoyée', frFriend: 'Amis', frAccept: 'Accepter', frPrivate: 'Privé', frNotFound: 'Ce pseudo n\'existe pas.', frNoAdd: 'Ce maire n\'accepte pas les demandes.', frSentOk: 'Demande envoyée à', frNow: 'Vous êtes amis :', frList: 'Maires inscrits', frPending: 'à ajouter', frReload: 'Les nouveaux voisins apparaissent dans la barre en rechargeant le jeu.' },
-    it: { fr: 'Amici', frReqs: 'Richieste di amicizia', frGotReq: 'ti ha inviato una richiesta di amicizia', frGotAcc: 'ha accettato la tua richiesta di amicizia 🎉', frNewReq: 'Nuova richiesta', frNewFriend: 'Nuovo amico!', frAdd: 'Aggiungi', frTitle: 'Aggiungi amici', frBy: 'Aggiungi per nome utente', frPh: 'Scrivi il nome utente…', frAll: 'Aggiungi tutti i registrati', frAllQ: 'Inviare una richiesta di amicizia a tutti i sindaci registrati?', frAllOk: 'Richieste inviate', frAccepted: 'accettate', frSent: 'Inviata', frFriend: 'Amici', frAccept: 'Accetta', frPrivate: 'Privato', frNotFound: 'Questo utente non esiste.', frNoAdd: 'Questo sindaco non accetta richieste.', frSentOk: 'Richiesta inviata a', frNow: 'Ora siete amici:', frList: 'Sindaci registrati', frPending: 'da aggiungere', frReload: 'I nuovi vicini appaiono nella barra ricaricando il gioco.' },
-    de: { fr: 'Freunde', frReqs: 'Freundschaftsanfragen', frGotReq: 'hat dir eine Freundschaftsanfrage geschickt', frGotAcc: 'hat deine Freundschaftsanfrage angenommen 🎉', frNewReq: 'Neue Anfrage', frNewFriend: 'Neuer Freund!', frAdd: 'Hinzufügen', frTitle: 'Freunde hinzufügen', frBy: 'Per Benutzername hinzufügen', frPh: 'Benutzername eingeben…', frAll: 'Alle Registrierten hinzufügen', frAllQ: 'Allen registrierten Bürgermeistern eine Anfrage senden?', frAllOk: 'Anfragen gesendet', frAccepted: 'angenommen', frSent: 'Gesendet', frFriend: 'Freunde', frAccept: 'Annehmen', frPrivate: 'Privat', frNotFound: 'Diesen Benutzer gibt es nicht.', frNoAdd: 'Dieser Bürgermeister nimmt keine Anfragen an.', frSentOk: 'Anfrage gesendet an', frNow: 'Ihr seid jetzt Freunde:', frList: 'Registrierte Bürgermeister', frPending: 'hinzuzufügen', frReload: 'Neue Nachbarn erscheinen nach dem Neuladen in der Leiste.' }
+    es: { frGotHelp: 'te ayudó en el muro 🤝', helpClosed: 'Este alcalde no acepta ayuda en sus publicaciones.', helpFriends: 'Solo sus amigos pueden ayudar aquí.', fr: 'Amigos', frReqs: 'Solicitudes de amistad', frGotReq: 'te mandó una solicitud de amistad', frGotAcc: 'aceptó tu solicitud de amistad 🎉', frNewReq: 'Nueva solicitud', frNewFriend: '¡Nuevo amigo!', frAdd: 'Agregar', frTitle: 'Agregar amigos', frBy: 'Agregar por nombre de usuario', frPh: 'Escribe el usuario…', frAll: 'Agregar a todos los registrados', frAllQ: '¿Mandar solicitud de amistad a todos los alcaldes registrados?', frAllOk: 'Solicitudes enviadas', frAccepted: 'aceptadas', frSent: 'Enviada', frFriend: 'Amigos', frAccept: 'Aceptar', frPrivate: 'Privado', frNotFound: 'No existe ese usuario.', frNoAdd: 'Este alcalde no acepta solicitudes.', frSentOk: 'Solicitud enviada a', frNow: 'Ahora son amigos:', frList: 'Alcaldes registrados', frPending: 'por agregar', frReload: 'Tus vecinos nuevos salen en la barra al recargar el juego.' },
+    en: { frGotHelp: 'helped you on the wall 🤝', helpClosed: "This mayor doesn't accept help on their posts.", helpFriends: 'Only their friends can help here.', fr: 'Friends', frReqs: 'Friend requests', frGotReq: 'sent you a friend request', frGotAcc: 'accepted your friend request 🎉', frNewReq: 'New request', frNewFriend: 'New friend!', frAdd: 'Add', frTitle: 'Add friends', frBy: 'Add by username', frPh: 'Type the username…', frAll: 'Add everyone registered', frAllQ: 'Send a friend request to every registered mayor?', frAllOk: 'Requests sent', frAccepted: 'accepted', frSent: 'Sent', frFriend: 'Friends', frAccept: 'Accept', frPrivate: 'Private', frNotFound: 'That user does not exist.', frNoAdd: 'This mayor does not accept requests.', frSentOk: 'Request sent to', frNow: 'You are now friends:', frList: 'Registered mayors', frPending: 'to add', frReload: 'New neighbors show in the bar when the game reloads.' },
+    pt: { frGotHelp: 'te ajudou no mural 🤝', helpClosed: 'Este prefeito não aceita ajuda nas publicações.', helpFriends: 'Só os amigos podem ajudar aqui.', fr: 'Amigos', frReqs: 'Pedidos de amizade', frGotReq: 'te enviou um pedido de amizade', frGotAcc: 'aceitou seu pedido de amizade 🎉', frNewReq: 'Novo pedido', frNewFriend: 'Novo amigo!', frAdd: 'Adicionar', frTitle: 'Adicionar amigos', frBy: 'Adicionar por nome de usuário', frPh: 'Digite o usuário…', frAll: 'Adicionar todos os registrados', frAllQ: 'Enviar pedido de amizade para todos os prefeitos registrados?', frAllOk: 'Pedidos enviados', frAccepted: 'aceitos', frSent: 'Enviado', frFriend: 'Amigos', frAccept: 'Aceitar', frPrivate: 'Privado', frNotFound: 'Esse usuário não existe.', frNoAdd: 'Este prefeito não aceita pedidos.', frSentOk: 'Pedido enviado para', frNow: 'Agora são amigos:', frList: 'Prefeitos registrados', frPending: 'para adicionar', frReload: 'Os novos vizinhos aparecem na barra ao recarregar o jogo.' },
+    fr: { frGotHelp: "t'a aidé sur le mur 🤝", helpClosed: "Ce maire n'accepte pas d'aide sur ses publications.", helpFriends: 'Seuls ses amis peuvent aider ici.', fr: 'Amis', frReqs: "Demandes d'ami", frGotReq: "t'a envoyé une demande d'ami", frGotAcc: "a accepté ta demande d'ami 🎉", frNewReq: 'Nouvelle demande', frNewFriend: 'Nouvel ami !', frAdd: 'Ajouter', frTitle: 'Ajouter des amis', frBy: 'Ajouter par pseudo', frPh: 'Écris le pseudo…', frAll: 'Ajouter tous les inscrits', frAllQ: 'Envoyer une demande d\'ami à tous les maires inscrits ?', frAllOk: 'Demandes envoyées', frAccepted: 'acceptées', frSent: 'Envoyée', frFriend: 'Amis', frAccept: 'Accepter', frPrivate: 'Privé', frNotFound: 'Ce pseudo n\'existe pas.', frNoAdd: 'Ce maire n\'accepte pas les demandes.', frSentOk: 'Demande envoyée à', frNow: 'Vous êtes amis :', frList: 'Maires inscrits', frPending: 'à ajouter', frReload: 'Les nouveaux voisins apparaissent dans la barre en rechargeant le jeu.' },
+    it: { frGotHelp: 'ti ha aiutato in bacheca 🤝', helpClosed: 'Questo sindaco non accetta aiuto nei suoi post.', helpFriends: 'Solo i suoi amici possono aiutare qui.', fr: 'Amici', frReqs: 'Richieste di amicizia', frGotReq: 'ti ha inviato una richiesta di amicizia', frGotAcc: 'ha accettato la tua richiesta di amicizia 🎉', frNewReq: 'Nuova richiesta', frNewFriend: 'Nuovo amico!', frAdd: 'Aggiungi', frTitle: 'Aggiungi amici', frBy: 'Aggiungi per nome utente', frPh: 'Scrivi il nome utente…', frAll: 'Aggiungi tutti i registrati', frAllQ: 'Inviare una richiesta di amicizia a tutti i sindaci registrati?', frAllOk: 'Richieste inviate', frAccepted: 'accettate', frSent: 'Inviata', frFriend: 'Amici', frAccept: 'Accetta', frPrivate: 'Privato', frNotFound: 'Questo utente non esiste.', frNoAdd: 'Questo sindaco non accetta richieste.', frSentOk: 'Richiesta inviata a', frNow: 'Ora siete amici:', frList: 'Sindaci registrati', frPending: 'da aggiungere', frReload: 'I nuovi vicini appaiono nella barra ricaricando il gioco.' },
+    de: { frGotHelp: 'hat dir an der Pinnwand geholfen 🤝', helpClosed: 'Dieser Bürgermeister nimmt keine Hilfe an.', helpFriends: 'Nur Freunde können hier helfen.', fr: 'Freunde', frReqs: 'Freundschaftsanfragen', frGotReq: 'hat dir eine Freundschaftsanfrage geschickt', frGotAcc: 'hat deine Freundschaftsanfrage angenommen 🎉', frNewReq: 'Neue Anfrage', frNewFriend: 'Neuer Freund!', frAdd: 'Hinzufügen', frTitle: 'Freunde hinzufügen', frBy: 'Per Benutzername hinzufügen', frPh: 'Benutzername eingeben…', frAll: 'Alle Registrierten hinzufügen', frAllQ: 'Allen registrierten Bürgermeistern eine Anfrage senden?', frAllOk: 'Anfragen gesendet', frAccepted: 'angenommen', frSent: 'Gesendet', frFriend: 'Freunde', frAccept: 'Annehmen', frPrivate: 'Privat', frNotFound: 'Diesen Benutzer gibt es nicht.', frNoAdd: 'Dieser Bürgermeister nimmt keine Anfragen an.', frSentOk: 'Anfrage gesendet an', frNow: 'Ihr seid jetzt Freunde:', frList: 'Registrierte Bürgermeister', frPending: 'hinzuzufügen', frReload: 'Neue Nachbarn erscheinen nach dem Neuladen in der Leiste.' }
   };
   var fx = FR[lang] || FR.es; for (var k in fx) t[k] = fx[k];
 
@@ -278,7 +278,7 @@
       a.disabled = true;
       api('POST', '/api/ag/wall/' + id + '/help', { item: a.getAttribute('data-item') }).then(function (rw) {
         toast(t.helpedOk + ' ' + rw.coins + ' ' + t.coins + ' 🪙 · ' + t.reloadNote); refreshPost(id);
-      }).catch(function (j) { a.disabled = false; if (j && j.error) toast(j.error === 'done' ? t.helpedAlready : j.error === 'full' ? t.full : j.error === 'old' ? t.old : '⚠️'); refreshPost(id); });
+      }).catch(function (j) { a.disabled = false; if (j && j.error) toast(j.error === 'done' ? t.helpedAlready : j.error === 'full' ? t.full : j.error === 'old' ? t.old : j.error === 'closed' ? t.helpClosed : j.error === 'friendsOnly' ? t.helpFriends : '⚠️'); refreshPost(id); });
     }
     else if (act === 'cm') { var c = card.querySelector('.cms'); c.style.display = ''; c.querySelector('input').focus(); }
     else if (act === 'send') {
@@ -307,8 +307,10 @@
   }
   // ---------- sonidos (hechos aqui mismo, sin archivos) ----------
   var actx = null;
-  function snd(kind) {
+  function pref(k) { return !(me && me.prefs && me.prefs[k] === 'off'); }
+  function snd(kind, cat) {
     if (me && me.status === 'busy') return;
+    if (cat && !pref(cat)) return;
     try {
       actx = actx || new (window.AudioContext || window.webkitAudioContext)();
       if (actx.state === 'suspended') actx.resume();
@@ -338,7 +340,7 @@
   }
   function showChat() {
     lastChat = 0;
-    var sc = chatBox(function (v, img) { api('POST', '/api/ag/chat', { text: v, image: img }).then(function () { snd('send'); pull(); }).catch(function () { }); });
+    var sc = chatBox(function (v, img) { api('POST', '/api/ag/chat', { text: v, image: img }).then(function () { snd('send', 'sndChat'); pull(); }).catch(function () { }); });
     sc.innerHTML = '<div class="empty">' + t.empty + '</div>';
     sc.onclick = function (e) {
       var a = e.target.closest('[data-a],.nm'); if (!a) return;
@@ -348,7 +350,7 @@
     };
     function pull() {
       api('GET', '/api/ag/chat?after=' + lastChat).then(function (list) {
-        if (lastChat && incoming(list)) snd('recv');
+        if (lastChat && incoming(list)) snd('recv', 'sndChat');
         if (list.length) lastChat = list[list.length - 1].id; append(sc, list, true);
       }).catch(function () { });
     }
@@ -534,7 +536,7 @@
   function showDm(name) {
     lastDm = 0;
     var sc = chatBox(function (v, img) {
-      api('POST', '/api/ag/dm/' + encodeURIComponent(name), { text: v, image: img }).then(function () { snd('send'); pull(); }).catch(function (j) { if (j && j.error === 'blocked') toast(t.blocked); });
+      api('POST', '/api/ag/dm/' + encodeURIComponent(name), { text: v, image: img }).then(function () { snd('send', 'sndMsg'); pull(); }).catch(function (j) { if (j && j.error === 'blocked') toast(t.blocked); });
     });
     sc.insertAdjacentHTML('beforebegin', '<div class="dmh"><button class="sm" data-a="back">‹ ' + t.back + '</button><div class="sp"><div class="nm"></div></div><button class="sm" data-a="block"></button></div>');
     var hd = body.querySelector('.dmh');
@@ -546,7 +548,7 @@
       api('GET', '/api/ag/dm/' + encodeURIComponent(name) + '?after=' + lastDm).then(function (d) {
         hd.querySelector('.sp').innerHTML = '<div class="nm">' + esc(d.with.name) + '</div><div class="meta"><span class="sd ' + d.with.status + '"></span>' + stText(d.with) + ' · ' + t.lvl + ' ' + d.with.level + '</div>';
         hd.querySelector('[data-a=block]').textContent = d.blocked ? t.unblock : t.block;
-        if (lastDm && incoming(d.messages)) snd('recv');
+        if (lastDm && incoming(d.messages)) snd('recv', 'sndMsg');
         if (d.messages.length) lastDm = d.messages[d.messages.length - 1].id;
         append(sc, d.messages, false);
         if (!lastDm && !sc.children.length) sc.innerHTML = '<div class="empty">✉️</div>';
@@ -572,7 +574,8 @@
     if (!m || (me && me.status === 'busy')) return;
     if (root && root.classList.contains('on') && tab === 'dm' && dmWith && dmWith.toLowerCase() === m.from.name.toLowerCase()) return;
     var old = document.getElementById('agNt'); if (old) old.remove();
-    snd('notify');
+    if (!pref('ntMsg')) return;
+    snd('notify', 'sndMsg');
     var n = document.createElement('div'); n.id = 'agNt';
     n.innerHTML = '<img src="' + esc(m.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">✉️ ' + t.newMsg + '</div><b>' + esc(m.from.name) + '</b><span>' + esc(m.text) + '</span></div>';
     n.onclick = function () { n.remove(); openDmWith(m.from.name); };
@@ -582,11 +585,12 @@
   var lastNote = null;
   function noteFriend(n) {
     if (me && me.status === 'busy') return;
-    snd('notify');
+    if (!pref(n.kind === 'help' ? 'ntHelp' : 'ntReq')) return;
+    snd('notify', 'sndReq');
     var old = document.getElementById('agNt'); if (old) old.remove();
     var el = document.createElement('div'); el.id = 'agNt';
-    el.innerHTML = '<img src="' + esc(n.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">👥 ' + (n.kind === 'acc' ? t.frNewFriend : t.frNewReq) + '</div><b>' + esc(n.from.name) + '</b><span>' + (n.kind === 'acc' ? t.frGotAcc : t.frGotReq) + '</span></div>';
-    el.onclick = function () { el.remove(); open('add'); };
+    el.innerHTML = '<img src="' + esc(n.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">' + (n.kind === 'help' ? '🤝 ' + t.wall : '👥 ' + (n.kind === 'acc' ? t.frNewFriend : t.frNewReq)) + '</div><b>' + esc(n.from.name) + '</b><span>' + (n.kind === 'help' ? t.frGotHelp : n.kind === 'acc' ? t.frGotAcc : t.frGotReq) + '</span></div>';
+    el.onclick = function () { el.remove(); open(n.kind === 'help' ? 'wall' : 'add'); };
     document.body.appendChild(el);
     setTimeout(function () { if (el.parentNode) el.remove(); }, 8000);
     if (root && root.classList.contains('on') && tab === 'add') open('add');

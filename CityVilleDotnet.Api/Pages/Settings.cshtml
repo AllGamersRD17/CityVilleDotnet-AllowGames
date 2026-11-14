@@ -1,0 +1,135 @@
+@page
+@model CityVilleDotnet.Api.Pages.SettingsModel
+@using CityVilleDotnet.Api.Pages.Account
+@{
+	Layout = "Shared/_GameLayout";
+}
+<style>
+	.ag-set .card { border-radius: 16px; }
+	.ag-set h5 { font-weight: 800; color: #0a5f8c; }
+	.ag-set .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+	.ag-set .seg button { flex: 1 1 0; min-width: 90px; border: 2px solid #1c6e9c; border-radius: 999px; background: #fff; color: #0a5f8c; font-weight: 700; padding: 6px 10px; }
+	.ag-set .seg button.on { background: linear-gradient(#6cc6f5, #2f8fc4); color: #fff; }
+	.ag-set .row-b { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eee; }
+	.ag-set .row-b img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+	.ag-set .ok { visibility: hidden; color: #2e7d1d; font-weight: 700; }
+</style>
+<div class="ag-set mx-auto" style="max-width:640px">
+	<h3 class="font-weight-bold mb-3"><i class="bi bi-gear mr-2"></i>@AgText.Get("SetTitle") <span class="ok small" id="agOk">✔ @AgText.Get("PrivSaved")</span></h3>
+
+	@if (Model.Deleted)
+	{
+		<div class="alert alert-success">@AgText.Get("Deleted")</div>
+		<a href="/" class="btn btn-primary">CityVille Revived</a>
+	}
+	else
+	{
+	<div class="card border-0 shadow-sm mb-3"><div class="card-body">
+		<h5><i class="bi bi-speedometer2 mr-2"></i>@AgText.Get("SetQuality")</h5>
+		<p class="text-muted small mb-2">@AgText.Get("SetQualityHelp")</p>
+		<div class="seg" id="agQ">
+			<button type="button" data-v="low">@AgText.Get("QLow")</button>
+			<button type="button" data-v="medium">@AgText.Get("QMed")</button>
+			<button type="button" data-v="high">@AgText.Get("QHigh")</button>
+		</div>
+	</div></div>
+
+	<div class="card border-0 shadow-sm mb-3"><div class="card-body">
+		<h5><i class="bi bi-volume-up mr-2"></i>@AgText.Get("SetSounds")</h5>
+		<div class="custom-control custom-switch mb-1"><input type="checkbox" class="custom-control-input" id="sndMsg" data-p="sndMsg"><label class="custom-control-label" for="sndMsg">@AgText.Get("SndMsg")</label></div>
+		<div class="custom-control custom-switch mb-1"><input type="checkbox" class="custom-control-input" id="sndReq" data-p="sndReq"><label class="custom-control-label" for="sndReq">@AgText.Get("SndReq")</label></div>
+		<div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="sndChat" data-p="sndChat"><label class="custom-control-label" for="sndChat">@AgText.Get("SndChat")</label></div>
+	</div></div>
+
+	<div class="card border-0 shadow-sm mb-3"><div class="card-body">
+		<h5><i class="bi bi-bell mr-2"></i>@AgText.Get("SetNotes")</h5>
+		<div class="custom-control custom-switch mb-1"><input type="checkbox" class="custom-control-input" id="ntMsg" data-p="ntMsg"><label class="custom-control-label" for="ntMsg">@AgText.Get("NtMsg")</label></div>
+		<div class="custom-control custom-switch mb-1"><input type="checkbox" class="custom-control-input" id="ntReq" data-p="ntReq"><label class="custom-control-label" for="ntReq">@AgText.Get("NtReq")</label></div>
+		<div class="custom-control custom-switch mb-1"><input type="checkbox" class="custom-control-input" id="ntHelp" data-p="ntHelp"><label class="custom-control-label" for="ntHelp">@AgText.Get("NtHelp")</label></div>
+		<div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="ntDaily" data-p="ntDaily"><label class="custom-control-label" for="ntDaily">@AgText.Get("NtDaily")</label></div>
+	</div></div>
+
+	<div class="card border-0 shadow-sm mb-3"><div class="card-body">
+		<h5><i class="bi bi-people mr-2"></i>@AgText.Get("SetWall")</h5>
+		<div class="seg" id="agW">
+			<button type="button" data-v="all">@AgText.Get("WAll")</button>
+			<button type="button" data-v="friends">@AgText.Get("WFriends")</button>
+			<button type="button" data-v="none">@AgText.Get("WNone")</button>
+		</div>
+	</div></div>
+
+	<div class="card border-0 shadow-sm mb-3"><div class="card-body">
+		<h5><i class="bi bi-shield-lock mr-2"></i>@AgText.Get("PrivTitle")</h5>
+		<div class="custom-control custom-switch mb-1"><input type="checkbox" class="custom-control-input" id="agNoMsg"><label class="custom-control-label" for="agNoMsg">@AgText.Get("PrivMsg")</label></div>
+		<div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="agNoAdd"><label class="custom-control-label" for="agNoAdd">@AgText.Get("PrivAdd")</label></div>
+	</div></div>
+
+	<div class="card border-0 shadow-sm mb-3"><div class="card-body">
+		<h5><i class="bi bi-slash-circle mr-2"></i>@AgText.Get("SetBlocked")</h5>
+		<div id="agBl" class="text-muted small">…</div>
+	</div></div>
+
+	<div class="card border-0 shadow-sm mb-4"><div class="card-body">
+		<h5><i class="bi bi-person-circle mr-2"></i>@AgText.Get("SetAccount")</h5>
+		<div class="d-flex flex-wrap" style="gap:18px">
+			<div><div class="text-muted small">@AgText.Get("Joined")</div><b>@Model.Joined.ToString("d")</b></div>
+			<div><div class="text-muted small">@AgText.Get("Level")</div><b>@Model.Level</b></div>
+			<div><div class="text-muted small">@AgText.Get("Friends")</div><b>@Model.FriendCount</b></div>
+		</div>
+		<hr>
+		<h6 class="font-weight-bold text-danger">@AgText.Get("Delete")</h6>
+		<p class="small text-muted mb-2">@AgText.Get("DeleteHelp")</p>
+		@if (Model.Error != null) { <div class="alert alert-danger py-2">@Model.Error</div> }
+		<form method="post" asp-page-handler="Delete" onsubmit="return confirm(this.getAttribute('data-q'))" data-q="@AgText.Get("DeleteHelp")">
+			<input name="ConfirmName" class="form-control mb-2" placeholder="@AgText.Get("DeleteConfirm")" autocomplete="off">
+			<button type="submit" class="btn btn-outline-danger btn-block font-weight-bold">@AgText.Get("DeleteBtn")</button>
+		</form>
+	</div></div>
+	}
+</div>
+@if (!Model.Deleted)
+{
+<script>
+	(function () {
+		var ok = document.getElementById('agOk'), tm;
+		function saved() { ok.style.visibility = 'visible'; clearTimeout(tm); tm = setTimeout(function () { ok.style.visibility = 'hidden'; }, 1500); }
+		function seg(id, val, onPick) {
+			var el = document.getElementById(id);
+			el.querySelectorAll('button').forEach(function (b) {
+				b.classList.toggle('on', b.getAttribute('data-v') === val);
+				b.onclick = function () { el.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); }); b.classList.add('on'); onPick(b.getAttribute('data-v')); };
+			});
+		}
+		// calidad: se guarda en este aparato (cada aparato puede tener la suya)
+		var q = (document.cookie.match(/(?:^|; )agQuality=(low|medium|high)/) || [])[1] || (matchMedia('(pointer: coarse)').matches ? 'low' : 'high');
+		seg('agQ', q, function (v) { document.cookie = 'agQuality=' + v + '; path=/; max-age=31536000; SameSite=Lax'; saved(); });
+
+		function post(url, body) { return fetch(url, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); }
+		function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+		function blocked(list) {
+			var bl = document.getElementById('agBl');
+			if (!list.length) { bl.textContent = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(AgText.Get("NoBlocked"))); return; }
+			bl.innerHTML = list.map(function (u) {
+				return '<div class="row-b"><img src="' + esc(u.avatar) + '" alt="" onerror="this.src=\'/blank.png\'"><b class="flex-grow-1 text-dark">' + esc(u.name) + '</b><button class="btn btn-sm btn-outline-primary" data-u="' + esc(u.name) + '">' + @Html.Raw(System.Text.Json.JsonSerializer.Serialize(AgText.Get("Unblock"))) + '</button></div>';
+			}).join('');
+			bl.querySelectorAll('button').forEach(function (b) {
+				b.onclick = function () { fetch('/api/ag/block/' + encodeURIComponent(b.getAttribute('data-u')), { method: 'POST', credentials: 'same-origin' }).then(load); };
+			});
+		}
+		function load() {
+			fetch('/api/ag/settings', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (j) {
+				document.querySelectorAll('[data-p]').forEach(function (cb) {
+					cb.checked = j.prefs[cb.getAttribute('data-p')] !== 'off';
+					cb.onchange = function () { post('/api/ag/settings', { key: cb.getAttribute('data-p'), value: cb.checked ? 'on' : 'off' }).then(saved); };
+				});
+				seg('agW', j.prefs.wallHelp, function (v) { post('/api/ag/settings', { key: 'wallHelp', value: v }).then(saved); });
+				var m = document.getElementById('agNoMsg'), a = document.getElementById('agNoAdd');
+				m.checked = !!j.privacy.noMsg; a.checked = !!j.privacy.noAdd;
+				m.onchange = a.onchange = function () { post('/api/ag/privacy', { noMsg: m.checked, noAdd: a.checked }).then(saved); };
+				blocked(j.blocked || []);
+			});
+		}
+		load();
+	})();
+</script>
+}

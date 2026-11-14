@@ -256,6 +256,9 @@
 	// Allow Games: pruebas de calidad por URL (?q=best&dfr=embedded&r=webgl)
 	(function () {
 		var u = new URLSearchParams(location.search), c = window.RufflePlayer.config;
+		// ajuste del jugador: calidad del juego (Ajustes > Calidad)
+		var mq = document.cookie.match(/(?:^|; )agQuality=(low|medium|high)/);
+		if (mq) c.quality = mq[1];
 		if (u.get("q")) c.quality = u.get("q");
 		if (u.get("dfr")) c.deviceFontRenderer = u.get("dfr");
 		if (u.get("r")) c.preferredRenderer = u.get("r");
