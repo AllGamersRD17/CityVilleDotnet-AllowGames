@@ -21,6 +21,16 @@ public class GameSettingsManager
     private readonly Dictionary<string, ValidateItem> _validators;
     private readonly Dictionary<string, TieredValueItem> _tieredValues;
     private readonly Dictionary<string, AssetPlaceholder> _assetPlaceholders;
+
+    // Allow Games: tipos que, sin arte en el mapa, se dibujan con su icono en vez del andamio
+    private static readonly HashSet<string> IconFallbackTypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "decoration", "rainbowDecoration", "residence", "house", "business", "municipal", "landmark", "wonder",
+        "storage", "storagefacility", "neighborhood", "superneighborhood", "moneyVault", "timed_business",
+        "powerstation", "greenHouse", "customResidence", "hotel", "attraction", "skyscraper", "learningcenter",
+        "mall", "mall2", "mall4", "corporation", "municipalcenter", "factory", "farmers_market", "heliport",
+        "amphitheater", "itemStorage", "garden", "theme_collection", "train_station", "busStation", "party"
+    };
     private List<string> _globalTableProviders = [];
     private Dictionary<string, List<string>> _addToWorldCallbackItems = [];
     private FarmingSettings? _farmSettings;
@@ -122,9 +132,10 @@ public class GameSettingsManager
                 if (item?.SizeX is null || item.SizeY is null) continue;
 
                 // Allow Games: a las decoraciones sin arte en el mapa se les dibuja su icono en vez del andamio
-                var icon = item.Type is "decoration" or "rainbowDecoration"
-                    ? item.Images.FirstOrDefault(x => x.Name == "icon")?.Url
+                var icon = IconFallbackTypes.Contains(item.Type)
+                    ? string.Join('|', item.Images.Where(x => x.Name is "large_icon" or "icon" && x.Url is not null).Select(x => x.Url))
                     : null;
+                if (icon == "") icon = null;
 
                 var smallIcon = item.Images.FirstOrDefault(x => x.Name == "icon")?.Url;
                 if (smallIcon is not null)

@@ -63,7 +63,11 @@ public class FallbackAssetMiddleware(
                 // Allow Games: decoracion sin arte en el mapa -> se dibuja su icono con el tamano del andamio
                 if (placeholder?.Icon is not null && extension == ".png")
                 {
-                    var iconFile = FindIgnoringCase("/" + placeholder.Icon.TrimStart('/'));
+                    var iconFile = placeholder.Icon.Split('|')
+                        .Select(x => FindIgnoringCase("/" + x.TrimStart('/')))
+                        .Where(x => x is not null)
+                        .OrderByDescending(x => new FileInfo(x!).Length)
+                        .FirstOrDefault();
                     var frameFile = FindIgnoringCase(placeholder.Path);
                     if (iconFile is not null && frameFile is not null)
                     {
@@ -200,7 +204,7 @@ public class FallbackAssetMiddleware(
         var src = new SKRect(minX, minY, maxX + 1, maxY + 1);
 
         // la base del objeto va cerca del centro del rombo de la casilla
-        var scale = w * 0.95f / src.Width;
+        var scale = Math.Min(w * 0.95f / src.Width, 2.5f); // sin agrandar tanto que se vea borroso
         int h;
         if (height > 0)
         {
