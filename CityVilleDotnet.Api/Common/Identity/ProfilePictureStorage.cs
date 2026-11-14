@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using CityVilleDotnet.Common.Utils;
 using SkiaSharp;
 
@@ -23,13 +23,23 @@ public class ProfilePictureStorage(IWebHostEnvironment webHost)
             File.Delete(oldFile);
         }
 
-        using var resized = new SKBitmap(MaxDimension, MaxDimension);
-        using var canvas = new SKCanvas(resized);
+        // Allow Games: recorte cuadrado del centro y en circulo con el fondo transparente (sin recuadro blanco)
+        var side = Math.Min(original.Width, original.Height);
+        var src = new SKRect((original.Width - side) / 2f, (original.Height - side) / 2f, (original.Width + side) / 2f, (original.Height + side) / 2f);
 
-        canvas.DrawBitmap(original, new SKRect(0, 0, MaxDimension, MaxDimension), new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
+        var info = new SKImageInfo(MaxDimension, MaxDimension, SKColorType.Rgba8888, SKAlphaType.Premul);
+        using var resized = new SKBitmap(info);
+        using (var canvas = new SKCanvas(resized))
+        {
+            using var clip = new SKRoundRect(new SKRect(0, 0, MaxDimension, MaxDimension), MaxDimension / 2f, MaxDimension / 2f);
+            canvas.ClipRoundRect(clip, SKClipOperation.Intersect, true);
+            using var img = SKImage.FromBitmap(original);
+            canvas.DrawImage(img, src, new SKRect(0, 0, MaxDimension, MaxDimension), new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
+        }
 
+        ext = ".png";
         using var image = SKImage.FromBitmap(resized);
-        using var data = ext is ".png" ? image.Encode(SKEncodedImageFormat.Png, 100) : image.Encode(SKEncodedImageFormat.Jpeg, 90);
+        using var data = image.Encode(SKEncodedImageFormat.Png, 100);
 
         await using var fs = new FileStream(Path.Combine(picturesDir, $"{baseName}{ext}"), FileMode.Create);
 

@@ -50,7 +50,7 @@ public static class GamePicture
         if (string.IsNullOrEmpty(url)) return "/blank.png";
         const string prefix = "/ag/avatars/";
         if (url.StartsWith(prefix) && !url.StartsWith(prefix + "50/"))
-            return prefix + "50/" + url[prefix.Length..];
+            return prefix + "50/" + url[prefix.Length..].Split('?')[0] + "?v=2";
         return url;
     }
 }
