@@ -91,6 +91,10 @@ internal sealed class Harvest(CityVilleDbContext context, ILogger<Harvest> logge
 
         await context.SaveChangesAsync(cancellationToken);
 
+        // Allow Games: cosechar una parcela la deja arada otra vez, asi que cuenta para el desafio "Ara 4 parcelas"
+        if (obj.ClassName == BuildingClassType.Plot)
+            CityVilleDotnet.Api.Features.AllowGames.ChallengeService.Track(playerId, "Plow");
+
         return new CityVilleResponse().Data(new ASObject
         {
             ["retCoinYield"] = coinYield,

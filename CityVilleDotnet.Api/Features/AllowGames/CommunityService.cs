@@ -609,8 +609,10 @@ public static class CommunityService
     public static string? AddShare(string me, string? title, string? text, string? image, string? action, List<string>? wishlist)
     {
         var isWish = wishlist is not null;
-        var key = me + (isWish ? "|w" : "|s");
-        var wait = isWish ? TimeSpan.FromHours(4) : TimeSpan.FromMinutes(10);
+        // pedir energia se puede repetir (solo 1 minuto entre pedidos para que no sea spam)
+        var isEnergy = !isWish && IsEnergyAsk(title, text, image);
+        var key = me + (isWish ? "|w" : isEnergy ? "|e" : "|s");
+        var wait = isWish ? TimeSpan.FromHours(4) : isEnergy ? TimeSpan.FromMinutes(1) : TimeSpan.FromMinutes(10);
         if (LastShare.TryGetValue(key, out var last) && DateTime.UtcNow - last < wait) return "wait";
         if (isWish && wishlist!.Count == 0) return "empty";
         var t = Clean(((title ?? "").Trim() + "\n" + (text ?? "").Trim()).Trim(), WallTextMax);
@@ -630,6 +632,19 @@ public static class CommunityService
     }
 
     // Registra la ayuda; devuelve (autor, tipo) o el motivo del rechazo
+    public static bool IsEnergyAsk(string? title, string? text, string? image) =>
+        (image ?? "").Contains("energy", StringComparison.OrdinalIgnoreCase) ||
+        System.Text.RegularExpressions.Regex.IsMatch((title ?? "") + " " + (text ?? ""), @"\b(energ\w*)\b", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+    public static bool IsEnergyPost(long id)
+    {
+        lock (Lock)
+        {
+            var p = _s.Wall.FirstOrDefault(x => x.Id == id);
+            return p is not null && p.Kind == "share" && IsEnergyAsk(p.Text, null, p.Image);
+        }
+    }
+
     public static (string? Author, string? Kind, string? Error) Help(string me, long id, string? item)
     {
         lock (Lock)
@@ -743,6 +758,13 @@ public static class CommunityService
                     else owner.AddCoins(25); // no es un coleccionable: el autor recibe monedas
                     helper.AddCoins(25);
                     reward = new { coins = 25, sent = b.Item };
+                }
+                else if (IsEnergyPost(id))
+                {
+                    // como en el CityVille de Facebook: tu ayuda le manda energia al que la pidio
+                    helper.AddCoins(50);
+                    owner.AddEnergy(1);
+                    reward = new { coins = 50, energySent = 1 };
                 }
                 else
                 {

@@ -54,6 +54,40 @@ public static class ChallengeService
         public bool AllClaimed { get; set; }
         public int Streak { get; set; }          // dias seguidos completando todo (se conserva entre dias)
         public string LastFullDay { get; set; } = "";
+        public Dictionary<string, string> Swaps { get; set; } = new(); // desafio cambiado hoy -> el nuevo
+        public int SwapCount { get; set; }
+    }
+
+    public const int SwapsPerDay = 2;
+
+    // Los desafios de hoy para este jugador (los del dia + los que cambio)
+    private static Def[] DefsFor(PlayerDay d)
+    {
+        var defs = TodayDefs();
+        return defs.Select(x => d.Swaps.TryGetValue(x.Id, out var n) ? Pool.FirstOrDefault(p => p.Id == n) ?? x : x).ToArray();
+    }
+
+    // Cambia un desafio que no te gusta por otro (2 veces al dia). Devuelve null si se pudo, o el motivo.
+    public static string? Swap(Guid playerId, string id)
+    {
+        var d = Get(playerId);
+        lock (d)
+        {
+            var defs = DefsFor(d);
+            var idx = Array.FindIndex(defs, x => x.Id == id);
+            if (idx < 0) return "notfound";
+            if (d.Claimed.Contains(id)) return "claimed";
+            if (d.SwapCount >= SwapsPerDay) return "limit";
+            var used = defs.Select(x => x.Id).Concat(d.Swaps.Keys).Concat(d.Swaps.Values).ToHashSet();
+            var options = Pool.Where(p => !used.Contains(p.Id)).ToList();
+            if (options.Count == 0) return "none";
+            var pick = options[Random.Shared.Next(options.Count)];
+            var orig = TodayDefs()[idx].Id;
+            d.Swaps[orig] = pick.Id;
+            d.SwapCount++;
+            _dirty = true;
+            return null;
+        }
     }
 
     private static readonly ConcurrentDictionary<Guid, PlayerDay> Data = new();
@@ -124,7 +158,7 @@ public static class ChallengeService
     public static object State(Guid playerId, string lang)
     {
         var d = Get(playerId);
-        var defs = TodayDefs();
+        var defs = DefsFor(d);
         lock (d)
         {
             var list = defs.Select(x =>
@@ -143,7 +177,8 @@ public static class ChallengeService
                 challenges = list,
                 bonus = new { coins = AllDoneCoins, cash = AllDoneCash, ready = allClaimed && !d.AllClaimed, claimed = d.AllClaimed },
                 streak = new { days = d.Streak, goal = StreakDays, coins = StreakCoins, cash = StreakCash },
-                resetIn = secs
+                resetIn = secs,
+                swapsLeft = Math.Max(0, SwapsPerDay - d.SwapCount)
             };
         }
     }
@@ -152,7 +187,7 @@ public static class ChallengeService
     public static (int Coins, int Cash, int Energy)? Claim(Guid playerId, string id)
     {
         var d = Get(playerId);
-        var defs = TodayDefs();
+        var defs = DefsFor(d);
         lock (d)
         {
             if (id == "bonus")

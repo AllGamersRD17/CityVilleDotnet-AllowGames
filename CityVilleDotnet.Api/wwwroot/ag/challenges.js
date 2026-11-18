@@ -11,6 +11,8 @@
     de: ['Herausforderungen', 'Spiele und verdiene Münzen und CV Cash. Nichts wird verkauft: alles wird erspielt.', 'Abholen', 'Abgeholt!', 'Neue Herausforderungen in', 'Bonus für alle', 'Schaffe alle 4 heute', 'Münzen', 'CV Cash', 'Energie', 'Dein Guthaben aktualisiert sich beim Neuladen.', 'Neu laden', 'Schließen', 'Wochentruhe', 'Schaffe alle Herausforderungen 7 Tage in Folge', 'Tage']
   };
   var t = L[lang] || L.es;
+  var SW = { es: ['Cambiar', 'Cambiar este desafío por otro', 'Ya cambiaste 2 desafíos hoy', 'cambios hoy'], en: ['Change', 'Swap this challenge for another', 'You already changed 2 challenges today', 'changes today'], pt: ['Trocar', 'Trocar este desafio por outro', 'Você já trocou 2 desafios hoje', 'trocas hoje'], fr: ['Changer', 'Changer ce défi', 'Tu as déjà changé 2 défis aujourd\'hui', 'changements'], it: ['Cambia', 'Cambia questa sfida', 'Hai già cambiato 2 sfide oggi', 'cambi oggi'], de: ['Tauschen', 'Diese Aufgabe tauschen', 'Du hast heute schon 2 getauscht', 'Tausche heute'] };
+  var sw = SW[lang] || SW.es;
   var css = '#agCh{position:fixed;inset:0;z-index:99996;display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;background:rgba(5,20,30,.55);font-family:CV,sans-serif}' +
     '#agCh *{box-sizing:border-box}' +
     '#agCh .c{position:relative;width:100%;max-width:560px;max-height:calc(100vh - 28px);overflow:auto;background:#2f8fc4;border:4px solid #1c6e9c;border-radius:22px;padding:12px;box-shadow:0 10px 0 rgba(0,0,0,.2)}' +
@@ -29,6 +31,7 @@
     '#agCh .rw img{height:16px;vertical-align:-3px;margin-right:2px}' +
     '#agCh button.cl{flex:0 0 auto;border:3px solid #2e7d1d;border-radius:999px;background:linear-gradient(#7fd14a,#4aa62a);color:#fff;font:700 15px CV,sans-serif;text-shadow:0 2px 0 #2e7d1d;padding:6px 14px;cursor:pointer;white-space:nowrap}' +
     '#agCh button.cl[disabled]{filter:grayscale(1);opacity:.55;cursor:default}' +
+    '#agCh button.sw{flex:0 0 auto;border:2px solid #1c6e9c;border-radius:999px;background:#e9f6ff;color:#0a5f8c;font:700 12px CV,sans-serif;padding:4px 9px;cursor:pointer;white-space:nowrap}#agCh button.sw:hover{background:#d0ecff}' +
     '#agCh .bonus{background:linear-gradient(#fff6c9,#ffe58a);border-color:#e0b33a}' +
     '#agCh .week{background:linear-gradient(#efe4ff,#d9c4ff);border-color:#8e63d6}' +
     '#agCh .dots{display:flex;gap:4px;margin:5px 0 3px;flex-wrap:wrap}#agCh .dots b{width:22px;height:22px;border-radius:50%;border:2px solid #8e63d6;background:#fff;color:#8e63d6;font-size:12px;display:flex;align-items:center;justify-content:center}#agCh .dots b.on{background:#8e63d6;color:#fff}' +
@@ -54,6 +57,7 @@
     d.challenges.forEach(function (c) {
       h += '<div class="ch' + (c.done ? ' done' : '') + (c.claimed ? ' cl' : '') + '"><div class="ic">' + cicon(c.icon) + '</div><div class="bd"><div class="tx">' + c.text + '</div>' +
         '<div class="bar"><i style="width:' + Math.round(100 * c.progress / c.goal) + '%"></i></div><div class="rw">' + c.progress + '/' + c.goal + ' · ' + rw(c) + '</div></div>' +
+        (!c.done && !c.claimed && d.swapsLeft > 0 ? '<button class="sw" data-sw="' + c.id + '" title="' + sw[1] + '">🔄 ' + sw[0] + '</button>' : '') +
         '<button class="cl" data-id="' + c.id + '"' + (!c.done || c.claimed ? ' disabled' : '') + '>' + (c.claimed ? '<img class="agi" src="/ag/ic/check.png" alt="">' : t[2]) + '</button></div>';
     });
     var b = d.bonus;
@@ -76,6 +80,8 @@
     root.addEventListener('click', function (e) {
       if (e.target === root || e.target.classList.contains('x')) { root.remove(); root = null; return; }
       if (e.target.classList.contains('rl')) { location.reload(); return; }
+      var swb = e.target.closest && e.target.closest('[data-sw]');
+      if (swb) { swb.disabled = true; fetch('/api/ag/challenges/swap/' + encodeURIComponent(swb.getAttribute('data-sw')), { method: 'POST', credentials: 'same-origin' }).then(function () { load(); }); return; }
       var id = e.target.getAttribute && e.target.getAttribute('data-id');
       if (id && !e.target.disabled) {
         e.target.disabled = true;

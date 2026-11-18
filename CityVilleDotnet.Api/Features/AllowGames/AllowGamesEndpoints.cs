@@ -1,4 +1,4 @@
-using CityVilleDotnet.Domain.Entities;
+﻿using CityVilleDotnet.Domain.Entities;
 using CityVilleDotnet.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +43,14 @@ public static class AllowGamesEndpoints
             var player = await CurrentPlayerAsync(http, db, users);
             if (player is null) return Results.Unauthorized();
             return Results.Json(ChallengeService.State(player.Id, (lang ?? "es")[..Math.Min(2, (lang ?? "es").Length)]));
+        });
+
+        app.MapPost("/api/ag/challenges/swap/{id}", async (string id, HttpContext http, CityVilleDbContext db, UserManager<ApplicationUser> users) =>
+        {
+            var player = await CurrentPlayerAsync(http, db, users);
+            if (player is null) return Results.Unauthorized();
+            var err = ChallengeService.Swap(player.Id, id);
+            return err is null ? Results.Ok() : Results.Json(new { error = err }, statusCode: 400);
         });
 
         app.MapPost("/api/ag/challenges/claim/{id}", async (string id, HttpContext http, CityVilleDbContext db, UserManager<ApplicationUser> users) =>
