@@ -1113,6 +1113,12 @@ public partial class WorldObject
         CrewMembers.Add(new CrewMember(crew));
     }
 
+    public void ClearCrewMembers()
+    {
+        CrewMembers.Clear();
+    }
+
+
     public int GetMaxWorkers()
     {
         if (ContractName is null) return 0;

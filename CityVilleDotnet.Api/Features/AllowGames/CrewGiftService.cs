@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using CityVilleDotnet.Common.Settings;
 using CityVilleDotnet.Domain.Entities;
 using CityVilleDotnet.Persistence;
@@ -68,7 +68,12 @@ public static class CrewGiftService
             try
             {
                 var item = b is null ? null : GameSettingsManager.Instance.GetItem(b.GetItemName());
-                need = item?.GetGates().SelectMany(g => g.Keys).FirstOrDefault(k => k?.Name == "required_crew")?.Amount ?? 0;
+                // en construccion cuenta el equipo de "build"; ya construido, el de la mejora ("pre_upgrade")
+                var gates = item?.GetGates() ?? [];
+                var building = b!.TargetBuildingName is not null;
+                var gate = (building ? null : gates.FirstOrDefault(g => g.Name == "pre_upgrade" && g.Keys.Any(k => k?.Name == "required_crew")))
+                           ?? gates.FirstOrDefault(g => g.Keys.Any(k => k?.Name == "required_crew"));
+                need = gate?.Keys.FirstOrDefault(k => k?.Name == "required_crew")?.Amount ?? 0;
             }
             catch { }
             return (p, b, need);

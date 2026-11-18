@@ -19,6 +19,9 @@ internal sealed class UpgradeBuilding(CityVilleDbContext context) : AmfService<U
             .Include(x => x.Worlds.Where(w => w.Type == w.Player!.LastPlayedWorldType))
             .ThenInclude(x => x.Objects)
             .ThenInclude(x => x.MechanicCounters)
+            .Include(x => x.Worlds.Where(w => w.Type == w.Player!.LastPlayedWorldType))
+            .ThenInclude(x => x.Objects)
+            .ThenInclude(x => x.CrewMembers)
             .Include(x => x.FeatureRollCounters)
             .Include(x => x.Collections)
             .Include(x => x.SeenFlags)
@@ -78,6 +81,8 @@ internal sealed class UpgradeBuilding(CityVilleDbContext context) : AmfService<U
         }
 
         obj.UpgradeBuilding(gameItem.GetFirstDeriveItem(gameItem), newItemName);
+        // Allow Games: el equipo contratado era para esta mejora; la siguiente mejora pide su propio equipo
+        if (obj.ClassName == BuildingClassType.Municipal) obj.ClearCrewMembers();
         player.HandleQuestsProgress("upgradeItemByName", itemName: gameItem.Name);
         player.RemoveObjectTableOverrides(obj.WorldFlatId);
         world.CalculatePopulation();
