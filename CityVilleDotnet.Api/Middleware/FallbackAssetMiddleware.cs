@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using CityVilleDotnet.Common.Utils;
 using CityVilleDotnet.Common.Settings;
 using SkiaSharp;
@@ -48,6 +48,14 @@ public class FallbackAssetMiddleware(
 
             if (contentType != null)
             {
+                // Allow Games: carros sin dibujo -> se usa otro carro parecido que si tenemos (mismo sentido)
+                var carFile = CarFallback(requestPath);
+                if (carFile is not null)
+                {
+                    await SendFallbackAsync(context, carFile, contentType);
+                    return;
+                }
+
                 var fallbackFile = GetConfiguredFallback(requestPath, logPath);
 
                 if (fallbackFile is not null)
@@ -164,6 +172,34 @@ public class FallbackAssetMiddleware(
             }
         }
         return _caseIndex.TryGetValue(Uri.UnescapeDataString(requestPath), out var real) ? real : null;
+    }
+
+    private static readonly System.Text.RegularExpressions.Regex CarPath = new(
+        @"^/assets/npcs/([^/]+)/[^/]*?_?(NNE|NNW|SSE|SSW|NEE|NWW|SEE|SWW|NE|NW|SE|SW|N|S|E|W)\.png$",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    private string? CarFallback(string requestPath)
+    {
+        var m = CarPath.Match(requestPath);
+        if (!m.Success) return null;
+        var folder = m.Groups[1].Value.ToLowerInvariant();
+        var dir = m.Groups[2].Value.ToUpperInvariant();
+        string[] donors = folder switch
+        {
+            "car_yellow_taxi" => ["/assets/NPC/Car_taxi/car_taxi_{0}.png"],
+            "car_cvbus" => ["/assets/NPC/Car_city_bus/cars_city_bus01_{0}.png"],
+            "car_pinkbus" => ["/assets/NPC/Car_city_bus/cars_city_bus03_{0}.png"],
+            "car_airportshuttle" => ["/assets/NPC/Car_tourismbus/bus_{0}.png"],
+            "car_bigdeltruck" => ["/assets/NPC/Car_bigdeltruck/car_bigdeltruck_{0}.png"],
+            "car_rustytruck" => ["/assets/NPC/Car_rustytruck/car_rustytruck_{0}.png"],
+            "car_policemotorcycle" => ["/assets/NPC/Car_detectivemotorcycle/car_detectivemotorcycle_{0}.png"],
+            "car_parkingenforcement" => ["/assets/NPC/Car_policecruiser/Car_policecruiser_{0}.png"],
+            "car_banditgetaway" => ["/assets/NPC/Car_detective_armoredsuv/Car_detective_armoredsuv_{0}.png"],
+            "car_limo" or "car_hummer_limo" => ["/assets/NPC/Car_yehaul_hearse/Car_hearse_{0}.png", "/assets/npcs/car_bluecar/car_bluecar_{0}.png"],
+            "car_propel" => ["/assets/NPC/Car_deliveryvan/char_deliveryVan_Move_{0}.png"],
+            _ => ["/assets/npcs/car_bluecar/car_bluecar_{0}.png", "/assets/NPC/Car_taxi/car_taxi_{0}.png"]
+        };
+        return donors.Select(d => FindIgnoringCase(string.Format(d, dir))).FirstOrDefault(x => x is not null);
     }
 
     private string? GetConfiguredFallback(string requestPath, string logPath)

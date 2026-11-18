@@ -68,7 +68,10 @@ public class Help(CityVilleDbContext context, ILogger<Help> logger) : AmfService
                 coins = settings.FriendHelpDefaultCoinReward;
                 break;
             default:
-                throw new Exception($"Not implemented help type {request.Type}");
+                // Allow Games: ayudas que el servidor no conoce (o sin tipo) cuentan como ayuda normal en vez de fallar
+                reputation = 1;
+                coins = settings.FriendHelpDefaultCoinReward;
+                break;
         }
 
         var targetFriend = currentUser.Friends.FirstOrDefault(x => x.GetFriend().Snuid == Convert.ToInt32(request.HelpParams.RecipientId));

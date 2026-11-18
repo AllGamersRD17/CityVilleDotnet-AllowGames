@@ -515,6 +515,8 @@ public partial class WorldObject
 
         var item = GameSettingsManager.Instance.GetItem(GetItemName());
         var growTime = item?.GrowTime;
+        // Allow Games: los edificios mejorados (ej. mun_civilunionhall_2) heredan el tiempo del original
+        if (growTime is null && item?.DerivesFrom is not null) growTime = item.GetFirstDeriveItem(item).GrowTime;
 
         if (growTime is null) return false;
 
