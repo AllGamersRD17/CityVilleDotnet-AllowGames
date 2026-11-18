@@ -58,13 +58,13 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
         // Allow Games: bono diario (se cobra antes de que cargue el juego)
         if (user is not null && user.Snuid != -1)
         {
-            var tracked = await dbContext.Set<Player>().FirstOrDefaultAsync(x => x.Id == user.Id);
+            var tracked = await dbContext.Set<Player>().Include(x => x.InventoryItems).FirstOrDefaultAsync(x => x.Id == user.Id);
             var reward = tracked is null ? null : CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.TryClaim(tracked, DateTime.Now);
             if (reward is not null)
             {
                 await dbContext.SaveChangesAsync();
                 if (CityVilleDotnet.Api.Features.AllowGames.CommunityService.Pref(tracked!.Username, "ntDaily") == "on")
-                DailyBonusJson = JsonSerializer.Serialize(new { day = reward.Day, coins = reward.Coins, energy = reward.Energy, cash = reward.Cash, surprise = reward.Surprise });
+                DailyBonusJson = JsonSerializer.Serialize(CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.Json(reward));
             }
         }
 

@@ -154,7 +154,10 @@ builder.Services.AddRateLimiter(options =>
             path.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
             path.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
             path.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) ||
-            path.EndsWith("gateway.php", StringComparison.OrdinalIgnoreCase)
+            path.EndsWith("gateway.php", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/api/ag/pic/", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/api/ag/media/", StringComparison.OrdinalIgnoreCase) ||
+            path.EndsWith("record_stats.php", StringComparison.OrdinalIgnoreCase)
            )
         {
             return RateLimitPartition.GetNoLimiter(string.Empty);
@@ -164,6 +167,15 @@ builder.Services.AddRateLimiter(options =>
                        ?? context.Request.Headers["X-Forwarded-For"].FirstOrDefault()?.Split(',', StringSplitOptions.TrimEntries).FirstOrDefault()
                        ?? context.Connection.RemoteIpAddress?.ToString()
                        ?? "unknown";
+
+        // Allow Games: la Comunidad y el chat preguntan seguido (y una familia puede jugar desde la misma casa)
+        if (path.StartsWith("/api/ag/", StringComparison.OrdinalIgnoreCase))
+            return RateLimitPartition.GetFixedWindowLimiter("ag:" + remoteIp, _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 600,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            });
 
         return RateLimitPartition.GetFixedWindowLimiter(remoteIp, _ => new FixedWindowRateLimiterOptions
         {
@@ -214,6 +226,7 @@ app.MapCommunity();
 app.MapSupport();
 app.MapCrewGifts();
 app.MapMissingHandlers();
+CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.MapDaily(app);
 app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();

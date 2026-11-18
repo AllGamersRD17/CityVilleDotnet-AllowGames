@@ -109,9 +109,9 @@
         '#agCm{width:min(480px,100vw);background:linear-gradient(180deg,#45afe6 0,#2a86bd 55%,#21719f 100%);border-left:0;box-shadow:-14px 0 40px rgba(0,0,0,.35)}' +
     '#agCm .hd{padding:12px 14px 8px}#agCm h2{display:flex;align-items:center;gap:6px;font-size:23px}#agCm h2 img.agi{width:36px;height:36px;margin:0}' +
     '#agCm .stsel{background:rgba(255,255,255,.95);border-color:#fff}' +
-    '#agCm .tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:0 12px 10px}' +
+    '#agCm .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:0 12px 10px}' +
     '#agCm .tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:14px;background:rgba(255,255,255,.17);color:#fff;font:700 11.5px CV,sans-serif;padding:7px 2px 6px;text-shadow:0 1px 0 rgba(0,0,0,.35);transition:transform .15s,background .15s;min-width:0}' +
-    '#agCm .tabs button:nth-child(n+4){background:rgba(155,226,79,.24)}' +
+    '#agCm .tabs button:nth-child(n+3){background:rgba(155,226,79,.24)}' +
     '#agCm .tabs button img.agi{width:30px;height:30px;margin:0;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}' +
     '#agCm .tabs button:hover{background:rgba(255,255,255,.32);transform:translateY(-2px)}' +
     '#agCm .tabs button.on{background:#fbf6e6;color:#0a5f8c;text-shadow:none;box-shadow:0 4px 0 rgba(0,0,0,.18);transform:translateY(-2px)}' +
@@ -213,6 +213,8 @@
       im.src = url;
     });
   }
+  // lo comparte con el chat de ventanitas (chatdock.js)
+  window.AGC = { esc: esc, txt: txt, stkName: stkName, tools: tools, api: api, snd: snd, lightbox: function (s) { lightbox(s); }, t: t, lang: lang, me: function () { return me; }, pref: function (k) { return pref(k); } };
   function lightbox(src) { var d = document.createElement('div'); d.id = 'agLb'; d.innerHTML = '<img src="' + esc(src) + '" alt="">'; d.onclick = function () { d.remove(); }; document.body.appendChild(d); }
 
   var me = null, root, body, tab = 'wall', dmWith = null, lastChat = 0, lastDm = 0, poll = null, wallOldest = 0;
@@ -220,7 +222,7 @@
   function build() {
     root = document.createElement('div'); root.id = 'agCm'; root.setAttribute('role', 'dialog');
     root.innerHTML = '<div class="hd"><h2><img class="agi" src="/ag/ic/friends.png" alt="">' + t.title + '</h2><select class="stsel" title="' + t.status + '"><option value="online">● ' + t.online + '</option><option value="busy">● ' + t.busy + '</option><option value="invisible">○ ' + t.invisible + '</option></select><button class="x" aria-label="' + t.close + '"></button></div>' +
-      '<div class="tabs"><button data-t="wall"><img class="agi" src="/ag/ic/news.png" alt="">' + t.wall + '</button><button data-t="chat"><img class="agi" src="/ag/ic/smile.png" alt="">' + t.chat + '</button><button data-t="dm"><img class="agi" src="/ag/ic/mail.png" alt="">' + t.dm + '<span class="badge" id="agCmTabBadge" style="display:none"></span></button><button data-t="add"><img class="agi" src="/ag/ic/friends.png" alt="">' + t.fr + '<span class="badge" id="agCmFrBadge" style="display:none"></span></button><button data-t="gift"><img class="agi" src="/ag/ic/gift.png" alt="">' + t.gf + '</button><button data-t="sup"><img class="agi" src="/ag/ic/alert.png" alt="">' + t.sup + '<span class="badge" id="agCmSupBadge" style="display:none"></span></button></div>' +
+      '<div class="tabs"><button data-t="wall"><img class="agi" src="/ag/ic/news.png" alt="">' + t.wall + '</button><button data-t="chat"><img class="agi" src="/ag/ic/smile.png" alt="">' + t.chat + '</button><button data-t="add"><img class="agi" src="/ag/ic/friends.png" alt="">' + t.fr + '<span class="badge" id="agCmFrBadge" style="display:none"></span></button><button data-t="gift"><img class="agi" src="/ag/ic/gift.png" alt="">' + t.gf + '</button><button data-t="sup"><img class="agi" src="/ag/ic/alert.png" alt="">' + t.sup + '<span class="badge" id="agCmSupBadge" style="display:none"></span></button></div>' +
       '<div class="rules"><img class="agi" src="/ag/ic/vip.png" alt="">' + t.rules + '</div><div class="bd"></div><div class="toast"></div>';
     document.body.appendChild(root);
     body = root.querySelector('.bd');
@@ -237,6 +239,8 @@
   function showLogin() { if (body) body.innerHTML = '<div class="empty">' + t.login + '<br><br><a class="go" href="/Account/Login" style="text-decoration:none">Login</a></div>'; }
 
   function open(which) {
+    // los privados ahora viven en las ventanitas de abajo (chatdock.js)
+    if (which === 'dm' && window.agChat) { close(); if (dmWith) { window.agChat.open(dmWith); dmWith = null; } else window.agChat.list(); return; }
     if (!root) build();
     root.classList.add('on');
     tab = which || tab; dmWith = which === 'dm' ? dmWith : null;
@@ -642,6 +646,7 @@
 
   function openDmWith(name) {
     if (!name || (me && name.toLowerCase() === me.name.toLowerCase())) return;
+    if (window.agChat) { window.agChat.open(name); return; }
     dmWith = name; open('dm');
   }
   function showDm(name) {
@@ -727,7 +732,7 @@
       var sb = document.getElementById('agCmSupBadge'), sn = (d.support || 0) + (d.supportAdmin || 0); if (sb) { sb.textContent = sn; sb.style.display = sn ? '' : 'none'; }
       var sel = root && root.querySelector('.stsel'); if (sel && document.activeElement !== sel) sel.value = d.status || 'online';
       var lu = d.lastUnread;
-      if (lu && lastNotified !== null && lu.id > lastNotified) notify(lu);
+      if (lu && lastNotified !== null && lu.id > lastNotified && !window.agChat) notify(lu);
       lastNotified = lu ? Math.max(lu.id, lastNotified || 0) : (lastNotified || 0);
     }).catch(function () { });
   }

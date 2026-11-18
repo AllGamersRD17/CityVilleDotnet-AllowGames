@@ -71,6 +71,7 @@ public static class CommunityService
         public Dictionary<string, HashSet<string>> Privacy { get; set; } = new(); // usuario -> nomsg | noadd
         public Dictionary<string, List<Note>> Notes { get; set; } = new();        // usuario -> avisos de amistad
         public Dictionary<string, Dictionary<string, string>> Prefs { get; set; } = new(); // usuario -> ajustes
+        public Dictionary<string, long> Delivered { get; set; } = new();                 // usuario -> ultimo id que ya le llego a su pantalla
     }
 
     private static Store _s = new();
@@ -80,6 +81,8 @@ public static class CommunityService
     private static volatile bool _dirty;
     private static readonly ConcurrentDictionary<string, DateTime> LastPost = new(StringComparer.OrdinalIgnoreCase);
     private static readonly ConcurrentDictionary<string, DateTime> LastSeen = new(StringComparer.OrdinalIgnoreCase);
+    private static readonly ConcurrentDictionary<string, DateTime> LastActive = new(StringComparer.OrdinalIgnoreCase); // ultima vez que movio el mouse o escribio
+    private static readonly ConcurrentDictionary<string, (string To, DateTime At)> Typing = new(StringComparer.OrdinalIgnoreCase);
     private static readonly ConcurrentDictionary<string, (string Day, int Count)> Uploads = new(StringComparer.OrdinalIgnoreCase);
     private static string _media = "community_media";
     private static readonly Regex MediaUrl = new(@"^/api/ag/media/[0-9a-f]{32}\.jpg$", RegexOptions.Compiled);
@@ -213,13 +216,64 @@ public static class CommunityService
         return false;
     }
 
-    // online | busy (no molestar) | offline. "invisible" se muestra como offline.
+    // online | idle (ausente, como Discord) | busy (no molestar) | offline. "invisible" se muestra como offline.
     public static string Presence(string name)
     {
         var st = _s.Status.GetValueOrDefault(name.ToLowerInvariant(), "online");
         if (st == "invisible") return "offline";
         if (!LastSeen.TryGetValue(name, out var seen) || (DateTime.UtcNow - seen).TotalSeconds > 75) return "offline";
-        return st == "busy" ? "busy" : "online";
+        if (st == "busy") return "busy";
+        if (LastActive.TryGetValue(name, out var act) && (DateTime.UtcNow - act).TotalMinutes > 5) return "idle";
+        return "online";
+    }
+
+    public static void Activity(string me, bool active)
+    {
+        if (active || !LastActive.ContainsKey(me)) LastActive[me] = DateTime.UtcNow;
+    }
+
+    public static void SetTyping(string me, string to) => Typing[me] = (to, DateTime.UtcNow);
+
+    // todo lo que ya existe le llego a la pantalla de este jugador (para el "Entregado")
+    public static void MarkDelivered(string me)
+    {
+        var u = me.ToLowerInvariant();
+        lock (Lock)
+        {
+            var top = _s.NextId - 1;
+            if (_s.Delivered.GetValueOrDefault(u) < top) { _s.Delivered[u] = top; _dirty = true; }
+        }
+    }
+
+    // Una ventanita de chat: mensajes nuevos + si el otro ya lo vio, si le llego y si esta escribiendo
+    public static object DockWin(string me, string other, long after)
+    {
+        var k = Key(me, other);
+        var o = other.ToLowerInvariant();
+        lock (Lock)
+        {
+            _s.Dms.TryGetValue(k, out var all);
+            var list = all is null ? new List<object>() : all.Where(m => m.Id > after).TakeLast(after == 0 ? 60 : 100).Select(Out).ToList();
+            if (all is { Count: > 0 }) MarkRead(me, k, all[^1].Id);
+            var seen = _s.Read.TryGetValue(o, out var r) ? r.GetValueOrDefault(k) : 0;
+            var delivered = Math.Max(_s.Delivered.GetValueOrDefault(o), seen);
+            var typing = Typing.TryGetValue(other, out var ty) && ty.To.Equals(me, StringComparison.OrdinalIgnoreCase) && (DateTime.UtcNow - ty.At).TotalSeconds < 6;
+            var blocked = Blocked(me, other) || Blocked(other, me) || (_s.Privacy.TryGetValue(o, out var pv) && pv.Contains("nomsg"));
+            return new { name = other, with = Who(other), blocked, messages = list, seen, delivered, typing };
+        }
+    }
+
+    // Conversaciones con mensajes sin leer (para abrir la ventanita sola cuando te escriben)
+    public static List<string> UnreadFrom(string me)
+    {
+        var u = me.ToLowerInvariant();
+        lock (Lock)
+        {
+            var read = _s.Read.GetValueOrDefault(u) ?? new();
+            return _s.Dms.Where(x => x.Key.Split('|').Contains(u))
+                .SelectMany(x => x.Value.Where(v => v.Id > read.GetValueOrDefault(x.Key) && !v.From.Equals(me, StringComparison.OrdinalIgnoreCase) && !Blocked(me, v.From)))
+                .OrderByDescending(v => v.Id).Select(v => v.From).Distinct(StringComparer.OrdinalIgnoreCase).Take(3).ToList();
+        }
     }
 
     private static DateTime? Seen(string name)
@@ -608,6 +662,8 @@ public static class CommunityService
     private sealed record PrefBody(string? Key, string? Value);
     private sealed record ShareBody(string? Title, string? Text, string? Image, string? Action, bool? Wishlist);
     private sealed record HelpBody(string? Item);
+    private sealed record DockWinReq(string? Name, long After);
+    private sealed record DockBody(bool Active, List<DockWinReq>? Wins, string? Typing);
 
     public static void MapCommunity(this WebApplication app)
     {
@@ -778,7 +834,7 @@ public static class CommunityService
                 .ToListAsync();
             var outList = list.Where(x => !Blocked(p.Username, x.name))
                 .Select(x => new { x.name, x.avatar, x.level, status = Presence(x.name), seen = Seen(x.name) })
-                .OrderBy(x => x.status == "online" ? 0 : x.status == "busy" ? 1 : 2).ToList();
+                .OrderBy(x => x.status == "online" ? 0 : x.status == "idle" ? 1 : x.status == "busy" ? 2 : 3).ToList();
             return Results.Json(outList);
         });
 
@@ -788,6 +844,51 @@ public static class CommunityService
                 .Select(f => new { n = f.FriendPlayer!.Username, f.Status, f.Requested }).ToListAsync())
             .GroupBy(x => x.n, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(g => g.Key, g => { var x = g.First(); return x.Status == FriendshipStatus.Accepted ? "friend" : x.Requested ? "received" : "sent"; }, StringComparer.OrdinalIgnoreCase);
+
+        // ---------- chat en ventanitas abajo (estilo Facebook 2011) ----------
+        app.MapPost("/api/ag/dock", async (DockBody b, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            Activity(p.Username, b.Active);
+            MarkDelivered(p.Username);
+            var want = (b.Wins ?? []).Where(w => !string.IsNullOrWhiteSpace(w.Name) && w.Name!.Length <= 40).Take(4).ToList();
+            var names = want.Select(w => w.Name!).ToList();
+            var found = names.Count == 0 ? new List<string>() : await db.Set<Player>().AsNoTracking()
+                .Where(x => x.Snuid != -1 && names.Contains(x.Username)).Select(x => x.Username).ToListAsync();
+            if (!string.IsNullOrWhiteSpace(b.Typing))
+            {
+                var to = found.FirstOrDefault(f => f.Equals(b.Typing, StringComparison.OrdinalIgnoreCase));
+                if (to is not null) SetTyping(p.Username, to);
+            }
+            var wins = want.Select(w => found.FirstOrDefault(f => f.Equals(w.Name, StringComparison.OrdinalIgnoreCase)) is { } o ? DockWin(p.Username, o, w.After) : null)
+                .Where(x => x is not null).ToList();
+            return Results.Json(new { status = MyStatus(p.Username), unread = Unread(p.Username), from = UnreadFrom(p.Username), wins });
+        });
+
+        // lista de la barra de chat: amigos primero, luego los que estan conectados
+        app.MapGet("/api/ag/dock/list", async (HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            var rel = await Relations(db, p.Id);
+            var friends = rel.Where(x => x.Value == "friend").Select(x => x.Key).ToList();
+            var recent = await db.Set<Player>().AsNoTracking()
+                .Where(x => x.Snuid != -1 && x.Username != p.Username)
+                .OrderByDescending(x => x.LastTrackingTimestamp).Take(60)
+                .Select(x => new { name = x.Username, avatar = x.ProfilePictureUrl ?? "/blank.png", level = x.Level })
+                .ToListAsync();
+            var fr = await db.Set<Player>().AsNoTracking()
+                .Where(x => x.Snuid != -1 && friends.Contains(x.Username))
+                .Select(x => new { name = x.Username, avatar = x.ProfilePictureUrl ?? "/blank.png", level = x.Level })
+                .ToListAsync();
+            int Rank(string st) => st == "online" ? 0 : st == "idle" ? 1 : st == "busy" ? 2 : 3;
+            object Row(string name, string avatar, int level, bool friend) => new { name, avatar, level, friend, status = Presence(name), seen = Seen(name) };
+            var outFr = fr.Where(x => !Blocked(p.Username, x.name)).OrderBy(x => Rank(Presence(x.name))).ThenBy(x => x.name).Select(x => Row(x.name, x.avatar, x.level, true)).ToList();
+            var outOn = recent.Where(x => !friends.Contains(x.name, StringComparer.OrdinalIgnoreCase) && !Blocked(p.Username, x.name) && Presence(x.name) != "offline")
+                .OrderBy(x => Rank(Presence(x.name))).Select(x => Row(x.name, x.avatar, x.level, false)).ToList();
+            return Results.Json(new { friends = outFr, online = outOn, convs = Conversations(p.Username) });
+        });
 
         app.MapGet("/api/ag/friends/find", async (string? q, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
         {
