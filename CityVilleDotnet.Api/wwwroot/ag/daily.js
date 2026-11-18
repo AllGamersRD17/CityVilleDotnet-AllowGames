@@ -28,11 +28,11 @@
   function show() {
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
     var icons = ['doober_coin', 'doober_coin', 'doober_coin', 'doober_coin', 'present_big'];
-    var amounts = ['25', '50 +1⚡', '100 +2⚡', '200 +3⚡', '?'];
+    var amounts = ['25', '50 +1<img class="agi" src="/ag/ic/energy.png" alt="">', '100 +2<img class="agi" src="/ag/ic/energy.png" alt="">', '200 +3<img class="agi" src="/ag/ic/energy.png" alt="">', '?'];
     var h = '<div class="c" role="dialog"><h2>' + t[0] + '</h2><div class="in"><div class="days">';
     for (var i = 1; i <= 5; i++) {
       h += '<div class="d' + (i === B.day ? ' now' : '') + '"><b>' + t[1] + ' ' + i + '</b><img src="/ag/daily/' + icons[i - 1] + '.png" alt="">' +
-        '<b>' + amounts[i - 1] + '</b>' + (i < B.day ? '<img class="ok" src="/ag/daily/check.png" alt="✔">' : '') + '</div>';
+        '<b>' + amounts[i - 1] + '</b>' + (i < B.day ? '<img class="ok" src="/ag/daily/check.png" alt="">' : '') + '</div>';
     }
     var parts = [];
     if (B.coins) parts.push('+' + B.coins + ' ' + t[5]);

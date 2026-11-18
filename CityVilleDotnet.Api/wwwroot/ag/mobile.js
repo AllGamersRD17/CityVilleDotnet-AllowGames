@@ -6,12 +6,12 @@
   var P = window.AG_PLAYER || {};
   var lang = (P.locale || navigator.language || 'es').slice(0, 2);
   var T = {
-    es: { menu: 'Menú', ch: 'Desafíos', cm: 'Social', zin: 'Acercar', zout: 'Alejar', fs: 'Pantalla', hide: 'Ocultar', tip: 'Pellizca con dos dedos para acercar o alejar', inst: 'Instalar app', instIos: 'Toca Compartir ⬆️ y luego "Agregar a inicio"' },
-    en: { menu: 'Menu', ch: 'Challenges', cm: 'Social', zin: 'Zoom in', zout: 'Zoom out', fs: 'Fullscreen', hide: 'Hide', tip: 'Pinch with two fingers to zoom', inst: 'Install app', instIos: 'Tap Share ⬆️ then "Add to Home Screen"' },
-    pt: { menu: 'Menu', ch: 'Desafios', cm: 'Social', zin: 'Aproximar', zout: 'Afastar', fs: 'Tela cheia', hide: 'Ocultar', tip: 'Faça pinça com dois dedos para o zoom', inst: 'Instalar app', instIos: 'Toque em Compartilhar ⬆️ e "Adicionar à Tela de Início"' },
-    fr: { menu: 'Menu', ch: 'Défis', cm: 'Social', zin: 'Zoom +', zout: 'Zoom −', fs: 'Plein écran', hide: 'Masquer', tip: 'Pince avec deux doigts pour zoomer', inst: "Installer l'app", instIos: 'Touche Partager ⬆️ puis « Sur l\'écran d\'accueil »' },
-    it: { menu: 'Menu', ch: 'Sfide', cm: 'Social', zin: 'Zoom +', zout: 'Zoom −', fs: 'Schermo intero', hide: 'Nascondi', tip: 'Pizzica con due dita per lo zoom', inst: 'Installa app', instIos: 'Tocca Condividi ⬆️ e "Aggiungi a Home"' },
-    de: { menu: 'Menü', ch: 'Aufgaben', cm: 'Social', zin: 'Zoom +', zout: 'Zoom −', fs: 'Vollbild', hide: 'Ausblenden', tip: 'Mit zwei Fingern zoomen', inst: 'App installieren', instIos: 'Tippe auf Teilen ⬆️ und „Zum Home-Bildschirm"' }
+    es: { menu: 'Menú', ch: 'Desafíos', cm: 'Social', zin: 'Acercar', zout: 'Alejar', fs: 'Pantalla', hide: 'Ocultar', tip: 'Pellizca con dos dedos para acercar o alejar', inst: 'Instalar app', instIos: 'Toca Compartir y luego "Agregar a inicio"' },
+    en: { menu: 'Menu', ch: 'Challenges', cm: 'Social', zin: 'Zoom in', zout: 'Zoom out', fs: 'Fullscreen', hide: 'Hide', tip: 'Pinch with two fingers to zoom', inst: 'Install app', instIos: 'Tap Share then "Add to Home Screen"' },
+    pt: { menu: 'Menu', ch: 'Desafios', cm: 'Social', zin: 'Aproximar', zout: 'Afastar', fs: 'Tela cheia', hide: 'Ocultar', tip: 'Faça pinça com dois dedos para o zoom', inst: 'Instalar app', instIos: 'Toque em Compartilhar e "Adicionar à Tela de Início"' },
+    fr: { menu: 'Menu', ch: 'Défis', cm: 'Social', zin: 'Zoom +', zout: 'Zoom −', fs: 'Plein écran', hide: 'Masquer', tip: 'Pince avec deux doigts pour zoomer', inst: "Installer l'app", instIos: 'Touche Partager puis « Sur l\'écran d\'accueil »' },
+    it: { menu: 'Menu', ch: 'Sfide', cm: 'Social', zin: 'Zoom +', zout: 'Zoom −', fs: 'Schermo intero', hide: 'Nascondi', tip: 'Pizzica con due dita per lo zoom', inst: 'Installa app', instIos: 'Tocca Condividi e "Aggiungi a Home"' },
+    de: { menu: 'Menü', ch: 'Aufgaben', cm: 'Social', zin: 'Zoom +', zout: 'Zoom −', fs: 'Vollbild', hide: 'Ausblenden', tip: 'Mit zwei Fingern zoomen', inst: 'App installieren', instIos: 'Tippe auf Teilen und „Zum Home-Bildschirm"' }
   };
   var t = T[lang] || T.es;
   var isIos = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -58,13 +58,13 @@
     var dock = document.createElement('div'); dock.id = 'agDock';
     var canFs = !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen) && !standalone;
     dock.innerHTML =
-      '<button data-a="menu">☰<small>' + t.menu + '</small></button>' +
-      '<button data-a="ch" class="gold">🏆<small>' + t.ch + '</small></button>' +
-      '<button data-a="cm" class="green">💬<small>' + t.cm + '</small><span class="bd" id="agDockBadge"></span></button>' +
+      '<button data-a="menu"><i class="bi bi-list"></i><small>' + t.menu + '</small></button>' +
+      '<button data-a="ch" class="gold"><img class="agi lg" src="/ag/ic/trophy.png" alt=""><small>' + t.ch + '</small></button>' +
+      '<button data-a="cm" class="green"><img class="agi lg" src="/ag/ic/friends.png" alt=""><small>' + t.cm + '</small><span class="bd" id="agDockBadge"></span></button>' +
       '<button data-a="zin" class="sm" title="' + t.zin + '">＋</button>' +
       '<button data-a="zout" class="sm" title="' + t.zout + '">－</button>' +
-      (canFs ? '<button data-a="fs" class="sm" title="' + t.fs + '">⛶</button>' : '') +
-      (!standalone ? '<button data-a="inst" id="agInstBtn" class="sm" title="' + t.inst + '"' + (isIos ? '' : ' style="display:none"') + '>📲</button>' : '') +
+      (canFs ? '<button data-a="fs" class="sm" title="' + t.fs + '"><i class="bi bi-arrows-fullscreen"></i></button>' : '') +
+      (!standalone ? '<button data-a="inst" id="agInstBtn" class="sm" title="' + t.inst + '"' + (isIos ? '' : ' style="display:none"') + '><i class="bi bi-phone"></i></button>' : '') +
       '<button data-a="hide" class="sm" title="' + t.hide + '">›</button>';
     var tab = document.createElement('button'); tab.id = 'agDockTab'; tab.type = 'button'; tab.textContent = '‹';
     document.body.appendChild(dock); document.body.appendChild(tab);
@@ -133,7 +133,7 @@
     if (!document.getElementById('cvGame')) return;
     build(); pinch();
     var shown = false; try { shown = localStorage.getItem('agPinchTip') === '1'; localStorage.setItem('agPinchTip', '1'); } catch (e) { }
-    if (!shown) addEventListener('ag:loaded', function () { tip('🤏 ' + t.tip, 4500); });
+    if (!shown) addEventListener('ag:loaded', function () { tip(t.tip, 4500); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

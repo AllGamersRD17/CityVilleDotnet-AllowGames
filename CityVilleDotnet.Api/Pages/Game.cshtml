@@ -51,13 +51,17 @@
 		#cvGame { width: 960px; height: 756px; }
 		/* Allow Games: juego a pantalla completa en PC (el juego se adapta al tamaño) */
 		@@media (pointer: fine) {
-			body:has(#cvGame) { background: #0b2533 !important; }
+			body:has(#cvGame) { background: transparent !important; }
 			#cvGame { width: 100%; height: calc(100dvh - var(--ag-nav-h, 72px)); min-height: 560px; background: #000; }
 			#flashOuterContainer, #flashContent, #cvGame object, #cvGame ruffle-object, #cvGame ruffle-embed { width: 100% !important; height: 100% !important; display: block; }
 			body:has(#cvGame) .container.py-4 { max-width: none !important; padding: 0 !important; }
 			html:has(#cvGame), body:has(#cvGame) { overflow: hidden !important; height: 100%; }
 			body:has(#cvGame) footer, body:has(#cvGame) #agInvite, body:has(#cvGame) #agBanner { display: none !important; }
 			#cvGame { background: #12384f; }
+			/* Allow Games: en pantallas muy anchas el juego no se estira de lado a lado (se descuadraban los botones);
+			   queda centrado con una proporcion como la original y fondo a los lados */
+			#cvGame { width: min(100%, calc((100dvh - var(--ag-nav-h, 72px)) * 1.6), 1760px); margin: 0 auto; box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 0 40px rgba(0,0,0,.45); }
+			body:has(#cvGame) { background: transparent !important; }
 		}
 		#cvRotate, .cv-overlay-btn { display: none; }
 
@@ -114,9 +118,9 @@
 		var agCh = agL switch { "en" => "Challenges", "pt" => "Desafios", "fr" => "Défis", "it" => "Sfide", "de" => "Aufgaben", _ => "Desafíos" };
 		var agInv = agL switch { "en" => "Invite friends", "pt" => "Convidar amigos", "fr" => "Inviter des amis", "it" => "Invita amici", "de" => "Freunde einladen", _ => "Invitar amigos" };
 	}
-	<button type="button" class="btn btn-sm btn-warning font-weight-bold mr-2 my-2" style="border-radius:999px;white-space:nowrap" onclick="window.agOpenChallenges&&window.agOpenChallenges()">🏆 @agCh</button>
+	<button type="button" class="btn btn-sm btn-warning font-weight-bold mr-2 my-2" style="border-radius:999px;white-space:nowrap" onclick="window.agOpenChallenges&&window.agOpenChallenges()"><img class="agi" src="/ag/ic/trophy.png" alt="" draggable="false"/>@agCh</button>
 	<button type="button" id="agInvBtn" class="btn btn-sm btn-success font-weight-bold mr-lg-3 my-2" style="border-radius:999px;white-space:nowrap"
-	        onclick="(function(b){var u=location.origin+'/invitar/'+encodeURIComponent(window.AG_PLAYER.name);try{navigator.clipboard.writeText(u)}catch(e){}var t=b.textContent;b.textContent='✔ '+((window.AG_PLAYER.locale||'es').indexOf('es')===0?'¡Enlace copiado!':'Link copied!');setTimeout(function(){b.textContent=t},2500)})(this)">📨 @agInv</button>
+	        onclick="(function(b){var u=location.origin+'/invitar/'+encodeURIComponent(window.AG_PLAYER.name);try{navigator.clipboard.writeText(u)}catch(e){}var t=b.innerHTML;b.innerHTML='<img class=&quot;agi&quot; src=&quot;/ag/ic/check.png&quot; alt=&quot;&quot; draggable=&quot;false&quot;/>'+((window.AG_PLAYER.locale||'es').indexOf('es')===0?'¡Enlace copiado!':'Link copied!');setTimeout(function(){b.innerHTML=t},2500)})(this)"><img class="agi" src="/ag/ic/mail.png" alt="" draggable="false"/>@agInv</button>
 	<div class="d-flex align-items-center mr-lg-3 my-2" title="@Localizer["GameLanguage"]">
 		<label class="mb-0 mr-2 text-secondary" for="gameLocale"><i class="bi bi-globe2"></i></label>
 		<select id="gameLocale" class="custom-select custom-select-sm w-auto" aria-label="@Localizer["GameLanguage"]"
@@ -251,11 +255,11 @@
 		"hideScreenshot": function () { },
 		"setIsShowingAds": function () { },
 		"unsetIsShowingAds": function () { }
-	}
+	};
 
 	// Allow Games: funciones que el juego le pedia a Facebook o a Zynga. Aqui no hay Facebook, ni anuncios,
 	// ni compras con dinero real: se responden sin hacer nada o se mandan a nuestro sistema.
-	(function () {
+	;(function () {
 		function f() { var a = getFlashApp(); try { if (a && a.thawGame) a.thawGame(); } catch (e) { } try { if (a && a.enableAllInput) a.enableAllInput(); } catch (e) { } }
 		function nada() { return false; }
 		// suscripciones y compras -> desafios

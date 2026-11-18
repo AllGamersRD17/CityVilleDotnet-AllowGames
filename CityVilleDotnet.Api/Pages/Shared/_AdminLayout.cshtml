@@ -1,95 +1,75 @@
-﻿@using System.Reflection
+@using System.Reflection
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resources.SharedResource> Localizer
-
+@{
+    var path = (Context.Request.Path.Value ?? "").TrimEnd('/').ToLowerInvariant();
+    string On(string p) => path == p || (p != "/admin" && path.StartsWith(p)) || (p == "/admin" && path == "/admin/index") ? "on" : "";
+}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>CityVilleDotnet - @Localizer["AdminPanel"]</title>
+    <meta name="robots" content="noindex, nofollow"/>
+    <title>Panel Admin · CityVille Revived · Allow Games</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <link type="text/css" rel="stylesheet" href="~/css/site.css"/>
+    <link rel="icon" href="/ag/favicon.ico"/>
+    <link type="text/css" rel="stylesheet" href="/ag/admin.css?v=1"/>
 
     @await RenderSectionAsync("Header", required: false)
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
-<nav class="navbar navbar-expand-lg cv-navbar sticky-top border-bottom bg-white">
-    <div class="container-fluid px-lg-5">
-        <a class="d-flex align-items-center text-decoration-none py-2" asp-page="/Admin/Index">
-            <span class="font-outfit font-weight-bold h5 text-dark mb-0">CityVille<span class="text-primary">.NET</span></span>
-            <span class="badge badge-danger ml-2">@Localizer["Admin"]</span>
-        </a>
+<body class="ag-admin">
+<aside class="ad-side" id="adSide">
+    <a class="ad-brand" href="/Admin">
+        <img src="/ag/allowgames_nav.png" alt="Allow Games" draggable="false"/>
+        <span><b>CityVille Revived</b><small>Panel de control</small></span>
+    </a>
+    <nav class="ad-nav">
+        <div class="ad-sec">General</div>
+        <a class="@On("/admin")" href="/Admin"><i class="bi bi-grid-1x2-fill"></i>@Localizer["Dashboard"]</a>
+        <a class="@On("/admin/players")" href="/Admin/Players"><i class="bi bi-people-fill"></i>@Localizer["Players"]</a>
+        <div class="ad-sec">Juego</div>
+        <a class="@On("/admin/temporadas")" href="/Admin/Temporadas"><i class="bi bi-snow2"></i>Temporadas</a>
+        <a href="/Admin#faltan"><i class="bi bi-bug-fill"></i>Funciones que faltan</a>
+        <div class="ad-sec">Servidor</div>
+        <a class="@On("/admin/logs")" href="/Admin/Logs"><i class="bi bi-terminal-fill"></i>@Localizer["Logs"]</a>
+        <a href="/novedades.html" target="_blank" rel="noopener"><i class="bi bi-megaphone-fill"></i>Novedades</a>
+        <a href="/ranking.html" target="_blank" rel="noopener"><i class="bi bi-trophy-fill"></i>Ranking</a>
+    </nav>
+    <a class="ad-back" href="/Game"><i class="bi bi-play-circle-fill"></i>@Localizer["BackToGame"]</a>
+</aside>
+<div class="ad-shade" onclick="document.body.classList.remove('ad-open')"></div>
 
-        <button class="navbar-toggler border-secondary rounded" type="button" data-toggle="collapse" data-target="#cvAdminNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<div class="ad-main">
+    <header class="ad-top">
+        <button class="ad-burger" type="button" aria-label="Menu" onclick="document.body.classList.toggle('ad-open')"><i class="bi bi-list"></i></button>
+        <div class="ad-crumb">@(ViewData["Title"] ?? "Admin")</div>
+        <div class="ad-live"><span class="ad-dot"></span><span id="adOnline">…</span></div>
+        <div class="ad-clock" id="adClock"></div>
+        <span class="ad-badge"><i class="bi bi-shield-lock-fill"></i>@Localizer["Admin"]</span>
+    </header>
 
-        <div class="collapse navbar-collapse" id="cvAdminNavbar">
-            <ul class="navbar-nav mr-auto ml-lg-4">
-                <li class="nav-item">
-                    <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover" asp-page="/Admin/Index">
-                        <i class="bi bi-speedometer2 mr-2"></i>@Localizer["Dashboard"]
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover" asp-page="/Admin/Players/Index">
-                        <i class="bi bi-people mr-2"></i>@Localizer["Players"]
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover" asp-page="/Admin/Temporadas">
-                        <i class="bi bi-snow mr-2"></i>Temporadas
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover" asp-page="/Admin/Logs">
-                        <i class="bi bi-journal-text mr-2"></i>@Localizer["Logs"]
-                    </a>
-                </li>
-            </ul>
+    <main class="ad-body">
+        @if (TempData["Error"] != null)
+        {
+            <div class="ad-alert err" role="alert"><i class="bi bi-exclamation-octagon-fill"></i><span>@TempData["Error"]</span><button type="button" onclick="this.parentNode.remove()"><i class="bi bi-x-lg"></i></button></div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="ad-alert ok" role="alert"><i class="bi bi-check-circle-fill"></i><span>@TempData["Success"]</span><button type="button" onclick="this.parentNode.remove()"><i class="bi bi-x-lg"></i></button></div>
+        }
 
-            <a class="btn btn-outline-primary btn-sm font-weight-bold" asp-page="/Game">
-                <i class="bi bi-play-fill mr-1"></i>@Localizer["BackToGame"]
-            </a>
-        </div>
-    </div>
-</nav>
+        @RenderBody()
+    </main>
 
-<div class="container-fluid px-lg-5 py-4 flex-grow-1">
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger fade show d-flex align-items-center justify-content-between" role="alert">
-            <span><i class="bi bi-exclamation-triangle-fill mr-2"></i>@TempData["Error"]</span>
-            <button type="button" class="btn btn-sm ml-3" data-dismiss="alert"><i class="bi bi-x-lg"></i></button>
-        </div>
-    }
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success fade show d-flex align-items-center justify-content-between" role="alert">
-            <span><i class="bi bi-check-circle-fill mr-2"></i>@TempData["Success"]</span>
-            <button type="button" class="btn btn-sm ml-3" data-dismiss="alert"><i class="bi bi-x-lg"></i></button>
-        </div>
-    }
-
-    @RenderBody()
+    <footer class="ad-foot">
+        CityVille Revived · Allow Games (AllGamersRD) · BETA v0.21 · servidor basado en CityVilleDotnet de besuper ·
+        build @(Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion?.Split('+')[0] ?? "dev")
+    </footer>
 </div>
 
-<footer class="mt-auto">
-    <div style="max-width:760px; margin: 0 auto;">
-        <hr class="my-2">
-        <p class="text-center text-muted small mb-3">
-            CityVilleDotnet
-            build: @(Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "dev")
-        </p>
-    </div>
-</footer>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -97,11 +77,29 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
         crossorigin="anonymous"></script>
 <script>
+    // confirmar acciones peligrosas (borrar, banear, resetear...)
     document.addEventListener("submit", e => {
         const message = e.target.dataset?.confirm;
-
-        if (message && !confirm(message)) e.preventDefault();
+        if (message && !confirm(message)) { e.preventDefault(); return; }
+        // evita doble envio
+        const b = e.target.querySelector("button[type=submit],button:not([type])");
+        if (b && !e.defaultPrevented) setTimeout(() => { b.disabled = true; b.classList.add("ad-busy"); }, 0);
     });
+    (function () {
+        const c = document.getElementById("adClock");
+        const tick = () => { c.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); };
+        tick(); setInterval(tick, 15000);
+        const o = document.getElementById("adOnline");
+        const st = () => fetch("/api/ag/stats").then(r => r.json()).then(s => { o.textContent = s.online + " en línea · " + s.players + " alcaldes"; }).catch(() => { });
+        st(); setInterval(st, 30000);
+        // tablas: buscar dentro de la tabla en vivo
+        document.querySelectorAll(".ad-body .table-responsive").forEach(w => {
+            const tb = w.querySelector("tbody"); if (!tb || tb.rows.length < 8) return;
+            const i = document.createElement("input"); i.className = "form-control ad-filter"; i.placeholder = "Filtrar esta tabla…";
+            i.oninput = () => { const q = i.value.toLowerCase(); [...tb.rows].forEach(r => r.style.display = r.textContent.toLowerCase().includes(q) ? "" : "none"); };
+            w.parentNode.insertBefore(i, w);
+        });
+    })();
 </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -24,7 +24,7 @@
 
     <link type="text/css" rel="stylesheet" href="~/css/site.css"/>
     <link rel="icon" href="/ag/favicon.ico"/>
-    <link type="text/css" rel="stylesheet" href="/ag/allowgames.css?v=8"/>
+    <link type="text/css" rel="stylesheet" href="/ag/allowgames.css?v=11"/>
     <link rel="manifest" href="/manifest.webmanifest"/>
     <meta name="theme-color" content="#2f8fc4"/>
     <meta name="mobile-web-app-capable" content="yes"/>
@@ -41,7 +41,7 @@
         <a class="ag-brand py-1" href="/Game" title="CityVille Revived · Allow Games">
             <img class="ag-ag" src="/ag/allowgames_nav.png" alt="Allow Games" draggable="false"/>
             <img class="ag-cv" src="/ag/logo_revived.png" alt="CityVille Revived" draggable="false"/>
-            <span class="ag-beta">BETA v0.17</span>
+            <span class="ag-beta">BETA v0.21</span>
         </a>
 
         <button class="navbar-toggler border-secondary rounded" type="button" data-toggle="collapse"
@@ -56,7 +56,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover"
                        asp-page="/Game" title="Game">
-                        <i class="bi bi-play-fill mr-2"></i>
+                        <img class="agi" src="/ag/ic/city.png" alt="" draggable="false"/>
                         @Localizer["Play"]
                     </a>
                 </li>
@@ -64,23 +64,23 @@
                 <li class="nav-item">
                     <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover"
                        asp-page="/Friends/List" title="Friends">
-                        <i class="bi bi-people mr-2"></i>
+                        <img class="agi" src="/ag/ic/friends.png" alt="" draggable="false"/>
                         @Localizer["Friends"]
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover position-relative"
                        href="/novedades.html" title="Novedades">
-                        <i class="bi bi-megaphone mr-2"></i><span id="agNewsTxt">Novedades</span>
+                        <img class="agi" src="/ag/ic/news.png" alt="" draggable="false"/><span id="agNewsTxt">Novedades</span>
                         <span id="agNewsDot" style="display:none;position:absolute;top:8px;right:6px;width:10px;height:10px;border-radius:50%;background:#e8572a;box-shadow:0 0 0 2px #fff"></span>
                     </a>
-                    <script>(function(){var V="0.17",l="es";try{l=(localStorage.getItem("lang")||navigator.language||"es").slice(0,2);if(localStorage.getItem("agNewsSeen")!==V)document.getElementById("agNewsDot").style.display="block"}catch(e){}
+                    <script>(function(){var V="0.21",l="es";try{l=(localStorage.getItem("lang")||navigator.language||"es").slice(0,2);if(localStorage.getItem("agNewsSeen")!==V)document.getElementById("agNewsDot").style.display="block"}catch(e){}
                     var t={es:"Novedades",en:"News",pt:"Novidades",fr:"Nouveautés",it:"Novità",de:"Neuigkeiten"};document.getElementById("agNewsTxt").textContent=t[l]||t.en})();</script>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-secondary font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover"
                        href="/ranking.html" title="Ranking">
-                        <i class="bi bi-trophy mr-2"></i>Ranking
+                        <img class="agi" src="/ag/ic/trophy.png" alt="" draggable="false"/>Ranking
                     </a>
                 </li>
                 <li class="nav-item d-flex align-items-center px-3 py-2 my-2 mx-1 small font-weight-bold text-success ag-online" title="En línea">
@@ -91,7 +91,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-danger font-weight-bold d-flex align-items-center rounded px-3 py-2 my-2 mx-1 cv-hover"
                            asp-page="/Admin/Index" title="Admin">
-                            <i class="bi bi-shield-lock mr-2"></i>
+                            <img class="agi" src="/ag/ic/vip.png" alt="" draggable="false"/>
                             @Localizer["Admin"]
                         </a>
                     </li>
@@ -106,8 +106,7 @@
                     <img class="rounded mr-2" src="@(ViewData["ProfilePictureUrl"] ?? "/blank.png")" style="width: 50px; height: 50px" alt="Profile" />
                     <div class="d-none d-xl-block">
                         <div class="font-weight-bold text-dark small">@ViewData["PlayerName"]</div>
-                        <div class="text-info small"><i
-                                class="bi bi-star-fill"></i> @Localizer["Level"] @ViewData["PlayerLevel"]
+                        <div class="text-info small"><img class="agi" src="/ag/ic/xp.png" alt="" draggable="false"/>@Localizer["Level"] @ViewData["PlayerLevel"]
                         </div>
                     </div>
                     <svg class="cv-chevron d-none d-xl-block text-secondary ml-2" xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +187,7 @@
             var i = document.getElementById('agInviteUrl'); i.value = u;
             document.getElementById('agInviteBtn').onclick = function () {
                 i.select(); try { navigator.clipboard.writeText(u); } catch (e) { document.execCommand('copy'); }
-                this.textContent = '✔';
+                this.innerHTML = '<img class="agi" src="/ag/ic/check.png" alt="" draggable="false"/>';
             };
         })();
     </script>
@@ -198,15 +197,17 @@
     <div style="max-width:760px; margin: 0 auto;">
         <hr class="my-2">
         <p class="text-center text-muted small mb-3">
-            CityVille Revived BETA v0.17 · <b>Allow Games</b> (AllGamersRD) ·
+            CityVille Revived BETA v0.21 · <b>Allow Games</b> (AllGamersRD) ·
             servidor basado en <a class="text-white" href="https://github.com/besuper/CityVilleDotnet" target="_blank" rel="noopener">CityVilleDotnet</a> ·
             proyecto de fans sin fines de lucro, no afiliado a Zynga · <a href="/creditos.html" style="color:inherit;font-weight:700">Créditos</a>
         </p>
     </div>
 </footer>
+<script src="/ag/scene.js?v=2"></script>
+<script>(function(){var p=location.pathname.toLowerCase().replace(/\/$/,"");document.querySelectorAll(".cv-navbar .nav-link").forEach(function(l){var h=(l.getAttribute("href")||"").toLowerCase().replace(/\/$/,"");if(h&&h===p)l.classList.add("ag-on")})})();</script>
 <script src="/ag/site.js?v=3"></script>
-<script src="/ag/community.js?v=12"></script>
-<script src="/ag/mobile.js?v=1"></script>
+<script src="/ag/community.js?v=15"></script>
+<script src="/ag/mobile.js?v=2"></script>
 <style>@@media (min-width:1200px){.cv-navbar>.container{max-width:1720px}}</style>
 <script>
 // Allow Games: la barra de arriba nunca se corta. Si no cabe, se achica entera (igual que se ve en grande).

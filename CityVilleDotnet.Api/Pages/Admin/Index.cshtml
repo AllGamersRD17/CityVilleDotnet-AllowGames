@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model CityVilleDotnet.Api.Pages.Admin.IndexModel
 
 @section Header {
@@ -9,6 +9,14 @@
 	<i class="bi bi-speedometer2 mr-2 text-primary"></i>@Localizer["Dashboard"]
 </h4>
 
+@{ ViewData["Title"] = "Inicio del panel"; }
+<div class="ad-quick">
+	<a href="/Admin/Players"><img src="/ag/ic/friends.png" alt="">Jugadores</a>
+	<a href="/Admin/Temporadas"><img src="/ag/ic/tree.png" alt="">Temporadas</a>
+	<a href="/Admin/Logs"><img src="/ag/ic/news.png" alt="">Registros</a>
+	<a href="#faltan"><img src="/ag/ic/alert.png" alt="">Lo que falta</a>
+	<a href="/Game"><img src="/ag/ic/city.png" alt="">Ir al juego</a>
+</div>
 <div class="row row-cols-2 row-cols-md-4 mb-4">
 	<div class="col mb-3">
 		<div class="card border-0 shadow-sm h-100 text-center p-3">
@@ -88,3 +96,28 @@
 		}
 	</div>
 </div>
+
+
+<div class="card mt-4" id="faltan">
+	<div class="card-body">
+		<div class="d-flex align-items-center justify-content-between mb-2">
+			<h6 class="font-weight-bold mb-0"><i class="bi bi-bug-fill mr-2 text-danger"></i>Funciones del juego que el servidor todavía no sabe hacer</h6>
+			<button class="btn btn-sm btn-primary" type="button" onclick="adMissing()"><i class="bi bi-arrow-repeat mr-1"></i>Actualizar</button>
+		</div>
+		<p class="text-muted small mb-3">Cada vez que un jugador toca algo que el servidor no conoce, aparece aquí. Las de arriba son las que más se usan: esas son las que hay que programar primero.</p>
+		<div class="table-responsive ad-miss">
+			<table class="table table-sm"><thead><tr><th>Función</th><th>Veces</th><th>Última vez</th></tr></thead><tbody id="adMissRows"><tr><td colspan="3" class="text-muted">Cargando…</td></tr></tbody></table>
+		</div>
+	</div>
+</div>
+<script>
+	function adMissing() {
+		const tb = document.getElementById("adMissRows");
+		fetch("/api/ag/admin/missing", { credentials: "same-origin" }).then(r => r.ok ? r.json() : []).then(list => {
+			const esc = x => String(x).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+			tb.innerHTML = list.length ? list.slice(0, 50).map(m => "<tr><td>" + esc(m.handler) + "</td><td class=\"cnt\">" + m.count + "</td><td>" + new Date(m.last).toLocaleString() + "</td></tr>").join("")
+				: "<tr><td colspan=\"3\" class=\"text-success\"><i class=\"bi bi-check-circle-fill mr-1\"></i>Nada pendiente desde que arrancó el servidor.</td></tr>";
+		}).catch(() => { tb.innerHTML = "<tr><td colspan=\"3\" class=\"text-muted\">No se pudo cargar.</td></tr>"; });
+	}
+	adMissing();
+</script>

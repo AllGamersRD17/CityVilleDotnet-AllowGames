@@ -13,12 +13,12 @@
   var t = L[lang] || L.es;
   // textos del panel de agregar amigos
   var FR = {
-    es: { gf: "Regalos", gfTitle: "Manda regalos gratis", gfPick: "1. Escoge un regalo", gfTo: "2. Escoge a tus amigos", gfSend: "Enviar regalo", gfSent: "¡Regalo enviado a", gfNone: "Primero agrega amigos para mandarles regalos.", gfToday: "ya recibió hoy", gfWish: "Pide", gfLvl: "Nivel", gfGot: "te mandó un regalo", gfInv: "Está en tu inventario.", gfNoSel: "Escoge un regalo y al menos un amigo.", gfAll: "Todos", crTitle: "Contratar amigos", crHelp: "Tus amigos pueden trabajar en este edificio. Contrátalos para llenar los puestos.", crHire: "Contratar", crHired: "Contratado", crFull: "¡Ya están todos los puestos llenos!", crNone: "Agrega amigos para poder contratarlos.", crOk: "¡Contrataste a", crReload: "Recarga la ciudad para verlo en el edificio.", crGot: "te contrató para trabajar en su ciudad 🏛️", crReloadBtn: "Recargar ciudad", crSlots: "puestos", frGotHelp: 'te ayudó en el muro 🤝', helpClosed: 'Este alcalde no acepta ayuda en sus publicaciones.', helpFriends: 'Solo sus amigos pueden ayudar aquí.', fr: 'Amigos', frReqs: 'Solicitudes de amistad', frGotReq: 'te mandó una solicitud de amistad', frGotAcc: 'aceptó tu solicitud de amistad 🎉', frNewReq: 'Nueva solicitud', frNewFriend: '¡Nuevo amigo!', frAdd: 'Agregar', frTitle: 'Agregar amigos', frBy: 'Agregar por nombre de usuario', frPh: 'Escribe el usuario…', frAll: 'Agregar a todos los registrados', frAllQ: '¿Mandar solicitud de amistad a todos los alcaldes registrados?', frAllOk: 'Solicitudes enviadas', frAccepted: 'aceptadas', frSent: 'Enviada', frFriend: 'Amigos', frAccept: 'Aceptar', frPrivate: 'Privado', frNotFound: 'No existe ese usuario.', frNoAdd: 'Este alcalde no acepta solicitudes.', frSentOk: 'Solicitud enviada a', frNow: 'Ahora son amigos:', frList: 'Alcaldes registrados', frPending: 'por agregar', frReload: 'Tus vecinos nuevos salen en la barra al recargar el juego.' },
-    en: { gf: "Gifts", gfTitle: "Send free gifts", gfPick: "1. Choose a gift", gfTo: "2. Choose your friends", gfSend: "Send gift", gfSent: "Gift sent to", gfNone: "Add friends first to send them gifts.", gfToday: "already got one today", gfWish: "Wants", gfLvl: "Level", gfGot: "sent you a gift", gfInv: "It's in your inventory.", gfNoSel: "Choose a gift and at least one friend.", gfAll: "All", crTitle: "Hire friends", crHelp: "Your friends can work in this building. Hire them to fill the jobs.", crHire: "Hire", crHired: "Hired", crFull: "All jobs are filled!", crNone: "Add friends so you can hire them.", crOk: "You hired", crReload: "Reload the city to see it in the building.", crGot: "hired you to work in their city 🏛️", crReloadBtn: "Reload city", crSlots: "jobs", frGotHelp: 'helped you on the wall 🤝', helpClosed: "This mayor doesn't accept help on their posts.", helpFriends: 'Only their friends can help here.', fr: 'Friends', frReqs: 'Friend requests', frGotReq: 'sent you a friend request', frGotAcc: 'accepted your friend request 🎉', frNewReq: 'New request', frNewFriend: 'New friend!', frAdd: 'Add', frTitle: 'Add friends', frBy: 'Add by username', frPh: 'Type the username…', frAll: 'Add everyone registered', frAllQ: 'Send a friend request to every registered mayor?', frAllOk: 'Requests sent', frAccepted: 'accepted', frSent: 'Sent', frFriend: 'Friends', frAccept: 'Accept', frPrivate: 'Private', frNotFound: 'That user does not exist.', frNoAdd: 'This mayor does not accept requests.', frSentOk: 'Request sent to', frNow: 'You are now friends:', frList: 'Registered mayors', frPending: 'to add', frReload: 'New neighbors show in the bar when the game reloads.' },
-    pt: { gf: "Presentes", gfTitle: "Envie presentes grátis", gfPick: "1. Escolha um presente", gfTo: "2. Escolha seus amigos", gfSend: "Enviar presente", gfSent: "Presente enviado para", gfNone: "Adicione amigos primeiro para mandar presentes.", gfToday: "já recebeu hoje", gfWish: "Pede", gfLvl: "Nível", gfGot: "te mandou um presente", gfInv: "Está no seu inventário.", gfNoSel: "Escolha um presente e pelo menos um amigo.", gfAll: "Todos", crTitle: "Contratar amigos", crHelp: "Seus amigos podem trabalhar neste prédio. Contrate-os para preencher as vagas.", crHire: "Contratar", crHired: "Contratado", crFull: "Todas as vagas estão preenchidas!", crNone: "Adicione amigos para poder contratá-los.", crOk: "Você contratou", crReload: "Recarregue a cidade para ver no prédio.", crGot: "te contratou para trabalhar na cidade dele 🏛️", crReloadBtn: "Recarregar cidade", crSlots: "vagas", frGotHelp: 'te ajudou no mural 🤝', helpClosed: 'Este prefeito não aceita ajuda nas publicações.', helpFriends: 'Só os amigos podem ajudar aqui.', fr: 'Amigos', frReqs: 'Pedidos de amizade', frGotReq: 'te enviou um pedido de amizade', frGotAcc: 'aceitou seu pedido de amizade 🎉', frNewReq: 'Novo pedido', frNewFriend: 'Novo amigo!', frAdd: 'Adicionar', frTitle: 'Adicionar amigos', frBy: 'Adicionar por nome de usuário', frPh: 'Digite o usuário…', frAll: 'Adicionar todos os registrados', frAllQ: 'Enviar pedido de amizade para todos os prefeitos registrados?', frAllOk: 'Pedidos enviados', frAccepted: 'aceitos', frSent: 'Enviado', frFriend: 'Amigos', frAccept: 'Aceitar', frPrivate: 'Privado', frNotFound: 'Esse usuário não existe.', frNoAdd: 'Este prefeito não aceita pedidos.', frSentOk: 'Pedido enviado para', frNow: 'Agora são amigos:', frList: 'Prefeitos registrados', frPending: 'para adicionar', frReload: 'Os novos vizinhos aparecem na barra ao recarregar o jogo.' },
-    fr: { gf: "Cadeaux", gfTitle: "Envoie des cadeaux gratuits", gfPick: "1. Choisis un cadeau", gfTo: "2. Choisis tes amis", gfSend: "Envoyer", gfSent: "Cadeau envoyé à", gfNone: "Ajoute d'abord des amis pour leur envoyer des cadeaux.", gfToday: "en a déjà reçu un aujourd'hui", gfWish: "Veut", gfLvl: "Niveau", gfGot: "t'a envoyé un cadeau", gfInv: "Il est dans ton inventaire.", gfNoSel: "Choisis un cadeau et au moins un ami.", gfAll: "Tous", crTitle: "Embaucher des amis", crHelp: "Tes amis peuvent travailler dans ce bâtiment. Embauche-les pour remplir les postes.", crHire: "Embaucher", crHired: "Embauché", crFull: "Tous les postes sont pris !", crNone: "Ajoute des amis pour pouvoir les embaucher.", crOk: "Tu as embauché", crReload: "Recharge la ville pour le voir dans le bâtiment.", crGot: "t'a embauché dans sa ville 🏛️", crReloadBtn: "Recharger la ville", crSlots: "postes", frGotHelp: "t'a aidé sur le mur 🤝", helpClosed: "Ce maire n'accepte pas d'aide sur ses publications.", helpFriends: 'Seuls ses amis peuvent aider ici.', fr: 'Amis', frReqs: "Demandes d'ami", frGotReq: "t'a envoyé une demande d'ami", frGotAcc: "a accepté ta demande d'ami 🎉", frNewReq: 'Nouvelle demande', frNewFriend: 'Nouvel ami !', frAdd: 'Ajouter', frTitle: 'Ajouter des amis', frBy: 'Ajouter par pseudo', frPh: 'Écris le pseudo…', frAll: 'Ajouter tous les inscrits', frAllQ: 'Envoyer une demande d\'ami à tous les maires inscrits ?', frAllOk: 'Demandes envoyées', frAccepted: 'acceptées', frSent: 'Envoyée', frFriend: 'Amis', frAccept: 'Accepter', frPrivate: 'Privé', frNotFound: 'Ce pseudo n\'existe pas.', frNoAdd: 'Ce maire n\'accepte pas les demandes.', frSentOk: 'Demande envoyée à', frNow: 'Vous êtes amis :', frList: 'Maires inscrits', frPending: 'à ajouter', frReload: 'Les nouveaux voisins apparaissent dans la barre en rechargeant le jeu.' },
-    it: { gf: "Regali", gfTitle: "Manda regali gratis", gfPick: "1. Scegli un regalo", gfTo: "2. Scegli i tuoi amici", gfSend: "Invia regalo", gfSent: "Regalo inviato a", gfNone: "Aggiungi prima degli amici per mandare regali.", gfToday: "ne ha già ricevuto uno oggi", gfWish: "Chiede", gfLvl: "Livello", gfGot: "ti ha mandato un regalo", gfInv: "È nel tuo inventario.", gfNoSel: "Scegli un regalo e almeno un amico.", gfAll: "Tutti", crTitle: "Assumi amici", crHelp: "I tuoi amici possono lavorare in questo edificio. Assumili per riempire i posti.", crHire: "Assumi", crHired: "Assunto", crFull: "Tutti i posti sono occupati!", crNone: "Aggiungi amici per poterli assumere.", crOk: "Hai assunto", crReload: "Ricarica la città per vederlo nell'edificio.", crGot: "ti ha assunto nella sua città 🏛️", crReloadBtn: "Ricarica città", crSlots: "posti", frGotHelp: 'ti ha aiutato in bacheca 🤝', helpClosed: 'Questo sindaco non accetta aiuto nei suoi post.', helpFriends: 'Solo i suoi amici possono aiutare qui.', fr: 'Amici', frReqs: 'Richieste di amicizia', frGotReq: 'ti ha inviato una richiesta di amicizia', frGotAcc: 'ha accettato la tua richiesta di amicizia 🎉', frNewReq: 'Nuova richiesta', frNewFriend: 'Nuovo amico!', frAdd: 'Aggiungi', frTitle: 'Aggiungi amici', frBy: 'Aggiungi per nome utente', frPh: 'Scrivi il nome utente…', frAll: 'Aggiungi tutti i registrati', frAllQ: 'Inviare una richiesta di amicizia a tutti i sindaci registrati?', frAllOk: 'Richieste inviate', frAccepted: 'accettate', frSent: 'Inviata', frFriend: 'Amici', frAccept: 'Accetta', frPrivate: 'Privato', frNotFound: 'Questo utente non esiste.', frNoAdd: 'Questo sindaco non accetta richieste.', frSentOk: 'Richiesta inviata a', frNow: 'Ora siete amici:', frList: 'Sindaci registrati', frPending: 'da aggiungere', frReload: 'I nuovi vicini appaiono nella barra ricaricando il gioco.' },
-    de: { gf: "Geschenke", gfTitle: "Gratis-Geschenke senden", gfPick: "1. Wähle ein Geschenk", gfTo: "2. Wähle deine Freunde", gfSend: "Geschenk senden", gfSent: "Geschenk gesendet an", gfNone: "Füge zuerst Freunde hinzu.", gfToday: "hat heute schon eins", gfWish: "Wünscht", gfLvl: "Level", gfGot: "hat dir ein Geschenk geschickt", gfInv: "Es ist in deinem Inventar.", gfNoSel: "Wähle ein Geschenk und mindestens einen Freund.", gfAll: "Alle", crTitle: "Freunde einstellen", crHelp: "Deine Freunde können in diesem Gebäude arbeiten.", crHire: "Einstellen", crHired: "Eingestellt", crFull: "Alle Stellen sind besetzt!", crNone: "Füge Freunde hinzu, um sie einzustellen.", crOk: "Du hast eingestellt:", crReload: "Lade die Stadt neu, um es zu sehen.", crGot: "hat dich in seiner Stadt eingestellt 🏛️", crReloadBtn: "Stadt neu laden", crSlots: "Stellen", frGotHelp: 'hat dir an der Pinnwand geholfen 🤝', helpClosed: 'Dieser Bürgermeister nimmt keine Hilfe an.', helpFriends: 'Nur Freunde können hier helfen.', fr: 'Freunde', frReqs: 'Freundschaftsanfragen', frGotReq: 'hat dir eine Freundschaftsanfrage geschickt', frGotAcc: 'hat deine Freundschaftsanfrage angenommen 🎉', frNewReq: 'Neue Anfrage', frNewFriend: 'Neuer Freund!', frAdd: 'Hinzufügen', frTitle: 'Freunde hinzufügen', frBy: 'Per Benutzername hinzufügen', frPh: 'Benutzername eingeben…', frAll: 'Alle Registrierten hinzufügen', frAllQ: 'Allen registrierten Bürgermeistern eine Anfrage senden?', frAllOk: 'Anfragen gesendet', frAccepted: 'angenommen', frSent: 'Gesendet', frFriend: 'Freunde', frAccept: 'Annehmen', frPrivate: 'Privat', frNotFound: 'Diesen Benutzer gibt es nicht.', frNoAdd: 'Dieser Bürgermeister nimmt keine Anfragen an.', frSentOk: 'Anfrage gesendet an', frNow: 'Ihr seid jetzt Freunde:', frList: 'Registrierte Bürgermeister', frPending: 'hinzuzufügen', frReload: 'Neue Nachbarn erscheinen nach dem Neuladen in der Leiste.' }
+    es: { gf: "Regalos", gfTitle: "Manda regalos gratis", gfPick: "1. Escoge un regalo", gfTo: "2. Escoge a tus amigos", gfSend: "Enviar regalo", gfSent: "¡Regalo enviado a", gfNone: "Primero agrega amigos para mandarles regalos.", gfToday: "ya recibió hoy", gfWish: "Pide", gfLvl: "Nivel", gfGot: "te mandó un regalo", gfInv: "Está en tu inventario.", gfNoSel: "Escoge un regalo y al menos un amigo.", gfAll: "Todos", crTitle: "Contratar amigos", crHelp: "Tus amigos pueden trabajar en este edificio. Contrátalos para llenar los puestos.", crHire: "Contratar", crHired: "Contratado", crFull: "¡Ya están todos los puestos llenos!", crNone: "Agrega amigos para poder contratarlos.", crOk: "¡Contrataste a", crReload: "Recarga la ciudad para verlo en el edificio.", crGot: "te contrató para trabajar en su ciudad", crReloadBtn: "Recargar ciudad", crSlots: "puestos", frGotHelp: 'te ayudó en el muro', helpClosed: 'Este alcalde no acepta ayuda en sus publicaciones.', helpFriends: 'Solo sus amigos pueden ayudar aquí.', fr: 'Amigos', frReqs: 'Solicitudes de amistad', frGotReq: 'te mandó una solicitud de amistad', frGotAcc: 'aceptó tu solicitud de amistad', frNewReq: 'Nueva solicitud', frNewFriend: '¡Nuevo amigo!', frAdd: 'Agregar', frTitle: 'Agregar amigos', frBy: 'Agregar por nombre de usuario', frPh: 'Escribe el usuario…', frAll: 'Agregar a todos los registrados', frAllQ: '¿Mandar solicitud de amistad a todos los alcaldes registrados?', frAllOk: 'Solicitudes enviadas', frAccepted: 'aceptadas', frSent: 'Enviada', frFriend: 'Amigos', frAccept: 'Aceptar', frPrivate: 'Privado', frNotFound: 'No existe ese usuario.', frNoAdd: 'Este alcalde no acepta solicitudes.', frSentOk: 'Solicitud enviada a', frNow: 'Ahora son amigos:', frList: 'Alcaldes registrados', frPending: 'por agregar', frReload: 'Tus vecinos nuevos salen en la barra al recargar el juego.' },
+    en: { gf: "Gifts", gfTitle: "Send free gifts", gfPick: "1. Choose a gift", gfTo: "2. Choose your friends", gfSend: "Send gift", gfSent: "Gift sent to", gfNone: "Add friends first to send them gifts.", gfToday: "already got one today", gfWish: "Wants", gfLvl: "Level", gfGot: "sent you a gift", gfInv: "It's in your inventory.", gfNoSel: "Choose a gift and at least one friend.", gfAll: "All", crTitle: "Hire friends", crHelp: "Your friends can work in this building. Hire them to fill the jobs.", crHire: "Hire", crHired: "Hired", crFull: "All jobs are filled!", crNone: "Add friends so you can hire them.", crOk: "You hired", crReload: "Reload the city to see it in the building.", crGot: "hired you to work in their city", crReloadBtn: "Reload city", crSlots: "jobs", frGotHelp: 'helped you on the wall', helpClosed: "This mayor doesn't accept help on their posts.", helpFriends: 'Only their friends can help here.', fr: 'Friends', frReqs: 'Friend requests', frGotReq: 'sent you a friend request', frGotAcc: 'accepted your friend request', frNewReq: 'New request', frNewFriend: 'New friend!', frAdd: 'Add', frTitle: 'Add friends', frBy: 'Add by username', frPh: 'Type the username…', frAll: 'Add everyone registered', frAllQ: 'Send a friend request to every registered mayor?', frAllOk: 'Requests sent', frAccepted: 'accepted', frSent: 'Sent', frFriend: 'Friends', frAccept: 'Accept', frPrivate: 'Private', frNotFound: 'That user does not exist.', frNoAdd: 'This mayor does not accept requests.', frSentOk: 'Request sent to', frNow: 'You are now friends:', frList: 'Registered mayors', frPending: 'to add', frReload: 'New neighbors show in the bar when the game reloads.' },
+    pt: { gf: "Presentes", gfTitle: "Envie presentes grátis", gfPick: "1. Escolha um presente", gfTo: "2. Escolha seus amigos", gfSend: "Enviar presente", gfSent: "Presente enviado para", gfNone: "Adicione amigos primeiro para mandar presentes.", gfToday: "já recebeu hoje", gfWish: "Pede", gfLvl: "Nível", gfGot: "te mandou um presente", gfInv: "Está no seu inventário.", gfNoSel: "Escolha um presente e pelo menos um amigo.", gfAll: "Todos", crTitle: "Contratar amigos", crHelp: "Seus amigos podem trabalhar neste prédio. Contrate-os para preencher as vagas.", crHire: "Contratar", crHired: "Contratado", crFull: "Todas as vagas estão preenchidas!", crNone: "Adicione amigos para poder contratá-los.", crOk: "Você contratou", crReload: "Recarregue a cidade para ver no prédio.", crGot: "te contratou para trabalhar na cidade dele", crReloadBtn: "Recarregar cidade", crSlots: "vagas", frGotHelp: 'te ajudou no mural', helpClosed: 'Este prefeito não aceita ajuda nas publicações.', helpFriends: 'Só os amigos podem ajudar aqui.', fr: 'Amigos', frReqs: 'Pedidos de amizade', frGotReq: 'te enviou um pedido de amizade', frGotAcc: 'aceitou seu pedido de amizade', frNewReq: 'Novo pedido', frNewFriend: 'Novo amigo!', frAdd: 'Adicionar', frTitle: 'Adicionar amigos', frBy: 'Adicionar por nome de usuário', frPh: 'Digite o usuário…', frAll: 'Adicionar todos os registrados', frAllQ: 'Enviar pedido de amizade para todos os prefeitos registrados?', frAllOk: 'Pedidos enviados', frAccepted: 'aceitos', frSent: 'Enviado', frFriend: 'Amigos', frAccept: 'Aceitar', frPrivate: 'Privado', frNotFound: 'Esse usuário não existe.', frNoAdd: 'Este prefeito não aceita pedidos.', frSentOk: 'Pedido enviado para', frNow: 'Agora são amigos:', frList: 'Prefeitos registrados', frPending: 'para adicionar', frReload: 'Os novos vizinhos aparecem na barra ao recarregar o jogo.' },
+    fr: { gf: "Cadeaux", gfTitle: "Envoie des cadeaux gratuits", gfPick: "1. Choisis un cadeau", gfTo: "2. Choisis tes amis", gfSend: "Envoyer", gfSent: "Cadeau envoyé à", gfNone: "Ajoute d'abord des amis pour leur envoyer des cadeaux.", gfToday: "en a déjà reçu un aujourd'hui", gfWish: "Veut", gfLvl: "Niveau", gfGot: "t'a envoyé un cadeau", gfInv: "Il est dans ton inventaire.", gfNoSel: "Choisis un cadeau et au moins un ami.", gfAll: "Tous", crTitle: "Embaucher des amis", crHelp: "Tes amis peuvent travailler dans ce bâtiment. Embauche-les pour remplir les postes.", crHire: "Embaucher", crHired: "Embauché", crFull: "Tous les postes sont pris !", crNone: "Ajoute des amis pour pouvoir les embaucher.", crOk: "Tu as embauché", crReload: "Recharge la ville pour le voir dans le bâtiment.", crGot: "t'a embauché dans sa ville", crReloadBtn: "Recharger la ville", crSlots: "postes", frGotHelp: "t'a aidé sur le mur", helpClosed: "Ce maire n'accepte pas d'aide sur ses publications.", helpFriends: 'Seuls ses amis peuvent aider ici.', fr: 'Amis', frReqs: "Demandes d'ami", frGotReq: "t'a envoyé une demande d'ami", frGotAcc: "a accepté ta demande d'ami", frNewReq: 'Nouvelle demande', frNewFriend: 'Nouvel ami !', frAdd: 'Ajouter', frTitle: 'Ajouter des amis', frBy: 'Ajouter par pseudo', frPh: 'Écris le pseudo…', frAll: 'Ajouter tous les inscrits', frAllQ: 'Envoyer une demande d\'ami à tous les maires inscrits ?', frAllOk: 'Demandes envoyées', frAccepted: 'acceptées', frSent: 'Envoyée', frFriend: 'Amis', frAccept: 'Accepter', frPrivate: 'Privé', frNotFound: 'Ce pseudo n\'existe pas.', frNoAdd: 'Ce maire n\'accepte pas les demandes.', frSentOk: 'Demande envoyée à', frNow: 'Vous êtes amis :', frList: 'Maires inscrits', frPending: 'à ajouter', frReload: 'Les nouveaux voisins apparaissent dans la barre en rechargeant le jeu.' },
+    it: { gf: "Regali", gfTitle: "Manda regali gratis", gfPick: "1. Scegli un regalo", gfTo: "2. Scegli i tuoi amici", gfSend: "Invia regalo", gfSent: "Regalo inviato a", gfNone: "Aggiungi prima degli amici per mandare regali.", gfToday: "ne ha già ricevuto uno oggi", gfWish: "Chiede", gfLvl: "Livello", gfGot: "ti ha mandato un regalo", gfInv: "È nel tuo inventario.", gfNoSel: "Scegli un regalo e almeno un amico.", gfAll: "Tutti", crTitle: "Assumi amici", crHelp: "I tuoi amici possono lavorare in questo edificio. Assumili per riempire i posti.", crHire: "Assumi", crHired: "Assunto", crFull: "Tutti i posti sono occupati!", crNone: "Aggiungi amici per poterli assumere.", crOk: "Hai assunto", crReload: "Ricarica la città per vederlo nell'edificio.", crGot: "ti ha assunto nella sua città", crReloadBtn: "Ricarica città", crSlots: "posti", frGotHelp: 'ti ha aiutato in bacheca', helpClosed: 'Questo sindaco non accetta aiuto nei suoi post.', helpFriends: 'Solo i suoi amici possono aiutare qui.', fr: 'Amici', frReqs: 'Richieste di amicizia', frGotReq: 'ti ha inviato una richiesta di amicizia', frGotAcc: 'ha accettato la tua richiesta di amicizia', frNewReq: 'Nuova richiesta', frNewFriend: 'Nuovo amico!', frAdd: 'Aggiungi', frTitle: 'Aggiungi amici', frBy: 'Aggiungi per nome utente', frPh: 'Scrivi il nome utente…', frAll: 'Aggiungi tutti i registrati', frAllQ: 'Inviare una richiesta di amicizia a tutti i sindaci registrati?', frAllOk: 'Richieste inviate', frAccepted: 'accettate', frSent: 'Inviata', frFriend: 'Amici', frAccept: 'Accetta', frPrivate: 'Privato', frNotFound: 'Questo utente non esiste.', frNoAdd: 'Questo sindaco non accetta richieste.', frSentOk: 'Richiesta inviata a', frNow: 'Ora siete amici:', frList: 'Sindaci registrati', frPending: 'da aggiungere', frReload: 'I nuovi vicini appaiono nella barra ricaricando il gioco.' },
+    de: { gf: "Geschenke", gfTitle: "Gratis-Geschenke senden", gfPick: "1. Wähle ein Geschenk", gfTo: "2. Wähle deine Freunde", gfSend: "Geschenk senden", gfSent: "Geschenk gesendet an", gfNone: "Füge zuerst Freunde hinzu.", gfToday: "hat heute schon eins", gfWish: "Wünscht", gfLvl: "Level", gfGot: "hat dir ein Geschenk geschickt", gfInv: "Es ist in deinem Inventar.", gfNoSel: "Wähle ein Geschenk und mindestens einen Freund.", gfAll: "Alle", crTitle: "Freunde einstellen", crHelp: "Deine Freunde können in diesem Gebäude arbeiten.", crHire: "Einstellen", crHired: "Eingestellt", crFull: "Alle Stellen sind besetzt!", crNone: "Füge Freunde hinzu, um sie einzustellen.", crOk: "Du hast eingestellt:", crReload: "Lade die Stadt neu, um es zu sehen.", crGot: "hat dich in seiner Stadt eingestellt", crReloadBtn: "Stadt neu laden", crSlots: "Stellen", frGotHelp: 'hat dir an der Pinnwand geholfen', helpClosed: 'Dieser Bürgermeister nimmt keine Hilfe an.', helpFriends: 'Nur Freunde können hier helfen.', fr: 'Freunde', frReqs: 'Freundschaftsanfragen', frGotReq: 'hat dir eine Freundschaftsanfrage geschickt', frGotAcc: 'hat deine Freundschaftsanfrage angenommen', frNewReq: 'Neue Anfrage', frNewFriend: 'Neuer Freund!', frAdd: 'Hinzufügen', frTitle: 'Freunde hinzufügen', frBy: 'Per Benutzername hinzufügen', frPh: 'Benutzername eingeben…', frAll: 'Alle Registrierten hinzufügen', frAllQ: 'Allen registrierten Bürgermeistern eine Anfrage senden?', frAllOk: 'Anfragen gesendet', frAccepted: 'angenommen', frSent: 'Gesendet', frFriend: 'Freunde', frAccept: 'Annehmen', frPrivate: 'Privat', frNotFound: 'Diesen Benutzer gibt es nicht.', frNoAdd: 'Dieser Bürgermeister nimmt keine Anfragen an.', frSentOk: 'Anfrage gesendet an', frNow: 'Ihr seid jetzt Freunde:', frList: 'Registrierte Bürgermeister', frPending: 'hinzuzufügen', frReload: 'Neue Nachbarn erscheinen nach dem Neuladen in der Leiste.' }
   };
   var fx = FR[lang] || FR.es; for (var k in fx) t[k] = fx[k];
 
@@ -106,6 +106,37 @@
     '#agSh .c{width:100%;max-width:440px;background:#2f8fc4;border:4px solid #1c6e9c;border-radius:20px;padding:12px;box-shadow:0 10px 0 rgba(0,0,0,.2)}#agSh h3{margin:0 0 8px;color:#fff;text-align:center;font-size:22px;text-shadow:-2px -2px 0 #073b57,2px -2px 0 #073b57,-2px 2px 0 #073b57,2px 2px 0 #073b57}' +
     '#agSh .in{background:#fbf6e6;border:3px solid #d9c79a;border-radius:14px;padding:10px;display:flex;gap:10px;align-items:center;color:#21445a}#agSh .in img{width:84px;height:84px;object-fit:contain;flex:0 0 84px}#agSh .in b{display:block;color:#0a5f8c}#agSh .in p{margin:4px 0 0;font-size:14px;overflow-wrap:anywhere}' +
     '#agSh .bt{display:flex;gap:10px;justify-content:center;margin-top:10px}#agSh button{border-radius:999px;font:700 16px CV,sans-serif;padding:7px 20px;cursor:pointer;border:3px solid #2e7d1d;background:linear-gradient(#7fd14a,#4aa62a);color:#fff;text-shadow:0 2px 0 #2e7d1d}#agSh button.no{border-color:#1c6e9c;background:#fff;color:#0a5f8c;text-shadow:none}' +
+        '#agCm{width:min(480px,100vw);background:linear-gradient(180deg,#45afe6 0,#2a86bd 55%,#21719f 100%);border-left:0;box-shadow:-14px 0 40px rgba(0,0,0,.35)}' +
+    '#agCm .hd{padding:12px 14px 8px}#agCm h2{display:flex;align-items:center;gap:6px;font-size:23px}#agCm h2 img.agi{width:36px;height:36px;margin:0}' +
+    '#agCm .stsel{background:rgba(255,255,255,.95);border-color:#fff}' +
+    '#agCm .tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:0 12px 10px}' +
+    '#agCm .tabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:14px;background:rgba(255,255,255,.17);color:#fff;font:700 11.5px CV,sans-serif;padding:7px 2px 6px;text-shadow:0 1px 0 rgba(0,0,0,.35);transition:transform .15s,background .15s;min-width:0}' +
+    '#agCm .tabs button:nth-child(n+4){background:rgba(155,226,79,.24)}' +
+    '#agCm .tabs button img.agi{width:30px;height:30px;margin:0;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}' +
+    '#agCm .tabs button:hover{background:rgba(255,255,255,.32);transform:translateY(-2px)}' +
+    '#agCm .tabs button.on{background:#fbf6e6;color:#0a5f8c;text-shadow:none;box-shadow:0 4px 0 rgba(0,0,0,.18);transform:translateY(-2px)}' +
+    '#agCm .tabs .badge{top:-6px;right:2px}' +
+    '#agCm .rules{opacity:.9;font-size:11.5px}' +
+    '#agCm .bd{margin:0 12px 12px;background:#f4eedd;border:0;border-radius:18px;box-shadow:inset 0 2px 0 rgba(0,0,0,.06),0 6px 0 rgba(0,0,0,.15)}' +
+    '#agCm .bar{background:#fffdf6;border-top:1px solid #e6d7ad}' +
+    '#agCm .card{border:0 !important;border-radius:16px !important;padding:12px;margin-bottom:10px;background:#fff;overflow:visible;box-shadow:0 2px 0 #e3d6b0,0 6px 16px rgba(60,40,0,.06) !important}' +
+    '#agCm .card .who .av{width:44px;height:44px;flex-basis:44px}#agCm .card .who .nm{font-size:16px}' +
+    '#agCm .card.share{background:#fff;border:0}' +
+    '#agCm .att{border:1px solid #dddfe2;border-left:4px solid #4a90d9;background:#fff;border-radius:10px;padding:10px;gap:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}' +
+    '#agCm .att .th{width:104px;height:104px;flex:0 0 104px;border-radius:8px;background:radial-gradient(circle,#fffbe6,#f3e7c0)}#agCm .att .th img{max-width:96px;max-height:96px}' +
+    '#agCm .att .ti{color:#385898;font-size:16px;line-height:1.25}#agCm .att .cp{display:flex;align-items:center;gap:3px;color:#7f8792}#agCm .att .cp img{width:16px;height:16px}' +
+    '#agCm .help .go{box-shadow:0 3px 0 #2e7d1d}' +
+    '#agCm .acts{border-top:1px solid #eee3c4;padding-top:7px;gap:16px}' +
+    '#agCm .go{box-shadow:0 3px 0 rgba(0,0,0,.15)}' +
+    '#agCm .row{border:0;border-radius:14px;box-shadow:0 2px 0 #e3d6b0}' +
+    '#agCm .msg .bb{border-width:1px;box-shadow:0 1px 0 rgba(0,0,0,.06)}' +
+    '#agCm .stk{display:block;max-width:118px;max-height:118px;margin:4px 0 2px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.15));animation:agStk .45s cubic-bezier(.3,1.6,.5,1)}#agCm .stk.ic{max-width:72px;max-height:72px}' +
+    '#agCm .msg .bb:has(> .stk){background:transparent !important;border-color:transparent !important;box-shadow:none}' +
+    '@keyframes agStk{from{transform:scale(.3) rotate(-10deg);opacity:0}to{transform:none;opacity:1}}' +
+    '#agCm .emo{display:none;flex-direction:column;padding:8px;max-height:260px;grid-template-columns:none}#agCm .emo.on{display:flex}' +
+    '#agCm .et{display:flex;gap:6px;margin-bottom:6px}#agCm .emo .et button{flex:1;display:flex;align-items:center;justify-content:center;gap:2px;border:2px solid #9fd0ec;border-radius:999px;background:#fff;color:#0a5f8c;font:700 13px CV,sans-serif;padding:3px 8px}#agCm .emo .et button.on{background:#2f8fc4;border-color:#1c6e9c;color:#fff}' +
+    '#agCm .ep{display:none;overflow:auto;gap:2px;grid-template-columns:repeat(8,1fr)}#agCm .ep.on{display:grid}#agCm .ep.s{grid-template-columns:repeat(5,1fr);gap:4px}' +
+    '#agCm .emo .sk{padding:4px;border-radius:12px;background:#f6fbff}#agCm .emo .sk:hover{background:#d9efff;transform:scale(1.06)}#agCm .sk img{display:block;width:100%;height:58px;object-fit:contain}' +
     '@media (max-width:480px){#agCmBtn .lb{display:none}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
@@ -129,20 +160,33 @@
   function stText(u) { return u.status === 'online' ? t.online : u.status === 'busy' ? t.busy : (u.seen ? t.seenAgo + ' ' + ago(u.seen) : t.offline); }
   function imgHtml(url) { return url ? '<img class="ph" src="' + esc(url) + '" alt="" loading="lazy">' : ''; }
   var EMOJI = '😀 😂 🤣 😊 😍 😘 😎 🤩 🥳 😜 🤗 🤔 😅 😢 😭 😡 👍 👎 👏 🙌 🙏 💪 👋 🤝 ❤️ 💙 💚 💛 🔥 ⭐ 🎉 🎁 🏙️ 🏠 🏡 🏢 🏬 🏗️ 🚜 🌾 🌻 🌳 🚂 🚗 🚢 ✈️ 💰 💵 🪙 ⚡ 🎄 🎃 ☀️ ❄️ 🌧️ 🍕 🍔 🍰 ☕ 🇩🇴 🇸🇻 🇺🇸 🇲🇽 🇪🇸 🇧🇷'.split(' ');
-  // barra de emojis + foto. onPhoto(url) recibe la foto ya subida.
-  function tools(inp, onPhoto) {
+  // ---------- stickers del juego: se mandan como [s:nombre] y se dibujan como imagen ----------
+  var STK = {}, STK_LIST = [];
+  ['lowlitta', 'lowlitta2', 'farmer', 'firefighter', 'gastonbaker', 'teacher', 'captain3', 'conductor2', 'pizzacook', 'celebrity', 'doctor', 'architect', 'governor2', 'surfer', 'son', 'daughter', 'weddingcouple', 'santa', 'pigeonlady', 'scientist', 'baseballcoach', 'cityjack', 'entrepreneur2', 'billionaire'].forEach(function (n) { STK[n] = '/ag/chars/' + n + '.png'; STK_LIST.push(n); });
+  ['coin', 'cash', 'gift', 'mystery', 'xp', 'heart', 'trophy', 'gold1', 'firework', 'cake', 'money', 'energy', 'goods', 'ribbon', 'city', 'smile', 'check', 'alert'].forEach(function (n) { STK['i_' + n] = '/ag/ic/' + n + '.png'; STK_LIST.push('i_' + n); });
+  function stkName(s) { var m = /^\[s:([a-z0-9_]+)\]$/.exec((s || '').trim()); return m && STK[m[1]] ? m[1] : null; }
+  function txt(s) { var n = stkName(s); return n ? '<img class="stk' + (n.indexOf('i_') === 0 ? ' ic' : '') + '" src="' + STK[n] + '" alt="sticker" draggable="false">' : '<div class="tx">' + esc(s) + '</div>'; }
+  function lastTxt(s) { return stkName(s) ? 'Sticker' : s; }
+  // barra de emojis, stickers y foto. onPhoto(url) recibe la foto ya subida; onSticker(nombre) manda un sticker.
+  function tools(inp, onPhoto, onSticker) {
     var bar = inp.closest('.bar');
     var pop = document.createElement('div'); pop.className = 'emo';
-    pop.innerHTML = EMOJI.map(function (e) { return '<button type="button">' + e + '</button>'; }).join('');
+    pop.innerHTML = '<div class="et"><button type="button" class="on" data-p="e"><img class="agi" src="/ag/ic/smile.png" alt="">Emoji</button>' + (onSticker ? '<button type="button" data-p="s"><img class="agi" src="/ag/ic/gift.png" alt="">Stickers</button>' : '') + '</div>' +
+      '<div class="ep e on">' + EMOJI.map(function (e) { return '<button type="button" class="em">' + e + '</button>'; }).join('') + '</div>' +
+      (onSticker ? '<div class="ep s">' + STK_LIST.map(function (n) { return '<button type="button" class="sk" data-s="' + n + '"><img src="' + STK[n] + '" alt="" loading="lazy" draggable="false"></button>'; }).join('') + '</div>' : '');
     bar.appendChild(pop);
     if (!bar.previousElementSibling) { pop.style.top = '100%'; pop.style.bottom = 'auto'; }
     var wrap = document.createElement('div'); wrap.className = 'tools';
-    wrap.innerHTML = '<button type="button" class="tb" title="Emoji">😊</button><button type="button" class="tb" title="' + t.photo + '">📷</button><input type="file" accept="image/*" style="display:none">';
+    wrap.innerHTML = '<button type="button" class="tb" title="Emoji / Stickers"><img class="agi" src="/ag/ic/smile.png" alt=""></button><button type="button" class="tb" title="' + t.photo + '"><i class="bi bi-camera-fill"></i></button><input type="file" accept="image/*" style="display:none">';
     bar.insertBefore(wrap, inp);
     var bs = wrap.querySelectorAll('.tb'), file = wrap.querySelector('input');
     bs[0].onclick = function () { pop.classList.toggle('on'); };
     pop.onclick = function (e) {
-      var b = e.target.closest('button'); if (!b) return;
+      var tb = e.target.closest('.et button');
+      if (tb) { pop.querySelectorAll('.et button').forEach(function (x) { x.classList.toggle('on', x === tb); }); pop.querySelectorAll('.ep').forEach(function (x) { x.classList.toggle('on', x.classList.contains(tb.getAttribute('data-p'))); }); return; }
+      var sk = e.target.closest('.sk');
+      if (sk) { pop.classList.remove('on'); onSticker(sk.getAttribute('data-s')); return; }
+      var b = e.target.closest('.em'); if (!b) return;
       var p = inp.selectionStart != null ? inp.selectionStart : inp.value.length;
       inp.value = inp.value.slice(0, p) + b.textContent + inp.value.slice(p); inp.focus();
       try { inp.selectionStart = inp.selectionEnd = p + b.textContent.length; } catch (x) { }
@@ -175,9 +219,9 @@
 
   function build() {
     root = document.createElement('div'); root.id = 'agCm'; root.setAttribute('role', 'dialog');
-    root.innerHTML = '<div class="hd"><h2>💬 ' + t.title + '</h2><select class="stsel" title="' + t.status + '"><option value="online">🟢 ' + t.online + '</option><option value="busy">🔴 ' + t.busy + '</option><option value="invisible">⚪ ' + t.invisible + '</option></select><button class="x" aria-label="' + t.close + '"></button></div>' +
-      '<div class="tabs"><button data-t="wall">📰 ' + t.wall + '</button><button data-t="chat">💬 ' + t.chat + '</button><button data-t="dm">✉️ ' + t.dm + '<span class="badge" id="agCmTabBadge" style="display:none"></span></button><button data-t="add">👥 ' + t.fr + '<span class="badge" id="agCmFrBadge" style="display:none"></span></button><button data-t="gift">🎁 ' + t.gf + '</button><button data-t="sup">🆘 ' + t.sup + '<span class="badge" id="agCmSupBadge" style="display:none"></span></button></div>' +
-      '<div class="rules">🛡️ ' + t.rules + '</div><div class="bd"></div><div class="toast"></div>';
+    root.innerHTML = '<div class="hd"><h2><img class="agi" src="/ag/ic/friends.png" alt="">' + t.title + '</h2><select class="stsel" title="' + t.status + '"><option value="online">● ' + t.online + '</option><option value="busy">● ' + t.busy + '</option><option value="invisible">○ ' + t.invisible + '</option></select><button class="x" aria-label="' + t.close + '"></button></div>' +
+      '<div class="tabs"><button data-t="wall"><img class="agi" src="/ag/ic/news.png" alt="">' + t.wall + '</button><button data-t="chat"><img class="agi" src="/ag/ic/smile.png" alt="">' + t.chat + '</button><button data-t="dm"><img class="agi" src="/ag/ic/mail.png" alt="">' + t.dm + '<span class="badge" id="agCmTabBadge" style="display:none"></span></button><button data-t="add"><img class="agi" src="/ag/ic/friends.png" alt="">' + t.fr + '<span class="badge" id="agCmFrBadge" style="display:none"></span></button><button data-t="gift"><img class="agi" src="/ag/ic/gift.png" alt="">' + t.gf + '</button><button data-t="sup"><img class="agi" src="/ag/ic/alert.png" alt="">' + t.sup + '<span class="badge" id="agCmSupBadge" style="display:none"></span></button></div>' +
+      '<div class="rules"><img class="agi" src="/ag/ic/vip.png" alt="">' + t.rules + '</div><div class="bd"></div><div class="toast"></div>';
     document.body.appendChild(root);
     body = root.querySelector('.bd');
     var sel = root.querySelector('.stsel'); if (me) sel.value = me.status || 'online';
@@ -212,31 +256,31 @@
     var full = p.helps >= p.maxHelps, h = '', lines = (p.text || '').split('\n');
     var title = lines.shift() || t.fromGame, desc = lines.join('\n');
     if (p.kind === 'wishlist') {
-      h += '<div class="att" style="display:block"><div class="ti">🎁 ' + t.wishTitle + ' · ' + esc(p.author.name) + '</div><div class="cp">' + esc(p.author.name) + ' ' + t.needs + ' · ' + t.viaGame + '</div>' +
+      h += '<div class="att" style="display:block"><div class="ti"><img class="agi" src="/ag/ic/gift.png" alt="">' + t.wishTitle + ' · ' + esc(p.author.name) + '</div><div class="cp">' + esc(p.author.name) + ' ' + t.needs + ' · ' + t.viaGame + '</div>' +
         '<div class="wl">' + p.items.map(function (it) {
-          return '<div>' + (it.icon ? '<img src="' + esc(it.icon) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<div style="font-size:34px">🎁</div>') + esc(nm(it.name)) +
+          return '<div>' + (it.icon ? '<img src="' + esc(it.icon) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<img class="agi lg" src="/ag/ic/mystery.png" alt="">') + esc(nm(it.name)) +
             (it.collection ? '<small>' + esc(nm(it.collection)) + '</small>' : '') +
             (mine ? '' : '<button class="go" data-a="help" data-item="' + esc(it.name) + '"' + (p.helped || full ? ' disabled' : '') + '>' + t.sendItem + '</button>') + '</div>';
         }).join('') + '</div></div>';
     } else {
       h += '<div class="att">' + (p.image ? '<div class="th"><img src="' + esc(p.image) + '" alt="" onerror="this.parentNode.remove()"></div>' : '') +
-        '<div style="min-width:0"><div class="ti">' + esc(title) + '</div><div class="cp">' + t.viaGame + '</div>' + (desc ? '<div class="ds">' + esc(desc) + '</div>' : '') + '</div></div>';
-      if (!mine) h += '<div class="help"><button class="go" data-a="help"' + (p.helped || full ? ' disabled' : '') + '>🤝 ' + esc(p.action || t.helpBtn) + '</button></div>';
+        '<div style="min-width:0"><div class="ti">' + esc(title) + '</div><div class="cp"><img src="/ag/ic/quest.png" alt="">' + t.viaGame + '</div>' + (desc ? '<div class="ds">' + esc(desc) + '</div>' : '') + '</div></div>';
+      if (!mine) h += '<div class="help"><button class="go" data-a="help"' + (p.helped || full ? ' disabled' : '') + '><img class="agi" src="/ag/ic/heart.png" alt="">' + esc(p.action || t.helpBtn) + '</button></div>';
     }
-    h += '<div class="hn">' + (p.helped ? '✔ ' + t.helpedAlready + ' · ' : '') + '🤝 ' + p.helps + '/' + p.maxHelps + ' ' + t.helpers + (p.helpers && p.helpers.length ? ': ' + p.helpers.map(esc).join(', ') : '') + '</div>';
+    h += '<div class="hn">' + (p.helped ? '<img class="agi" src="/ag/ic/check.png" alt="">' + t.helpedAlready + ' · ' : '') + '<img class="agi" src="/ag/ic/crew.png" alt="">' + p.helps + '/' + p.maxHelps + ' ' + t.helpers + (p.helpers && p.helpers.length ? ': ' + p.helpers.map(esc).join(', ') : '') + '</div>';
     return h;
   }
   function postHtml(p) {
     var mine = me && p.author.name.toLowerCase() === me.name.toLowerCase();
     var isShare = p.kind && p.kind !== 'text';
-    var h = '<div class="card' + (isShare ? ' share' : '') + '" data-id="' + p.id + '">' + '<div class="who">' + av(p.author) + '<div style="min-width:0"><div class="nm" data-u="' + esc(p.author.name) + '">' + esc(p.author.name) + '</div><div class="meta">' + (isShare ? '🎮 ' + t.sharedFrom + ' · ' : '') + t.lvl + ' ' + p.author.level + ' · ' + ago(p.at) + '</div></div></div>' +
-      (isShare ? shareHtml(p, mine) : (p.text ? '<div class="tx">' + esc(p.text) + '</div>' : '') + imgHtml(p.image)) + '<div style="height:6px"></div><div class="acts"><a class="' + (p.liked ? 'lk' : '') + '" data-a="like">' + (p.liked ? '❤️' : '🤍') + ' ' + t.like + (p.likes ? ' · ' + p.likes : '') + '</a>' +
-      '<a data-a="cm">💬 ' + t.comment + (p.comments.length ? ' · ' + p.comments.length : '') + '</a>' +
+    var h = '<div class="card' + (isShare ? ' share' : '') + '" data-id="' + p.id + '">' + '<div class="who">' + av(p.author) + '<div style="min-width:0"><div class="nm" data-u="' + esc(p.author.name) + '">' + esc(p.author.name) + '</div><div class="meta">' + (isShare ? '<img class="agi" src="/ag/ic/quest.png" alt="">' + t.sharedFrom + ' · ' : '') + t.lvl + ' ' + p.author.level + ' · ' + ago(p.at) + '</div></div></div>' +
+      (isShare ? shareHtml(p, mine) : (p.text ? txt(p.text) : '') + imgHtml(p.image)) + '<div style="height:6px"></div><div class="acts"><a class="' + (p.liked ? 'lk' : '') + '" data-a="like">' + (p.liked ? '<img class="agi" src="/ag/ic/heart.png" alt="">' : '<img class="agi off" src="/ag/ic/heart.png" alt="">') + ' ' + t.like + (p.likes ? ' · ' + p.likes : '') + '</a>' +
+      '<a data-a="cm"><i class="bi bi-chat-dots-fill"></i> ' + t.comment + (p.comments.length ? ' · ' + p.comments.length : '') + '</a>' +
       (mine || (me && me.admin) ? '<a class="mut" data-a="del" data-x="' + p.id + '">' + t.del + '</a>' : '<a class="mut" data-a="rep" data-x="' + p.id + '">' + t.report + '</a>') + '</div>';
     h += '<div class="cms"' + (p.comments.length ? '' : ' style="display:none"') + '>';
     p.comments.forEach(function (c) {
       var cmine = me && (c.author.name.toLowerCase() === me.name.toLowerCase() || mine || me.admin);
-      h += '<div class="cm">' + av(c.author) + '<div class="bb"><span class="nm" data-u="' + esc(c.author.name) + '">' + esc(c.author.name) + '</span> <span class="meta">' + ago(c.at) + '</span><div class="tx">' + esc(c.text) + '</div>' +
+      h += '<div class="cm">' + av(c.author) + '<div class="bb"><span class="nm" data-u="' + esc(c.author.name) + '">' + esc(c.author.name) + '</span> <span class="meta">' + ago(c.at) + '</span>' + txt(c.text) + '' +
         '<div class="acts">' + (cmine ? '<a class="mut" data-a="del" data-x="' + c.id + '">' + t.del + '</a>' : '<a class="mut" data-a="rep" data-x="' + c.id + '">' + t.report + '</a>') + '</div></div></div>';
     });
     h += '<div class="cmf"><input maxlength="300" placeholder="' + t.commentPh + '"><button class="go" data-a="send">' + t.send + '</button></div></div></div>';
@@ -245,7 +289,7 @@
   function showWall() {
     body.innerHTML = '<div style="border-bottom:2px solid #e6d7ad;background:#fffdf4"><div class="bar" style="border-top:0"><textarea rows="2" maxlength="600" placeholder="' + t.wallPh + '"></textarea><button class="go">' + t.post + '</button></div><div class="pv"></div></div><div class="sc"></div>';
     var ta = body.querySelector('textarea'), sc = body.querySelector('.sc'), pv = body.querySelector('.pv'), photo = null;
-    tools(ta, function (url) { photo = url; pv.innerHTML = '<span class="prev"><img src="' + esc(url) + '" alt=""><b>✕</b></span>'; pv.querySelector('b').onclick = function () { photo = null; pv.innerHTML = ''; }; });
+    tools(ta, function (url) { photo = url; pv.innerHTML = '<span class="prev"><img src="' + esc(url) + '" alt=""><b><i class="bi bi-x-lg"></i></b></span>'; pv.querySelector('b').onclick = function () { photo = null; pv.innerHTML = ''; }; }, function (n) { api('POST', '/api/ag/wall', { text: '[s:' + n + ']' }).then(function () { loadWall(true); }).catch(function () { }); });
     body.querySelector('.go').onclick = function () {
       var v = ta.value.trim(); if (!v && !photo) return;
       api('POST', '/api/ag/wall', { text: v, image: photo }).then(function () { ta.value = ''; photo = null; pv.innerHTML = ''; loadWall(true); }).catch(function () { });
@@ -278,8 +322,8 @@
     else if (act === 'help') {
       a.disabled = true;
       api('POST', '/api/ag/wall/' + id + '/help', { item: a.getAttribute('data-item') }).then(function (rw) {
-        toast(t.helpedOk + ' ' + rw.coins + ' ' + t.coins + ' 🪙 · ' + t.reloadNote); refreshPost(id);
-      }).catch(function (j) { a.disabled = false; if (j && j.error) toast(j.error === 'done' ? t.helpedAlready : j.error === 'full' ? t.full : j.error === 'old' ? t.old : j.error === 'closed' ? t.helpClosed : j.error === 'friendsOnly' ? t.helpFriends : '⚠️'); refreshPost(id); });
+        toast(t.helpedOk + ' ' + rw.coins + ' ' + t.coins + ' · ' + t.reloadNote); refreshPost(id);
+      }).catch(function (j) { a.disabled = false; if (j && j.error) toast(j.error === 'done' ? t.helpedAlready : j.error === 'full' ? t.full : j.error === 'old' ? t.old : j.error === 'closed' ? t.helpClosed : j.error === 'friendsOnly' ? t.helpFriends : '!'); refreshPost(id); });
     }
     else if (act === 'cm') { var c = card.querySelector('.cms'); c.style.display = ''; c.querySelector('input').focus(); }
     else if (act === 'send') {
@@ -295,12 +339,12 @@
   function msgHtml(m, showDel) {
     var mine = me && m.from.name.toLowerCase() === me.name.toLowerCase();
     return '<div class="msg' + (mine ? ' me' : '') + '" data-id="' + m.id + '">' + av(m.from) + '<div class="bb"><span class="nm" data-u="' + esc(m.from.name) + '">' + esc(mine ? me.name : m.from.name) + '</span> <span class="meta">' + t.lvl + ' ' + m.from.level + ' · ' + ago(m.at) + '</span>' +
-      (m.text ? '<div class="tx">' + esc(m.text) + '</div>' : '') + imgHtml(m.image) + (showDel ? '<div class="acts">' + ((mine || (me && me.admin)) ? '<a class="mut" data-a="del" data-x="' + m.id + '">' + t.del + '</a>' : '<a class="mut" data-a="rep" data-x="' + m.id + '">' + t.report + '</a>') + '</div>' : '') + '</div></div>';
+      (m.text ? txt(m.text) : '') + imgHtml(m.image) + (showDel ? '<div class="acts">' + ((mine || (me && me.admin)) ? '<a class="mut" data-a="del" data-x="' + m.id + '">' + t.del + '</a>' : '<a class="mut" data-a="rep" data-x="' + m.id + '">' + t.report + '</a>') + '</div>' : '') + '</div></div>';
   }
   function chatBox(onSend) {
     body.innerHTML = '<div class="sc"></div><div class="bar"><input maxlength="300" placeholder="' + t.chatPh + '"><button class="go">' + t.send + '</button></div>';
     var inp = body.querySelector('.bar input');
-    tools(inp, function (url) { onSend(inp.value.trim(), url); inp.value = ''; });
+    tools(inp, function (url) { onSend(inp.value.trim(), url); inp.value = ''; }, function (n) { onSend('[s:' + n + ']'); });
     function go() { var v = inp.value.trim(); if (!v) return; inp.value = ''; var e = body.querySelector('.emo'); if (e) e.classList.remove('on'); onSend(v); }
     body.querySelector('.go').onclick = go;
     inp.onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); go(); } };
@@ -359,15 +403,15 @@
   }
   // ---------- agregar amigos ----------
   function showAdd() {
-    body.innerHTML = '<div style="padding:10px 10px 0"><div class="card"><div class="nm" style="margin-bottom:6px">🔎 ' + t.frBy + '</div>' +
+    body.innerHTML = '<div style="padding:10px 10px 0"><div class="card"><div class="nm" style="margin-bottom:6px"><i class="bi bi-search"></i> ' + t.frBy + '</div>' +
       '<div style="display:flex;gap:6px"><input class="frq" maxlength="40" placeholder="' + t.frPh + '" style="flex:1;min-width:0;border:2px solid #d9c79a;border-radius:999px;padding:6px 12px;font:600 15px CV,sans-serif"><button class="go fradd">' + t.frAdd + '</button></div></div>' +
-      '<div class="card" style="text-align:center"><button class="go frall" style="width:100%">👥 ' + t.frAll + '</button><div class="meta frcount" style="margin-top:6px"></div></div></div>' +
+      '<div class="card" style="text-align:center"><button class="go frall" style="width:100%"><img class="agi" src="/ag/ic/friends.png" alt="">' + t.frAll + '</button><div class="meta frcount" style="margin-top:6px"></div></div></div>' +
       '<div class="sub" style="padding:0 14px">' + t.frList + '</div><div class="sc"></div>';
     var inp = body.querySelector('.frq'), sc = body.querySelector('.sc'), timer;
     function badge(p) {
-      if (p.rel === 'friend') return '<span class="meta">✔ ' + t.frFriend + '</span>';
-      if (p.rel === 'sent') return '<span class="meta">⏳ ' + t.frSent + '</span>';
-      if (p.rel === 'private') return '<span class="meta">🔒 ' + t.frPrivate + '</span>';
+      if (p.rel === 'friend') return '<span class="meta"><img class="agi" src="/ag/ic/check.png" alt="">' + t.frFriend + '</span>';
+      if (p.rel === 'sent') return '<span class="meta"><i class="bi bi-hourglass-split"></i> ' + t.frSent + '</span>';
+      if (p.rel === 'private') return '<span class="meta"><i class="bi bi-lock-fill"></i> ' + t.frPrivate + '</span>';
       return '<button class="sm" data-add="' + esc(p.name) + '">' + (p.rel === 'received' ? t.frAccept : '+ ' + t.frAdd) + '</button>';
     }
     function load() {
@@ -376,7 +420,7 @@
         var inc = (r.incoming || []).map(function (p) {
           return '<div class="row" data-u="' + esc(p.name) + '">' + av(p) + '<div class="bb"><div class="nm">' + esc(p.name) + '</div><div class="last">' + t.lvl + ' ' + p.level + '</div></div><div>' + badge(p) + '</div></div>';
         }).join('');
-        var head = inc && !inp.value.trim() ? '<div class="sub" style="padding:0 4px">📩 ' + t.frReqs + ' (' + r.incoming.length + ')</div>' + inc + '<div class="sub" style="padding:0 4px">' + t.frList + '</div>' : '';
+        var head = inc && !inp.value.trim() ? '<div class="sub" style="padding:0 4px"><img class="agi" src="/ag/ic/mail.png" alt="">' + t.frReqs + ' (' + r.incoming.length + ')</div>' + inc + '<div class="sub" style="padding:0 4px">' + t.frList + '</div>' : '';
         sc.innerHTML = head + (r.players.length ? r.players.map(function (p) {
           return '<div class="row" data-u="' + esc(p.name) + '">' + av(p) + '<div class="bb"><div class="nm">' + esc(p.name) + '</div><div class="last">' + t.lvl + ' ' + p.level + '</div></div><div>' + badge(p) + '</div></div>';
         }).join('') : '<div class="empty">' + t.empty + '</div>');
@@ -384,8 +428,8 @@
     }
     function add(name) {
       return api('POST', '/api/ag/friends/add', { text: name }).then(function (r) {
-        toast(r.rel === 'friend' ? t.frNow + ' ' + r.name + ' 🎉' : t.frSentOk + ' ' + r.name + ' ✉️'); load();
-      }).catch(function (j) { if (j && j.error) toast(j.error === 'notfound' ? t.frNotFound : j.error === 'private' ? t.frNoAdd : '⚠️'); });
+        toast(r.rel === 'friend' ? t.frNow + ' ' + r.name + '!' : t.frSentOk + ' ' + r.name); load();
+      }).catch(function (j) { if (j && j.error) toast(j.error === 'notfound' ? t.frNotFound : j.error === 'private' ? t.frNoAdd : '!'); });
     }
     body.querySelector('.fradd').onclick = function () { var v = inp.value.trim(); if (v) add(v); };
     inp.onkeydown = function (e) { if (e.key === 'Enter') { var v = inp.value.trim(); if (v) add(v); } };
@@ -406,21 +450,21 @@
   var giftPre = null;
   function itemCard(it, sel) {
     return '<button class="gfi' + (sel ? ' on' : '') + (it.locked ? ' lk' : '') + '" data-g="' + esc(it.name) + '"' + (it.locked ? ' disabled' : '') + '>' +
-      (it.icon ? '<img src="' + esc(it.icon) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<span style="font-size:30px">🎁</span>') +
-      '<small>' + esc(nm(it.name)) + '</small>' + (it.locked ? '<em>🔒 ' + t.gfLvl + ' ' + it.level + '</em>' : '') + '</button>';
+      (it.icon ? '<img src="' + esc(it.icon) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<img class="agi lg" src="/ag/ic/mystery.png" alt="">') +
+      '<small>' + esc(nm(it.name)) + '</small>' + (it.locked ? '<em><i class="bi bi-lock-fill"></i> ' + t.gfLvl + ' ' + it.level + '</em>' : '') + '</button>';
   }
   function showGifts() {
     body.innerHTML = '<div class="sc" style="padding:10px"><div class="empty">…</div></div>';
     var sc = body.querySelector('.sc'), pick = giftPre, to = {};
     loadNames().then(function () { return api('GET', '/api/ag/gifts'); }).then(function (r) {
-      if (!r.friends.length) { sc.innerHTML = '<div class="empty">' + t.gfNone + '<br><br><button class="go" data-go="add">👥 ' + t.fr + '</button></div>'; sc.querySelector('[data-go]').onclick = function () { open('add'); }; return; }
+      if (!r.friends.length) { sc.innerHTML = '<div class="empty">' + t.gfNone + '<br><br><button class="go" data-go="add"><img class="agi" src="/ag/ic/friends.png" alt="">' + t.fr + '</button></div>'; sc.querySelector('[data-go]').onclick = function () { open('add'); }; return; }
       function paint() {
-        var h = '<div class="card"><div class="nm">🎁 ' + t.gfPick + '</div><div class="gfl">' + r.gifts.map(function (g) { return itemCard(g, g.name === pick); }).join('') + '</div></div>';
-        h += '<div class="card"><div class="nm" style="display:flex;justify-content:space-between">👥 ' + t.gfTo + ' <button class="sm" data-all>' + t.gfAll + '</button></div>' + r.friends.map(function (f) {
+        var h = '<div class="card"><div class="nm"><img class="agi" src="/ag/ic/gift.png" alt="">' + t.gfPick + '</div><div class="gfl">' + r.gifts.map(function (g) { return itemCard(g, g.name === pick); }).join('') + '</div></div>';
+        h += '<div class="card"><div class="nm" style="display:flex;justify-content:space-between"><span><img class="agi" src="/ag/ic/friends.png" alt="">' + t.gfTo + '</span> <button class="sm" data-all>' + t.gfAll + '</button></div>' + r.friends.map(function (f) {
           return '<label class="row" style="cursor:pointer">' + av(f) + '<div class="bb"><div class="nm">' + esc(f.name) + '</div><div class="last">' + t.lvl + ' ' + f.level +
             (f.wishlist.length ? ' · ' + t.gfWish + ': ' + f.wishlist.map(function (w) { return '<a class="wl" data-g="' + esc(w.name) + '">' + esc(nm(w.name)) + '</a>'; }).join(', ') : '') + '</div></div>' +
-            (f.sentToday ? '<span class="meta">✔ ' + t.gfToday + '</span>' : '<input type="checkbox" data-to="' + esc(f.name) + '"' + (to[f.name] ? ' checked' : '') + ' style="width:22px;height:22px">') + '</label>';
-        }).join('') + '</div><div style="text-align:center;padding:4px 0 10px"><button class="go gfs">🎁 ' + t.gfSend + '</button></div>';
+            (f.sentToday ? '<span class="meta"><img class="agi" src="/ag/ic/check.png" alt="">' + t.gfToday + '</span>' : '<input type="checkbox" data-to="' + esc(f.name) + '"' + (to[f.name] ? ' checked' : '') + ' style="width:22px;height:22px">') + '</label>';
+        }).join('') + '</div><div style="text-align:center;padding:4px 0 10px"><button class="go gfs"><img class="agi" src="/ag/ic/gift.png" alt="">' + t.gfSend + '</button></div>';
         sc.innerHTML = h;
       }
       paint();
@@ -432,7 +476,7 @@
           var list = Object.keys(to).filter(function (k) { return to[k]; });
           if (!pick || !list.length) return toast(t.gfNoSel);
           api('POST', '/api/ag/gifts/send', { item: pick, to: list }).then(function (res) {
-            toast(res.sent.length ? t.gfSent + ' ' + res.sent.join(', ') + '! 🎁' : t.gfNoSel); to = {}; showGifts();
+            toast(res.sent.length ? t.gfSent + ' ' + res.sent.join(', ') + '!' : t.gfNoSel); to = {}; showGifts();
           }).catch(function () { });
         }
       };
@@ -447,20 +491,20 @@
     var sc = body.querySelector('.sc');
     function load() {
       loadNames().then(function () { return api('GET', '/api/ag/crew/' + crewId); }).then(function (r) {
-        var h = '<div class="card"><div class="nm">🏛️ ' + t.crTitle + ' · ' + esc(nm(r.building)) + '</div><div class="meta" style="margin:4px 0 8px">' + t.crHelp + '</div>' +
+        var h = '<div class="card"><div class="nm"><img class="agi" src="/ag/ic/crew.png" alt="">' + t.crTitle + ' · ' + esc(nm(r.building)) + '</div><div class="meta" style="margin:4px 0 8px">' + t.crHelp + '</div>' +
           '<div style="font-weight:700;color:#0a5f8c">' + r.filled + ' / ' + (r.need || '?') + ' ' + t.crSlots + '</div></div>';
-        if (r.need && r.filled >= r.need) h += '<div class="empty">✅ ' + t.crFull + '<br><br><button class="go" data-rl>🔄 ' + t.crReloadBtn + '</button></div>';
-        else if (!r.friends.length) h += '<div class="empty">' + t.crNone + '<br><br><button class="go" data-go>👥 ' + t.fr + '</button></div>';
+        if (r.need && r.filled >= r.need) h += '<div class="empty"><img class="agi lg" src="/ag/ic/check.png" alt=""><br>' + t.crFull + '<br><br><button class="go" data-rl><i class="bi bi-arrow-repeat"></i> ' + t.crReloadBtn + '</button></div>';
+        else if (!r.friends.length) h += '<div class="empty">' + t.crNone + '<br><br><button class="go" data-go><img class="agi" src="/ag/ic/friends.png" alt="">' + t.fr + '</button></div>';
         else h += r.friends.map(function (f) {
           return '<div class="row">' + av(f) + '<div class="bb"><div class="nm">' + esc(f.name) + '</div><div class="last">' + t.lvl + ' ' + f.level + '</div></div>' +
-            (f.hired ? '<span class="meta">✔ ' + t.crHired + '</span>' : '<button class="sm" data-hire="' + esc(f.name) + '">' + t.crHire + '</button>') + '</div>';
+            (f.hired ? '<span class="meta"><img class="agi" src="/ag/ic/check.png" alt="">' + t.crHired + '</span>' : '<button class="sm" data-hire="' + esc(f.name) + '">' + t.crHire + '</button>') + '</div>';
         }).join('');
         sc.innerHTML = h;
-      }).catch(function () { sc.innerHTML = '<div class="empty">⚠️</div>'; });
+      }).catch(function () { sc.innerHTML = '<div class="empty"><img class="agi lg" src="/ag/ic/alert.png" alt=""></div>'; });
     }
     sc.onclick = function (e) {
       var b = e.target.closest('[data-hire]');
-      if (b) { b.disabled = true; api('POST', '/api/ag/crew/' + crewId + '/hire', { name: b.getAttribute('data-hire') }).then(function () { toast(t.crOk + ' ' + b.getAttribute('data-hire') + '! ' + t.crReload); load(); }).catch(function (j) { b.disabled = false; toast(j && j.error === 'full' ? t.crFull : '⚠️'); }); }
+      if (b) { b.disabled = true; api('POST', '/api/ag/crew/' + crewId + '/hire', { name: b.getAttribute('data-hire') }).then(function () { toast(t.crOk + ' ' + b.getAttribute('data-hire') + '! ' + t.crReload); load(); }).catch(function (j) { b.disabled = false; toast(j && j.error === 'full' ? t.crFull : '!'); }); }
       if (e.target.closest('[data-rl]')) location.reload();
       if (e.target.closest('[data-go]')) open('add');
     };
@@ -469,7 +513,7 @@
   window.agOpenCrew = function (id) { crewId = +id || 0; open('crew'); };
 
   function showDms() {
-    body.innerHTML = '<div class="bar" style="border-top:0;border-bottom:2px solid #e6d7ad"><input placeholder="🔎 ' + t.search + '"></div><div class="sc"></div>';
+    body.innerHTML = '<div class="bar" style="border-top:0;border-bottom:2px solid #e6d7ad"><input placeholder="' + t.search + '"></div><div class="sc"></div>';
     var inp = body.querySelector('input'), sc = body.querySelector('.sc'), timer;
     function row(u, right) {
       return '<div class="row" data-u="' + esc(u.name) + '">' + av(u) + '<div class="bb"><div class="nm">' + esc(u.name) + '</div>' + right + '</div></div>';
@@ -482,12 +526,12 @@
         var list = r[0], players = r[1], h = '';
         if (list.length) {
           h += '<div class="sub">' + t.convs + '</div>' + list.map(function (c) {
-            return '<div class="row" data-u="' + esc(c.with.name) + '">' + av(c.with) + '<div class="bb"><div class="nm">' + esc(c.with.name) + '</div><div class="last">' + esc(c.last) + '</div></div>' +
+            return '<div class="row" data-u="' + esc(c.with.name) + '">' + av(c.with) + '<div class="bb"><div class="nm">' + esc(c.with.name) + '</div><div class="last">' + esc(lastTxt(c.last)) + '</div></div>' +
               '<div style="text-align:right"><div class="meta">' + ago(c.at) + '</div>' + (c.unread ? '<span class="badge">' + c.unread + '</span>' : '') + '</div></div>';
           }).join('');
         }
         var on = players.filter(function (p) { return p.status !== 'offline'; });
-        h += '<div class="sub">🟢 ' + t.online + ' (' + on.length + ')</div>' + (on.length ? on.map(playerRow).join('') : '<div class="meta" style="padding:0 4px 8px">—</div>');
+        h += '<div class="sub"><span class="ag-dot"></span>' + t.online + ' (' + on.length + ')</div>' + (on.length ? on.map(playerRow).join('') : '<div class="meta" style="padding:0 4px 8px">—</div>');
         var off = players.filter(function (p) { return p.status === 'offline'; }).slice(0, 15);
         if (off.length) h += '<div class="sub">' + t.contacts + '</div>' + off.map(playerRow).join('');
         if (!list.length && !players.length) h = '<div class="empty">' + t.noDm + '</div>';
@@ -507,13 +551,13 @@
     convs(); poll = setInterval(convs, 8000);
   }
   // ---------- soporte ----------
-  var KINDS = [['bug', '🐞', 'kBug'], ['ayuda', '🙋', 'kAyuda'], ['sugerencia', '💡', 'kSug'], ['cuenta', '👤', 'kCuenta'], ['otro', '📝', 'kOtro']];
+  var KINDS = [['bug', '<img class="agi" src="/ag/ic/alert.png" alt="">', 'kBug'], ['ayuda', '<img class="agi" src="/ag/ic/smile.png" alt="">', 'kAyuda'], ['sugerencia', '<img class="agi" src="/ag/ic/xp.png" alt="">', 'kSug'], ['cuenta', '<img class="agi" src="/ag/ic/vip.png" alt="">', 'kCuenta'], ['otro', '<img class="agi" src="/ag/ic/quest.png" alt="">', 'kOtro']];
   var supAll = false, supFilter = 'todos';
-  function kindIcon(k) { var x = KINDS.filter(function (q) { return q[0] === k; })[0]; return x ? x[1] : '📝'; }
+  function kindIcon(k) { var x = KINDS.filter(function (q) { return q[0] === k; })[0]; return x ? x[1] : '<img class="agi" src="/ag/ic/quest.png" alt="">'; }
   function stLabel(st) { return t['st' + st.charAt(0).toUpperCase() + st.slice(1)] || st; }
   function showSupport() {
     var isAdmin = me && me.admin;
-    body.innerHTML = '<div class="tool"><button class="go" data-a="new">➕ ' + t.newReq + '</button>' +
+    body.innerHTML = '<div class="tool"><button class="go" data-a="new"><i class="bi bi-plus-lg"></i> ' + t.newReq + '</button>' +
       (isAdmin ? '<select data-a="scope"><option value="0">' + t.myReqs + '</option><option value="1">' + t.allReqs + '</option></select>' +
         '<select data-a="filter"' + (supAll ? '' : ' style="display:none"') + '><option value="todos">' + t.all + '</option><option value="abierto">' + t.stAbierto + '</option><option value="en_progreso">' + t.stEn_progreso + '</option><option value="resuelto">' + t.stResuelto + '</option><option value="cerrado">' + t.stCerrado + '</option></select>' : '') +
       '</div><div class="sc"></div>';
@@ -526,7 +570,7 @@
         if (!d.tickets.length) { sc.innerHTML = '<div class="empty">🆘<br>' + t.noReqs + '</div>'; return; }
         sc.innerHTML = d.tickets.map(function (x) {
           return '<div class="row" data-id="' + x.id + '"><div style="font-size:24px">' + kindIcon(x.kind) + '</div><div class="bb"><div class="nm">#' + x.id + ' · ' + esc(x.title) + '</div>' +
-            '<div class="last">' + (supAll ? esc(x.user) + ' · ' : '') + '<span class="chip ' + x.status + '">' + stLabel(x.status) + '</span> · ' + ago(x.updated) + ' · 💬 ' + x.replies + '</div></div>' +
+            '<div class="last">' + (supAll ? esc(x.user) + ' · ' : '') + '<span class="chip ' + x.status + '">' + stLabel(x.status) + '</span> · ' + ago(x.updated) + ' · ' + '<i class="bi bi-chat-dots-fill"></i> ' + x.replies + '</div></div>' +
             (x.unread ? '<span class="badge">!</span>' : '') + '</div>';
         }).join('');
       }).catch(function () { });
@@ -540,7 +584,7 @@
     body.innerHTML = '<div class="dmh"><button class="sm" data-a="back">‹ ' + t.back + '</button><div class="sp"><div class="nm">🆘 ' + t.newReq + '</div></div></div>' +
       '<div class="sc form"><div class="kinds">' + KINDS.map(function (k) { return '<button type="button" data-k="' + k[0] + '"' + (k[0] === kind ? ' class="on"' : '') + '>' + k[1] + ' ' + t[k[2]] + '</button>'; }).join('') + '</div>' +
       '<input maxlength="90" placeholder="' + t.reqTitle + '"><textarea rows="6" maxlength="2000" placeholder="' + t.reqText + '"></textarea>' +
-      '<div class="pv"></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button type="button" class="sm" data-a="ph">📷 ' + t.attach + '</button><input type="file" accept="image/*" style="display:none"><span style="flex:1"></span><button class="go" data-a="send">' + t.sendReq + '</button></div></div>';
+      '<div class="pv"></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button type="button" class="sm" data-a="ph"><i class="bi bi-camera-fill"></i> ' + t.attach + '</button><input type="file" accept="image/*" style="display:none"><span style="flex:1"></span><button class="go" data-a="send">' + t.sendReq + '</button></div></div>';
     body.querySelector('[data-a=back]').onclick = showSupport;
     body.querySelectorAll('.kinds button').forEach(function (b) { b.onclick = function () { kind = b.getAttribute('data-k'); body.querySelectorAll('.kinds button').forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
     var file = body.querySelector('input[type=file]'), pv = body.querySelector('.pv');
@@ -548,7 +592,7 @@
     file.onchange = function () {
       var f = file.files && file.files[0]; file.value = ''; if (!f) return;
       shrink(f).then(function (data) { return api('POST', '/api/ag/upload', { image: data }); }).then(function (r) {
-        photo = r.url; pv.innerHTML = '<span class="prev" style="margin:0 0 8px"><img src="' + esc(r.url) + '" alt=""><b>✕</b></span>';
+        photo = r.url; pv.innerHTML = '<span class="prev" style="margin:0 0 8px"><img src="' + esc(r.url) + '" alt=""><b><i class="bi bi-x-lg"></i></b></span>';
         pv.querySelector('b').onclick = function () { photo = null; pv.innerHTML = ''; };
       }).catch(function (x) { if (x !== 0) toast(t.photoErr); });
     };
@@ -578,7 +622,7 @@
           }
           if (document.activeElement !== st.querySelector('select')) st.querySelector('select').value = tk.status;
         } else {
-          st.innerHTML = '<span class="chip ' + tk.status + '">' + stLabel(tk.status) + '</span>' + (tk.status !== 'cerrado' ? ' <button class="sm" data-a="close" style="margin-left:4px">✓</button>' : '');
+          st.innerHTML = '<span class="chip ' + tk.status + '">' + stLabel(tk.status) + '</span>' + (tk.status !== 'cerrado' ? ' <button class="sm" data-a="close" style="margin-left:4px"><img class="agi" src="/ag/ic/check.png" alt=""></button>' : '');
           var cb = st.querySelector('[data-a=close]'); if (cb) { cb.title = t.closeReq; cb.onclick = function () { api('POST', '/api/ag/support/' + id + '/status', { status: 'cerrado' }).then(pull).catch(function () { }); }; }
         }
         var msgs = tk.replies;
@@ -586,11 +630,11 @@
           var m = msgs[i], mine = me && m.from.toLowerCase() === me.name.toLowerCase();
           var who = m.admin ? { name: t.team, avatar: '/ag/allowgames_nav.png' } : { name: m.from, avatar: mine && me ? me.avatar : '/blank.png' };
           sc.insertAdjacentHTML('beforeend', '<div class="msg' + (mine ? ' me' : '') + (m.admin ? ' team' : '') + '">' + av(who) + '<div class="bb"><span class="nm">' + esc(m.admin ? m.from : m.from) + '</span>' + (m.admin ? '<span class="tm">' + t.team + '</span>' : '') + ' <span class="meta">' + ago(m.at) + '</span>' +
-            (m.text ? '<div class="tx">' + esc(m.text) + '</div>' : '') + imgHtml(m.image) + '</div></div>');
+            (m.text ? txt(m.text) : '') + imgHtml(m.image) + '</div></div>');
         }
         if (msgs.length > shown) sc.scrollTop = sc.scrollHeight;
         shown = msgs.length;
-        if (tk.info && !sc.querySelector('.info')) sc.insertAdjacentHTML('afterbegin', '<div class="meta info" style="padding:4px 6px 8px;word-break:break-all">🖥️ ' + esc(tk.info) + '</div>');
+        if (tk.info && !sc.querySelector('.info')) sc.insertAdjacentHTML('afterbegin', '<div class="meta info" style="padding:4px 6px 8px;word-break:break-all"><i class="bi bi-display"></i> ' + esc(tk.info) + '</div>');
       }).catch(function () { });
     }
     pull(); poll = setInterval(pull, 5000);
@@ -618,7 +662,7 @@
         if (lastDm && incoming(d.messages)) snd('recv', 'sndMsg');
         if (d.messages.length) lastDm = d.messages[d.messages.length - 1].id;
         append(sc, d.messages, false);
-        if (!lastDm && !sc.children.length) sc.innerHTML = '<div class="empty">✉️</div>';
+        if (!lastDm && !sc.children.length) sc.innerHTML = '<div class="empty"><img class="agi lg" src="/ag/ic/mail.png" alt=""></div>';
       }).catch(function () { });
     }
     pull(); poll = setInterval(pull, 3000);
@@ -644,7 +688,7 @@
     if (!pref('ntMsg')) return;
     snd('notify', 'sndMsg');
     var n = document.createElement('div'); n.id = 'agNt';
-    n.innerHTML = '<img src="' + esc(m.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">✉️ ' + t.newMsg + '</div><b>' + esc(m.from.name) + '</b><span>' + esc(m.text) + '</span></div>';
+    n.innerHTML = '<img src="' + esc(m.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t"><img class="agi" src="/ag/ic/mail.png" alt="">' + t.newMsg + '</div><b>' + esc(m.from.name) + '</b><span>' + esc(m.text) + '</span></div>';
     n.onclick = function () { n.remove(); openDmWith(m.from.name); };
     document.body.appendChild(n);
     setTimeout(function () { if (n.parentNode) n.remove(); }, 7000);
@@ -657,7 +701,7 @@
       snd('notify', 'sndReq');
       var o2 = document.getElementById('agNt'); if (o2) o2.remove();
       var g = document.createElement('div'); g.id = 'agNt';
-      g.innerHTML = '<img src="' + esc(n.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">' + (n.kind === 'gift' ? '🎁 ' + t.gf : '🏛️ ' + t.crTitle) + '</div><b>' + esc(n.from.name) + '</b><span>' +
+      g.innerHTML = '<img src="' + esc(n.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">' + (n.kind === 'gift' ? '<img class="agi" src="/ag/ic/gift.png" alt="">' + t.gf : '<img class="agi" src="/ag/ic/crew.png" alt="">' + t.crTitle) + '</div><b>' + esc(n.from.name) + '</b><span>' +
         (n.kind === 'gift' ? t.gfGot + (n.item ? ': ' + esc(nm(n.item.name)) : '') + '. ' + t.gfInv : t.crGot) + '</span></div>';
       g.onclick = function () { g.remove(); };
       document.body.appendChild(g); setTimeout(function () { if (g.parentNode) g.remove(); }, 9000);
@@ -666,7 +710,7 @@
     snd('notify', 'sndReq');
     var old = document.getElementById('agNt'); if (old) old.remove();
     var el = document.createElement('div'); el.id = 'agNt';
-    el.innerHTML = '<img src="' + esc(n.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">' + (n.kind === 'help' ? '🤝 ' + t.wall : '👥 ' + (n.kind === 'acc' ? t.frNewFriend : t.frNewReq)) + '</div><b>' + esc(n.from.name) + '</b><span>' + (n.kind === 'help' ? t.frGotHelp : n.kind === 'acc' ? t.frGotAcc : t.frGotReq) + '</span></div>';
+    el.innerHTML = '<img src="' + esc(n.from.avatar || '/blank.png') + '" alt="" onerror="this.src=\'/blank.png\'"><div class="bb"><div class="t">' + (n.kind === 'help' ? '<img class="agi" src="/ag/ic/heart.png" alt="">' + t.wall : '<img class="agi" src="/ag/ic/friends.png" alt="">' + (n.kind === 'acc' ? t.frNewFriend : t.frNewReq)) + '</div><b>' + esc(n.from.name) + '</b><span>' + (n.kind === 'help' ? t.frGotHelp : n.kind === 'acc' ? t.frGotAcc : t.frGotReq) + '</span></div>';
     el.onclick = function () { el.remove(); open(n.kind === 'help' ? 'wall' : 'add'); };
     document.body.appendChild(el);
     setTimeout(function () { if (el.parentNode) el.remove(); }, 8000);
@@ -691,7 +735,7 @@
     var beta = document.querySelector('.ag-beta'); if (!beta || document.getElementById('agCmBtn')) return;
     var btn = document.createElement('button');
     btn.id = 'agCmBtn'; btn.type = 'button'; btn.title = t.title;
-    btn.innerHTML = '💬 <span class="lb">' + t.title + '</span> <span class="sd online" id="agCmSd"></span> <span class="badge" id="agCmBadge" style="display:none"></span>';
+    btn.innerHTML = '<img class="agi" src="/ag/ic/friends.png" alt=""><span class="lb">' + t.title + '</span> <span class="sd online" id="agCmSd"></span> <span class="badge" id="agCmBadge" style="display:none"></span>';
     btn.onclick = function (e) { e.preventDefault(); e.stopPropagation(); if (root && root.classList.contains('on')) close(); else open(tab); };
     var brand = beta.closest('a');
     (brand && brand.parentNode ? brand.parentNode.insertBefore(btn, brand.nextSibling) : beta.parentNode.appendChild(btn));
@@ -707,8 +751,8 @@
   function shareDialog(data) {
     var old = document.getElementById('agSh'); if (old) old.remove();
     var d = document.createElement('div'); d.id = 'agSh';
-    d.innerHTML = '<div class="c"><h3>📣 ' + t.shareTitle + '</h3><div class="in">' + (data.image ? '<img src="' + esc(data.image) + '" alt="" onerror="this.remove()">' : '<div style="font-size:48px">🏙️</div>') +
-      '<div style="min-width:0"><b>' + esc(data.wishlist ? '🎁 ' + t.wishTitle : data.title) + '</b><p>' + esc(data.wishlist ? (data.title || '') : data.text) + '</p></div></div>' +
+    d.innerHTML = '<div class="c"><h3><img class="agi" src="/ag/ic/news.png" alt="">' + t.shareTitle + '</h3><div class="in">' + (data.image ? '<img src="' + esc(data.image) + '" alt="" onerror="this.remove()">' : '<img src="/ag/ic/city.png" alt="" style="width:64px;height:64px">') +
+      '<div style="min-width:0"><b>' + (data.wishlist ? '<img class="agi" src="/ag/ic/gift.png" alt="">' + esc(t.wishTitle) : esc(data.title)) + '</b><p>' + esc(data.wishlist ? (data.title || '') : data.text) + '</p></div></div>' +
       '<div class="bt"><button class="no">' + t.cancel + '</button><button class="yes">' + t.shareBtn + '</button></div></div>';
     document.body.appendChild(d);
     ['keydown', 'keyup', 'keypress'].forEach(function (ev) { d.addEventListener(ev, function (e) { e.stopPropagation(); }); });
@@ -716,10 +760,10 @@
     d.querySelector('.yes').onclick = function () {
       this.disabled = true;
       api('POST', '/api/ag/share', data).then(function () { d.remove(); afterShare('published'); toast2(t.shared); })
-        .catch(function (j) { d.remove(); afterShare('null'); toast2(j && j.error === 'wait' ? t.shareWait : j && j.error === 'empty' ? t.wishEmpty : '⚠️'); });
+        .catch(function (j) { d.remove(); afterShare('null'); toast2(j && j.error === 'wait' ? t.shareWait : j && j.error === 'empty' ? t.wishEmpty : '!'); });
     };
   }
-  function toast2(msg) { if (root && root.classList.contains('on')) return toast(msg); var n = document.createElement('div'); n.id = 'agNt'; n.innerHTML = '<div class="bb"><b>💬 ' + t.title + '</b><span>' + esc(msg) + '</span></div>'; n.onclick = function () { n.remove(); open('wall'); }; var o = document.getElementById('agNt'); if (o) o.remove(); document.body.appendChild(n); setTimeout(function () { if (n.parentNode) n.remove(); }, 5000); }
+  function toast2(msg) { if (root && root.classList.contains('on')) return toast(msg); var n = document.createElement('div'); n.id = 'agNt'; n.innerHTML = '<div class="bb"><b><img class="agi" src="/ag/ic/friends.png" alt="">' + t.title + '</b><span>' + esc(msg) + '</span></div>'; n.onclick = function () { n.remove(); open('wall'); }; var o = document.getElementById('agNt'); if (o) o.remove(); document.body.appendChild(n); setTimeout(function () { if (n.parentNode) n.remove(); }, 5000); }
   function fromGame(att, links) {
     att = att || {}; links = links || [];
     if (typeof att === 'string') { try { att = JSON.parse(att); } catch (e) { att = { name: att }; } }

@@ -37,10 +37,12 @@
     '#agCh .note p{color:#fff;margin:0 0 6px;font-size:14px}#agCh .note button{border:3px solid #1c6e9c;border-radius:999px;background:#fff;color:#0a5f8c;font:700 14px CV,sans-serif;padding:5px 16px;cursor:pointer}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
+  var CI = { '💰': 'money', '🌾': 'farm', '🤝': 'heart', '🏘️': 'city', '📦': 'goods', '🏗️': 'build', '🚜': 'farm', '📜': 'quest' };
+  function cicon(e) { var n = CI[e] || CI[(e || '').replace('\uFE0F', '')] || 'xp'; return '<img class="agi lg" src="/ag/ic/' + n + '.png" alt="">'; }
   function rw(c) {
     var s = [];
     if (c.coins) s.push('<img src="/ag/daily/doober_coin.png" alt="">' + c.coins + ' ' + t[7]);
-    if (c.cash) s.push('💵 ' + c.cash + ' ' + t[8]);
+    if (c.cash) s.push('<img class="agi" src="/ag/ic/cash.png" alt="">' + c.cash + ' ' + t[8]);
     if (c.energy) s.push('<img src="/ag/daily/doober_bolt.png" alt="">' + c.energy + ' ' + t[9]);
     return s.join(' · ');
   }
@@ -50,19 +52,19 @@
   function render(d) {
     var h = '<div class="c" role="dialog"><button class="x" aria-label="' + t[12] + '"></button><h2>' + t[0] + '</h2><p class="sub">' + t[1] + '</p><div class="in">';
     d.challenges.forEach(function (c) {
-      h += '<div class="ch' + (c.done ? ' done' : '') + (c.claimed ? ' cl' : '') + '"><div class="ic">' + c.icon + '</div><div class="bd"><div class="tx">' + c.text + '</div>' +
+      h += '<div class="ch' + (c.done ? ' done' : '') + (c.claimed ? ' cl' : '') + '"><div class="ic">' + cicon(c.icon) + '</div><div class="bd"><div class="tx">' + c.text + '</div>' +
         '<div class="bar"><i style="width:' + Math.round(100 * c.progress / c.goal) + '%"></i></div><div class="rw">' + c.progress + '/' + c.goal + ' · ' + rw(c) + '</div></div>' +
-        '<button class="cl" data-id="' + c.id + '"' + (!c.done || c.claimed ? ' disabled' : '') + '>' + (c.claimed ? '✔' : t[2]) + '</button></div>';
+        '<button class="cl" data-id="' + c.id + '"' + (!c.done || c.claimed ? ' disabled' : '') + '>' + (c.claimed ? '<img class="agi" src="/ag/ic/check.png" alt="">' : t[2]) + '</button></div>';
     });
     var b = d.bonus;
-    h += '<div class="ch bonus' + (b.claimed ? ' cl' : '') + '"><div class="ic">🎁</div><div class="bd"><div class="tx">' + t[5] + '</div><div class="rw">' + t[6] + ' · ' + rw(b) + '</div></div>' +
-      '<button class="cl" data-id="bonus"' + (!b.ready ? ' disabled' : '') + '>' + (b.claimed ? '✔' : t[2]) + '</button></div>';
+    h += '<div class="ch bonus' + (b.claimed ? ' cl' : '') + '"><div class="ic"><img class="agi lg" src="/ag/ic/gift.png" alt=""></div><div class="bd"><div class="tx">' + t[5] + '</div><div class="rw">' + t[6] + ' · ' + rw(b) + '</div></div>' +
+      '<button class="cl" data-id="bonus"' + (!b.ready ? ' disabled' : '') + '>' + (b.claimed ? '<img class="agi" src="/ag/ic/check.png" alt="">' : t[2]) + '</button></div>';
     var w = d.streak;
     if (w) {
-      var dots = ''; for (var i = 1; i <= w.goal; i++) dots += '<b class="' + (i <= w.days ? 'on' : '') + '">' + (i <= w.days ? '✔' : i) + '</b>';
-      h += '<div class="ch week"><div class="ic">🧰</div><div class="bd"><div class="tx">' + t[13] + ' · ' + w.days + '/' + w.goal + ' ' + t[15] + '</div><div class="dots">' + dots + '</div><div class="rw">' + t[14] + ' · ' + rw(w) + '</div></div></div>';
+      var dots = ''; for (var i = 1; i <= w.goal; i++) dots += '<b class="' + (i <= w.days ? 'on' : '') + '">' + (i <= w.days ? '<img class="agi" src="/ag/ic/check.png" alt="">' : i) + '</b>';
+      h += '<div class="ch week"><div class="ic"><img class="agi lg" src="/ag/ic/tools.png" alt=""></div><div class="bd"><div class="tx">' + t[13] + ' · ' + w.days + '/' + w.goal + ' ' + t[15] + '</div><div class="dots">' + dots + '</div><div class="rw">' + t[14] + ' · ' + rw(w) + '</div></div></div>';
     }
-    h += '</div><div class="ft">⏰ ' + t[4] + ' ' + fmt(d.resetIn) + '</div><div class="note' + (claimedSomething ? ' on' : '') + '"><p>' + t[10] + '</p><button class="rl">' + t[11] + '</button></div></div>';
+    h += '</div><div class="ft"><img class="agi" src="/ag/ic/alert.png" alt="">' + t[4] + ' ' + fmt(d.resetIn) + '</div><div class="note' + (claimedSomething ? ' on' : '') + '"><p>' + t[10] + '</p><button class="rl">' + t[11] + '</button></div></div>';
     root.innerHTML = h;
   }
   function load() {
