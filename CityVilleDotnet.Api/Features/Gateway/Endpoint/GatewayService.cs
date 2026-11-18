@@ -175,6 +175,7 @@ internal sealed class GatewayService(IServiceProvider serviceProvider, CityVille
                 catch (Exception e)
                 {
                     logger.LogError(e, "Error processing request for function {FunctionName} with params {@Params}", functionName, parameters);
+                    CityVilleDotnet.Api.Features.AllowGames.MissingHandlers.RecordError(functionName, parameters, e);
 
                     context.ChangeTracker.Clear();
 

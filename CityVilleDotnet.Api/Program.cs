@@ -244,6 +244,7 @@ CityVilleDotnet.Api.Features.AllowGames.ChallengeService.Initialize(app.Environm
 CityVilleDotnet.Api.Features.AllowGames.CommunityService.Initialize(app.Environment.ContentRootPath);
 CityVilleDotnet.Api.Features.AllowGames.SupportService.Initialize(app.Environment.ContentRootPath);
 CityVilleDotnet.Api.Features.AllowGames.ResetCodeService.Initialize(app.Environment.ContentRootPath);
+CityVilleDotnet.Api.Features.AllowGames.MissingHandlers.Initialize(app.Environment.ContentRootPath);
 await CityVilleDotnet.Api.Features.AllowGames.AllowGamesEndpoints.BootstrapAdminsAsync(app.Services, app.Configuration, logger);
 
 logger.LogInformation("Version {InformationalVersion} loaded", Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion);
