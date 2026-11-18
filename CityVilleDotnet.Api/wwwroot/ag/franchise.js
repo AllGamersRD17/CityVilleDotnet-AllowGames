@@ -4,12 +4,12 @@
   var P = window.AG_PLAYER || {};
   var lang = (P.locale || navigator.language || 'es').slice(0, 2);
   var L = {
-    es: { title: '¡Solicitud de franquicia!', wants: 'quiere abrir', inCity: 'en tu ciudad', ok: 'Aprobar', no: 'Rechazar', done: '¡Franquicia aprobada! Recargando tu ciudad...', denied: 'Solicitud rechazada', fail: 'No se pudo. Intenta otra vez.', tip: 'Los dos ganan monedas cuando la gente compra ahí.', more: 'más esperando' },
-    en: { title: 'Franchise request!', wants: 'wants to open', inCity: 'in your city', ok: 'Approve', no: 'Decline', done: 'Franchise approved! Reloading your city...', denied: 'Request declined', fail: "Couldn't do it. Try again.", tip: 'You both earn coins when people shop there.', more: 'more waiting' },
-    pt: { title: 'Pedido de franquia!', wants: 'quer abrir', inCity: 'na sua cidade', ok: 'Aprovar', no: 'Recusar', done: 'Franquia aprovada! Recarregando sua cidade...', denied: 'Pedido recusado', fail: 'Não deu. Tente de novo.', tip: 'Vocês dois ganham moedas quando o povo compra lá.', more: 'esperando' },
-    fr: { title: 'Demande de franchise !', wants: 'veut ouvrir', inCity: 'dans ta ville', ok: 'Accepter', no: 'Refuser', done: 'Franchise acceptée ! Ta ville se recharge...', denied: 'Demande refusée', fail: 'Échec. Réessaie.', tip: 'Vous gagnez tous les deux des pièces quand les gens y achètent.', more: 'en attente' },
-    it: { title: 'Richiesta di franchising!', wants: 'vuole aprire', inCity: 'nella tua città', ok: 'Approva', no: 'Rifiuta', done: 'Franchising approvato! Ricarico la tua città...', denied: 'Richiesta rifiutata', fail: 'Non riuscito. Riprova.', tip: 'Guadagnate entrambi monete quando la gente compra lì.', more: 'in attesa' },
-    de: { title: 'Franchise-Anfrage!', wants: 'möchte eröffnen:', inCity: 'in deiner Stadt', ok: 'Annehmen', no: 'Ablehnen', done: 'Franchise angenommen! Deine Stadt lädt neu...', denied: 'Anfrage abgelehnt', fail: 'Hat nicht geklappt. Versuch es nochmal.', tip: 'Ihr verdient beide Münzen, wenn dort eingekauft wird.', more: 'warten noch' }
+    es: { title: '¡Solicitud de franquicia!', wants: 'quiere abrir', inCity: 'en tu ciudad', ok: 'Aprobar', no: 'Rechazar', done: '¡Franquicia aprobada! Recargando tu ciudad...', denied: 'Solicitud rechazada', fail: 'No se pudo. Intenta otra vez.', tip: 'Los dos ganan monedas cuando la gente compra ahí.', more: 'más esperando', nolot: 'Necesitas un terreno de negocio vacío en tu ciudad. Ponlo desde la tienda (Negocios) y vuelve a intentarlo.', later: 'Luego' },
+    en: { title: 'Franchise request!', wants: 'wants to open', inCity: 'in your city', ok: 'Approve', no: 'Decline', done: 'Franchise approved! Reloading your city...', denied: 'Request declined', fail: "Couldn't do it. Try again.", tip: 'You both earn coins when people shop there.', more: 'more waiting', nolot: 'You need an empty business lot in your city. Place one from the shop (Businesses) and try again.', later: 'Later' },
+    pt: { title: 'Pedido de franquia!', wants: 'quer abrir', inCity: 'na sua cidade', ok: 'Aprovar', no: 'Recusar', done: 'Franquia aprovada! Recarregando sua cidade...', denied: 'Pedido recusado', fail: 'Não deu. Tente de novo.', tip: 'Vocês dois ganham moedas quando o povo compra lá.', more: 'esperando', nolot: 'Você precisa de um terreno de negócio vazio na sua cidade. Coloque um pela loja (Negócios) e tente de novo.', later: 'Depois' },
+    fr: { title: 'Demande de franchise !', wants: 'veut ouvrir', inCity: 'dans ta ville', ok: 'Accepter', no: 'Refuser', done: 'Franchise acceptée ! Ta ville se recharge...', denied: 'Demande refusée', fail: 'Échec. Réessaie.', tip: 'Vous gagnez tous les deux des pièces quand les gens y achètent.', more: 'en attente', nolot: 'Il te faut un terrain commercial vide dans ta ville. Places-en un depuis la boutique (Commerces) et réessaie.', later: 'Plus tard' },
+    it: { title: 'Richiesta di franchising!', wants: 'vuole aprire', inCity: 'nella tua città', ok: 'Approva', no: 'Rifiuta', done: 'Franchising approvato! Ricarico la tua città...', denied: 'Richiesta rifiutata', fail: 'Non riuscito. Riprova.', tip: 'Guadagnate entrambi monete quando la gente compra lì.', more: 'in attesa', nolot: 'Ti serve un lotto commerciale vuoto nella tua città. Mettine uno dal negozio (Attività) e riprova.', later: 'Dopo' },
+    de: { title: 'Franchise-Anfrage!', wants: 'möchte eröffnen:', inCity: 'in deiner Stadt', ok: 'Annehmen', no: 'Ablehnen', done: 'Franchise angenommen! Deine Stadt lädt neu...', denied: 'Anfrage abgelehnt', fail: 'Hat nicht geklappt. Versuch es nochmal.', tip: 'Ihr verdient beide Münzen, wenn dort eingekauft wird.', more: 'warten noch', nolot: 'Du brauchst ein leeres Geschäftsgrundstück in deiner Stadt. Stell eins aus dem Shop (Geschäfte) auf und versuch es nochmal.', later: 'Später' }
   };
   var t = L[lang] || L.es;
   var shown = {};
@@ -40,7 +40,7 @@
       (o.item && o.item.icon ? '<img class="bz" src="' + esc(o.item.icon) + '" alt="" onerror="this.remove()">' : '') +
       '</div><p><b>' + esc(o.from.name) + '</b> ' + esc(t.wants) + ' <b>' + esc(name) + '</b> ' + esc(t.inCity) + '</p>' +
       '<small>' + esc(t.tip) + (list.length > 1 ? ' · +' + (list.length - 1) + ' ' + esc(t.more) : '') + '</small>' +
-      '<div class="bt"><button class="no">' + esc(t.no) + '</button><button class="ok">' + esc(t.ok) + '</button></div></div>';
+      '<div class="bt"><button class="lt" style="display:none;background:linear-gradient(#bfe0f2,#7fb8d8);box-shadow:0 5px 0 #4f8db0">' + esc(t.later) + '</button><button class="no">' + esc(t.no) + '</button><button class="ok">' + esc(t.ok) + '</button></div></div>';
     ['keydown', 'keyup', 'keypress'].forEach(function (ev) { d.addEventListener(ev, function (e) { e.stopPropagation(); }); });
     document.body.appendChild(d);
     var p = d.querySelector('p');
@@ -49,8 +49,13 @@
       busy(true);
       post('/api/ag/franchise/accept', { senderId: String(o.senderId), lotId: o.lotId })
         .then(function () { p.textContent = t.done; setTimeout(function () { location.reload(); }, 1800); })
-        .catch(function () { p.textContent = t.fail; busy(false); });
+        .catch(function (r) {
+          if (r && r.json) r.json().then(function (j) { p.textContent = j && j.error === 'nolot' ? t.nolot : t.fail; }).catch(function () { p.textContent = t.fail; });
+          else p.textContent = t.fail;
+          busy(false); d.querySelector('.lt').style.display = '';
+        });
     };
+    d.querySelector('.lt').onclick = function () { d.remove(); };
     d.querySelector('.no').onclick = function () {
       busy(true);
       post('/api/ag/franchise/deny', { senderId: String(o.senderId), lotId: o.lotId })

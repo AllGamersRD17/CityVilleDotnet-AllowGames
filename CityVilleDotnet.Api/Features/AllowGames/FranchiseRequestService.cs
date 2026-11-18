@@ -63,6 +63,10 @@ public static class FranchiseRequestService
                 await new AcceptOrder(db).HandlePacket(new AcceptOrderRequest { SenderId = sid, LotId = b.LotId }, me.Id, ct);
                 return Results.Ok();
             }
+            catch (InvalidOperationException ex) when (ex.Message == "nolot")
+            {
+                return Results.Json(new { error = "nolot" }, statusCode: 400);
+            }
             catch (Exception ex)
             {
                 MissingHandlers.RecordError("ag.franchise.accept", $"{b.SenderId}/{b.LotId}", ex);

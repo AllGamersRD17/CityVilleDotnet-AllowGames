@@ -70,8 +70,20 @@ public class AcceptOrder(CityVilleDbContext context) : AmfService<AcceptOrderReq
 
         var newBuilding = receiveUser.GetWorld().Objects.FirstOrDefault(x => x.WorldFlatId == lotOrder.LotId);
 
-        if (newBuilding is null)
-            throw new Exception($"Can't find building with WorldFlatId {lotOrder.LotId}");
+        // Allow Games: a veces el pedido llega sin terreno (lotId -1). Se usa el primer terreno de negocio vacio de la ciudad.
+        if (newBuilding is null || newBuilding.ClassName != BuildingClassType.LotSite)
+        {
+            newBuilding = receiveUser.GetWorld().Objects
+                .Where(x => x.ClassName == BuildingClassType.LotSite && !x.Deleted)
+                .OrderBy(x => x.WorldFlatId)
+                .FirstOrDefault();
+
+            if (newBuilding is null)
+                throw new InvalidOperationException("nolot");
+
+            lotOrder.LotId = newBuilding.WorldFlatId;
+            senderLotOrder.LotId = newBuilding.WorldFlatId;
+        }
 
         senderLotOrder.Accept();
         lotOrder.Accept();
