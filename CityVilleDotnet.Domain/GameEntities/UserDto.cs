@@ -1,4 +1,4 @@
-using CityVilleDotnet.Common.Settings;
+﻿using CityVilleDotnet.Common.Settings;
 using CityVilleDotnet.Common.Utils;
 using CityVilleDotnet.Domain.Entities;
 using System.Text.Json.Serialization;
@@ -204,7 +204,9 @@ public static class UserDtoMapper
                         {
                             "supportedWeather", new ASObject()
                             {
-                                { "0", 0 },
+                                // Allow Games: el juego pregunta supportedWeather[tipo] y 0 cuenta como "no": por eso
+                                // "Ver" en el aviso del clima no hacia nada con el tiempo soleado
+                                { "0", 1 },
                                 { "1", 1 },
                             }
                         }
