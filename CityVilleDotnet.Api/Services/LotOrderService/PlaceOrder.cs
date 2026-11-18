@@ -48,6 +48,7 @@ public sealed class PlaceOrder(CityVilleDbContext context) : AmfService<PlaceOrd
             ConstructionCount = order.ConstructionCount,
             OrderResourceName = order.OrderResourceName,
             ResourceType = order.ResourceType,
+            TimeSent = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
             OrderState = OrderState.Pending,
             OrderType = OrderType.Lot,
             TransmissionStatus = TransmissionStatus.Sent
@@ -63,6 +64,7 @@ public sealed class PlaceOrder(CityVilleDbContext context) : AmfService<PlaceOrd
             ConstructionCount = order.ConstructionCount,
             OrderResourceName = order.OrderResourceName,
             ResourceType = order.ResourceType,
+            TimeSent = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
             OrderState = OrderState.Pending,
             OrderType = OrderType.Lot,
             TransmissionStatus = TransmissionStatus.Received

@@ -316,7 +316,7 @@ public static class CommunityService
         return LastSeen.TryGetValue(name, out var d) ? d : null;
     }
 
-    private static object Who(string name) => new
+    internal static object Who(string name) => new
     {
         name,
         avatar = _s.Avatars.GetValueOrDefault(name.ToLowerInvariant(), "/blank.png"),
@@ -609,7 +609,7 @@ public static class CommunityService
     }
 
     // Icono y coleccion de un objeto, desde gameSettings.xml
-    private static object ItemInfo(string name)
+    internal static object ItemInfo(string name)
     {
         string? icon = null, col = null;
         try

@@ -112,7 +112,7 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
             ["generateSchema"] = "1",
             ["sn_app_url"] = "",
             ["snapiEnable"] = Request.Query["sn"] == "fb" ? "0" : "1", // ?sn=fb para probar el modo Facebook
-            ["game_config_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/gameSettings.xml?v=7",
+            ["game_config_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/gameSettings.xml?v=8",
             ["quest_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/questSettings.xml?v=1",
             ["effects_config_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/effectsConfig.xml",
             ["font_mapper_url"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/FontMapper.swf",

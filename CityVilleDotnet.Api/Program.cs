@@ -227,6 +227,7 @@ app.MapSupport();
 app.MapCrewGifts();
 app.MapMissingHandlers();
 CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.MapDaily(app);
+CityVilleDotnet.Api.Features.AllowGames.FranchiseRequestService.MapFranchise(app);
 app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();

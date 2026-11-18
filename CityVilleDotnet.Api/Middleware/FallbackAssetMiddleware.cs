@@ -49,7 +49,7 @@ public class FallbackAssetMiddleware(
             if (contentType != null)
             {
                 // Allow Games: carros sin dibujo -> se usa otro carro parecido que si tenemos (mismo sentido)
-                var carFile = CarFallback(requestPath);
+                var carFile = CarFallback(requestPath) ?? CarUiFallback(requestPath);
                 if (carFile is not null)
                 {
                     await SendFallbackAsync(context, carFile, contentType);
@@ -177,6 +177,27 @@ public class FallbackAssetMiddleware(
     private static readonly System.Text.RegularExpressions.Regex CarPath = new(
         @"^/assets/npcs/([^/]+)/[^/]*?_?(NNE|NNW|SSE|SSW|NEE|NWW|SEE|SWW|NE|NW|SE|SW|N|S|E|W)\.png$",
         System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
+
+    // Allow Games: la ventana de fabricar carros pide assets/cars/ui_images/<carro>.png, que no tenemos;
+    // se usa el icono del carro (o el de la tienda de carros) para que la ventana no salga vacia
+    private string? CarUiFallback(string requestPath)
+    {
+        const string prefix = "/assets/cars/ui_images/";
+        if (!requestPath.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) return null;
+        var name = Path.GetFileNameWithoutExtension(requestPath);
+        try
+        {
+            var item = CityVilleDotnet.Common.Settings.GameSettingsManager.Instance.GetItem(name);
+            var url = item?.Images.FirstOrDefault(i => i.Name == "icon")?.Url ?? item?.Images.FirstOrDefault()?.Url;
+            if (!string.IsNullOrEmpty(url))
+            {
+                var f = FindIgnoringCase("/" + url.TrimStart('/'));
+                if (f is not null) return f;
+            }
+        }
+        catch { /* settings sin cargar */ }
+        return FindIgnoringCase("/assets/cars/car_jack.png");
+    }
 
     private string? CarFallback(string requestPath)
     {
