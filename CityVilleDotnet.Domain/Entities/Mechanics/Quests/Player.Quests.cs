@@ -66,6 +66,7 @@ public partial class Player
                             quest.Progress[index] += 1;
                             break;
                         case "countLights":
+                        case "autoHarvest":
                             quest.Progress[index] += amount;
                             break;
                         case "craftCollection":
@@ -112,6 +113,9 @@ public partial class Player
                         case "moveByName":
                         case "upgradeItemByName":
                         case "acceptTrainByName":
+                        case "countStoreItem":
+                        case "countMoveToStorage":
+                        case "countPlaceFromStorage":
                         {
                             if (itemName is null)
                                 throw new Exception("Can't validate byName action without itemName");
@@ -441,6 +445,17 @@ public partial class Player
                             quest.Progress[index] = 1;
                         }
 
+                        continue;
+                    }
+                    case "hasExpansionsByCoords":
+                    {
+                        var worldId = GetWorld().Type.ToDescriptionString();
+                        
+                        var owned = taskType.Split('|')
+                            .Select(coord => coord.Split(','))
+                            .Count(coords => coords.Length > 2 && coords[2] == worldId && GetWorld().IsPointInTerritory(int.Parse(coords[0]), int.Parse(coords[1])));
+
+                        quest.Progress[index] = Math.Max(quest.Progress[index], owned);
                         continue;
                     }
                 }

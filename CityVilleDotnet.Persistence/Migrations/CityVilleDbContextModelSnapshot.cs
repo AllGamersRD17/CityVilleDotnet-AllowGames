@@ -16,7 +16,7 @@ partial class CityVilleDbContextModelSnapshot : ModelSnapshot
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261112200630_AddPlayerIsPlazaBuild";
+    public override string LastMigrationId => "20261116204508_AddDailyBonus";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
@@ -749,6 +749,9 @@ partial class CityVilleDbContextModelSnapshot : ModelSnapshot
                 b.Property<DateTimeOffset>("CreationTimestamp")
                     .HasColumnType("datetimeoffset");
 
+                b.Property<int>("DailyBonusDay")
+                    .HasColumnType("int");
+
                 b.Property<int>("Energy")
                     .HasColumnType("int");
 
@@ -761,6 +764,12 @@ partial class CityVilleDbContextModelSnapshot : ModelSnapshot
                 b.Property<bool>("FirstDay")
                     .HasColumnType("bit");
 
+                b.Property<int>("Gas")
+                    .HasColumnType("int");
+
+                b.Property<long>("GasLastCheck")
+                    .HasColumnType("bigint");
+
                 b.Property<int>("Gold")
                     .HasColumnType("int");
 
@@ -772,6 +781,9 @@ partial class CityVilleDbContextModelSnapshot : ModelSnapshot
 
                 b.Property<bool>("IsPlazaBuild")
                     .HasColumnType("bit");
+
+                b.Property<DateOnly?>("LastDailyBonusDate")
+                    .HasColumnType("date");
 
                 b.Property<int>("LastPlayedWorldType")
                     .HasColumnType("int");

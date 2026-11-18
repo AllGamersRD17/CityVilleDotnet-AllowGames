@@ -1,4 +1,5 @@
 using CityVilleDotnet.Common.Settings;
+using CityVilleDotnet.Common.Utils;
 using CityVilleDotnet.Domain.Entities;
 using System.Text.Json.Serialization;
 using CityVilleDotnet.Domain.EnumExtensions;
@@ -38,6 +39,9 @@ public static class UserDtoMapper
             energyModifiers[$"{obj.WorldFlatId}"] = obj.EnergyModifier;
         }
 
+        var (gas, gasLastCheck) = model.GetCurrentGas(ServerUtils.GetCurrentTimeSeconds());
+        var (currentBonusDay, previousBonusDay) = model.GetDailyBonusStreak();
+
         var dto = new UserDto()
         {
             Crews = model.GetWorld().Objects.Where(o => o.CrewMembers.Count > 0).ToDictionary(
@@ -75,6 +79,8 @@ public static class UserDtoMapper
                     Energy = model.Energy,
                     EnergyMax = model.EnergyMax,
                     LastEnergyCheck = model.GetLastCheckEnergyTimestamp(),
+                    RegenerableResources = new ASObject { ["gas"] = gas },
+                    RegenerableLastUpdates = new ASObject { ["gas"] = gasLastCheck },
                     ExpansionsPurchased = model.ExpansionsPurchased,
                     Gold = model.Gold,
                     Inventory = new InventoryDto
@@ -122,6 +128,8 @@ public static class UserDtoMapper
                     Xp = model.Xp,
                     SocialLevel = model.SocialLevel,
                     SocialXp = model.SocialXp,
+                    CurrentBonusDay = currentBonusDay,
+                    PreviousBonusDay = previousBonusDay,
                     Orders = BuildOrdersAsObject(model),
                     LightLevel = model.LightLevel,
                     PaidEnergy = 0, // TODO
@@ -130,7 +138,7 @@ public static class UserDtoMapper
                     ShowNpcCloud = true,
                     StorageComponent = model.ToStorageComponentDto(),
                     AdditionalWareHouseSlots = 0,
-                    ActiveQuests = activeQuests.Select(q => q.ToDto()).ToList()
+                    ActiveQuests = activeQuests.Select(q => q.ToDto(model)).ToList()
                 },
                 World = model.GetWorld().ToDto(),
                 Username = model.Username,

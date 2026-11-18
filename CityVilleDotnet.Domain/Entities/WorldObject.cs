@@ -1,6 +1,8 @@
 ﻿using System.Buffers.Binary;
 using System.Security.Cryptography;
 using System.Text;
+using CityVilleDotnet.Common.Enums;
+using CityVilleDotnet.Common.Exceptions;
 using CityVilleDotnet.Common.Settings;
 using CityVilleDotnet.Common.Settings.GameSettings;
 using CityVilleDotnet.Common.Utils;
@@ -820,6 +822,16 @@ public partial class WorldObject
         Y = y;
         Z = z;
         Direction = direction;
+        State = state;
+    }
+
+    public void UpdateTrackState(WorldObjectState state)
+    {
+        if (ClassName != BuildingClassType.MonorailTrack || state < WorldObjectState.StraightNeSw)
+        {
+            throw new DomainException(GameErrorType.InvalidState, $"Can't set state {state} on {ItemName}");
+        }
+
         State = state;
     }
 

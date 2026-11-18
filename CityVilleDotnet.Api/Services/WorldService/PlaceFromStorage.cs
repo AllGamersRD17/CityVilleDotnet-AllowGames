@@ -1,6 +1,7 @@
 ﻿using CityVilleDotnet.Api.Common.Amf;
 using CityVilleDotnet.Api.Services.WorldService.Common;
 using CityVilleDotnet.Domain.Entities;
+using CityVilleDotnet.Domain.Enums;
 using CityVilleDotnet.Persistence;
 using FluentValidation;
 using FluorineFx;
@@ -19,6 +20,7 @@ public class PlaceFromStorage(CityVilleDbContext context) : AmfService<PlaceFrom
             .ThenInclude(x => x.MechanicCounters)
             .Include(x => x.InventoryItems)
             .ThenInclude(x => x.StoredObject)
+            .Include(x => x.Quests.Where(q => q.QuestType == QuestType.Active))
             .FirstOrDefaultAsync(x => x.Id == playerId, cancellationToken);
 
         if (player is null) throw new Exception("Player not found");
@@ -40,6 +42,8 @@ public class PlaceFromStorage(CityVilleDbContext context) : AmfService<PlaceFrom
 
             world.Objects.Add(newBuilding);
         }
+
+        player.HandleQuestsProgress("countPlaceFromStorage", itemName: request.Building.ItemName);
 
         if (inventoryItem is not null)
         {

@@ -64,7 +64,7 @@ public static class NeighborDtoMapper
             IsSubscriber = false,
 
             EnergyLeft = model.GetAvailableEnergy(ServerUtils.GetCurrentTime()),
-            LastLoginTimestamp = 0,
+            LastLoginTimestamp = (int)Math.Max(1, friend.LastTrackingTimestamp.ToUnixTimeSeconds()),
             HelpRequests = 0,
             PlayerClassType = -1
         };

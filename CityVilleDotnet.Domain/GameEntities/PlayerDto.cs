@@ -44,10 +44,15 @@ public class PlayerDto
 
     [JsonPropertyName("socialXp")] public int SocialXp { get; set; } = 0;
 
+    [JsonPropertyName("currentBonusDay")] public int CurrentBonusDay { get; set; }
+    [JsonPropertyName("previousBonusDay")] public int PreviousBonusDay { get; set; }
+
     [JsonPropertyName("energy")] public int Energy { get; set; } = 12;
 
     [JsonPropertyName("energyMax")] public int EnergyMax { get; set; } = 12;
     [JsonPropertyName("lastEnergyCheck")] public int LastEnergyCheck { get; set; } = 0;
+    [JsonPropertyName("regenerableResources")] public ASObject RegenerableResources { get; set; } = new();
+    [JsonPropertyName("regenerableLastUpdates")] public ASObject RegenerableLastUpdates { get; set; } = new();
 
     [JsonPropertyName("seenFlags")] public ASObject SeenFlags { get; set; } = new ASObject();
     [JsonPropertyName("coupons")] public List<string> Coupons { get; set; } = [];
