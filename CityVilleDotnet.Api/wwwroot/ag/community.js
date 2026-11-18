@@ -449,6 +449,7 @@
     load();
   }
   window.agOpenFriends = function () { open('add'); };
+  window.agOpenWall = function () { open('wall'); };
 
   // ---------- regalos gratis (gifts.php) ----------
   var giftPre = null;

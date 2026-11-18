@@ -263,6 +263,40 @@ public static class CommunityService
         }
     }
 
+    private static string Tldr(string text)
+    {
+        var t = (text.Split('\n').FirstOrDefault(x => x.Trim().Length > 0) ?? "").Trim();
+        return t.Length > 90 ? t[..90] + "…" : t;
+    }
+
+    // Avisos de "ayuda rapida": amigos/vecinos que acaban de pedir ayuda en el muro y todavia no les ayudaste
+    public static object HelpFeed(string me, long after)
+    {
+        lock (Lock)
+        {
+            var now = DateTime.UtcNow;
+            var list = _s.Wall.Where(p => p.Id > after && (p.Kind == "share" || p.Kind == "wishlist")
+                    && !p.Author.Equals(me, StringComparison.OrdinalIgnoreCase)
+                    && !p.Helps.ContainsKey(me) && p.Helps.Count < MaxHelps
+                    && (now - p.At).TotalHours < 6 && !Blocked(me, p.Author) && !Blocked(p.Author, me)
+                    && Pref(p.Author, "wallHelp") != "none")
+                .OrderByDescending(p => p.Id).Take(3).ToList();
+            var top = _s.Wall.Count == 0 ? 0 : _s.Wall.Max(p => p.Id);
+            return new
+            {
+                top,
+                list = list.Select(p => new
+                {
+                    id = p.Id, kind = p.Kind, from = Who(p.Author), at = p.At,
+                    text = Tldr(p.Text),
+                    image = p.Image, energy = IsEnergyAsk(p.Text, null, p.Image),
+                    item = p.Kind == "wishlist" ? p.Items.FirstOrDefault() : null,
+                    itemInfo = p.Kind == "wishlist" && p.Items.Count > 0 ? ItemInfo(p.Items[0]) : null
+                }).ToList()
+            };
+        }
+    }
+
     // Conversaciones con mensajes sin leer (para abrir la ventanita sola cuando te escriben)
     public static List<string> UnreadFrom(string me)
     {
@@ -678,7 +712,7 @@ public static class CommunityService
     private sealed record ShareBody(string? Title, string? Text, string? Image, string? Action, bool? Wishlist);
     private sealed record HelpBody(string? Item);
     private sealed record DockWinReq(string? Name, long After);
-    private sealed record DockBody(bool Active, List<DockWinReq>? Wins, string? Typing);
+    private sealed record DockBody(bool Active, List<DockWinReq>? Wins, string? Typing, long? HelpAfter);
 
     public static void MapCommunity(this WebApplication app)
     {
@@ -885,7 +919,7 @@ public static class CommunityService
             }
             var wins = want.Select(w => found.FirstOrDefault(f => f.Equals(w.Name, StringComparison.OrdinalIgnoreCase)) is { } o ? DockWin(p.Username, o, w.After) : null)
                 .Where(x => x is not null).ToList();
-            return Results.Json(new { status = MyStatus(p.Username), unread = Unread(p.Username), from = UnreadFrom(p.Username), wins });
+            return Results.Json(new { status = MyStatus(p.Username), unread = Unread(p.Username), from = UnreadFrom(p.Username), wins, helps = b.HelpAfter is null ? null : HelpFeed(p.Username, b.HelpAfter.Value) });
         });
 
         // lista de la barra de chat: amigos primero, luego los que estan conectados

@@ -6,12 +6,12 @@
   if (!C) return; // necesita community.js
   var lang = C.lang;
   var L = {
-    es: { chat: 'Chat', online: 'En línea', idle: 'Ausente', busy: 'No molestar', offline: 'Desconectado', invisible: 'Invisible', seen: 'Visto', sent: 'Enviado', delivered: 'Entregado', failed: 'No se envió. Toca para reintentar', typing: 'está escribiendo', today: 'Hoy', yesterday: 'Ayer', ph: 'Escribe un mensaje…', search: 'Buscar jugadores…', friends: 'Amigos', nowOn: 'Conectados ahora', convs: 'Conversaciones', none: 'Nadie conectado ahora mismo.', noFriends: 'Todavía no tienes amigos. ¡Agrégalos desde Comunidad!', blocked: 'No puedes escribirle a este jugador.', min: 'Minimizar', close: 'Cerrar', lvl: 'Nv.', ago: 'hace', say: '¡Salúdalo! 👋', slow: 'Más despacio 🙂', photo: 'Foto', you: 'Tú: ', sticker: 'Sticker', status: 'Tu estado', lastSeen: 'Últ. vez' },
-    en: { chat: 'Chat', online: 'Online', idle: 'Idle', busy: 'Do not disturb', offline: 'Offline', invisible: 'Invisible', seen: 'Seen', sent: 'Sent', delivered: 'Delivered', failed: 'Not sent. Tap to retry', typing: 'is typing', today: 'Today', yesterday: 'Yesterday', ph: 'Type a message…', search: 'Search players…', friends: 'Friends', nowOn: 'Online now', convs: 'Conversations', none: 'Nobody is online right now.', noFriends: 'No friends yet. Add some from Community!', blocked: "You can't message this player.", min: 'Minimize', close: 'Close', lvl: 'Lv.', ago: '', say: 'Say hi! 👋', slow: 'Slow down 🙂', photo: 'Photo', you: 'You: ', sticker: 'Sticker', status: 'Your status', lastSeen: 'Last seen' },
-    pt: { chat: 'Chat', online: 'Online', idle: 'Ausente', busy: 'Não perturbe', offline: 'Offline', invisible: 'Invisível', seen: 'Visto', sent: 'Enviado', delivered: 'Entregue', failed: 'Não enviado. Toque para tentar de novo', typing: 'está digitando', today: 'Hoje', yesterday: 'Ontem', ph: 'Escreva uma mensagem…', search: 'Buscar jogadores…', friends: 'Amigos', nowOn: 'Online agora', convs: 'Conversas', none: 'Ninguém online agora.', noFriends: 'Você ainda não tem amigos. Adicione pela Comunidade!', blocked: 'Você não pode mandar mensagem para este jogador.', min: 'Minimizar', close: 'Fechar', lvl: 'Nv.', ago: 'há', say: 'Diga oi! 👋', slow: 'Mais devagar 🙂', photo: 'Foto', you: 'Você: ', sticker: 'Sticker', status: 'Seu status', lastSeen: 'Visto por último' },
-    fr: { chat: 'Chat', online: 'En ligne', idle: 'Absent', busy: 'Ne pas déranger', offline: 'Hors ligne', invisible: 'Invisible', seen: 'Vu', sent: 'Envoyé', delivered: 'Distribué', failed: 'Non envoyé. Touche pour réessayer', typing: 'écrit', today: "Aujourd'hui", yesterday: 'Hier', ph: 'Écris un message…', search: 'Chercher des joueurs…', friends: 'Amis', nowOn: 'En ligne', convs: 'Conversations', none: "Personne n'est en ligne.", noFriends: "Pas encore d'amis. Ajoute-en depuis la Communauté !", blocked: 'Tu ne peux pas écrire à ce joueur.', min: 'Réduire', close: 'Fermer', lvl: 'Niv.', ago: 'il y a', say: 'Dis bonjour ! 👋', slow: 'Doucement 🙂', photo: 'Photo', you: 'Toi : ', sticker: 'Sticker', status: 'Ton statut', lastSeen: 'Vu' },
-    it: { chat: 'Chat', online: 'Online', idle: 'Assente', busy: 'Non disturbare', offline: 'Offline', invisible: 'Invisibile', seen: 'Visto', sent: 'Inviato', delivered: 'Consegnato', failed: 'Non inviato. Tocca per riprovare', typing: 'sta scrivendo', today: 'Oggi', yesterday: 'Ieri', ph: 'Scrivi un messaggio…', search: 'Cerca giocatori…', friends: 'Amici', nowOn: 'Online ora', convs: 'Conversazioni', none: 'Nessuno è online adesso.', noFriends: 'Ancora nessun amico. Aggiungili dalla Comunità!', blocked: 'Non puoi scrivere a questo giocatore.', min: 'Riduci', close: 'Chiudi', lvl: 'Liv.', ago: '', say: 'Salutalo! 👋', slow: 'Più piano 🙂', photo: 'Foto', you: 'Tu: ', sticker: 'Sticker', status: 'Il tuo stato', lastSeen: 'Ultimo accesso' },
-    de: { chat: 'Chat', online: 'Online', idle: 'Abwesend', busy: 'Nicht stören', offline: 'Offline', invisible: 'Unsichtbar', seen: 'Gesehen', sent: 'Gesendet', delivered: 'Zugestellt', failed: 'Nicht gesendet. Tippen zum Wiederholen', typing: 'schreibt', today: 'Heute', yesterday: 'Gestern', ph: 'Nachricht schreiben…', search: 'Spieler suchen…', friends: 'Freunde', nowOn: 'Jetzt online', convs: 'Unterhaltungen', none: 'Gerade ist niemand online.', noFriends: 'Noch keine Freunde. Füge welche in der Community hinzu!', blocked: 'Du kannst diesem Spieler nicht schreiben.', min: 'Minimieren', close: 'Schließen', lvl: 'Lv.', ago: 'vor', say: 'Sag hallo! 👋', slow: 'Langsamer 🙂', photo: 'Foto', you: 'Du: ', sticker: 'Sticker', status: 'Dein Status', lastSeen: 'Zuletzt' }
+    es: { chat: 'Chat', online: 'En línea', idle: 'Ausente', busy: 'No molestar', offline: 'Desconectado', invisible: 'Invisible', seen: 'Visto', sent: 'Enviado', delivered: 'Entregado', failed: 'No se envió. Toca para reintentar', typing: 'está escribiendo', today: 'Hoy', yesterday: 'Ayer', ph: 'Escribe un mensaje…', search: 'Buscar jugadores…', friends: 'Amigos', nowOn: 'Conectados ahora', convs: 'Conversaciones', none: 'Nadie conectado ahora mismo.', noFriends: 'Todavía no tienes amigos. ¡Agrégalos desde Comunidad!', blocked: 'No puedes escribirle a este jugador.', min: 'Minimizar', close: 'Cerrar', lvl: 'Nv.', ago: 'hace', say: '¡Salúdalo! 👋', slow: 'Más despacio 🙂', photo: 'Foto', you: 'Tú: ', sticker: 'Sticker', status: 'Tu estado', lastSeen: 'Últ. vez', help: 'necesita ayuda', helpBtn: 'Ayudar', helpWish: 'quiere', helpEnergy: 'pide energía ⚡', helped: '¡Ayudaste! +50 monedas', helpSeen: 'Ver', helpErr: 'Ya no se puede ayudar' },
+    en: { chat: 'Chat', online: 'Online', idle: 'Idle', busy: 'Do not disturb', offline: 'Offline', invisible: 'Invisible', seen: 'Seen', sent: 'Sent', delivered: 'Delivered', failed: 'Not sent. Tap to retry', typing: 'is typing', today: 'Today', yesterday: 'Yesterday', ph: 'Type a message…', search: 'Search players…', friends: 'Friends', nowOn: 'Online now', convs: 'Conversations', none: 'Nobody is online right now.', noFriends: 'No friends yet. Add some from Community!', blocked: "You can't message this player.", min: 'Minimize', close: 'Close', lvl: 'Lv.', ago: '', say: 'Say hi! 👋', slow: 'Slow down 🙂', photo: 'Photo', you: 'You: ', sticker: 'Sticker', status: 'Your status', lastSeen: 'Last seen', help: 'needs help', helpBtn: 'Help', helpWish: 'wants', helpEnergy: 'is asking for energy ⚡', helped: 'You helped! +50 coins', helpSeen: 'View', helpErr: "Can't help anymore" },
+    pt: { chat: 'Chat', online: 'Online', idle: 'Ausente', busy: 'Não perturbe', offline: 'Offline', invisible: 'Invisível', seen: 'Visto', sent: 'Enviado', delivered: 'Entregue', failed: 'Não enviado. Toque para tentar de novo', typing: 'está digitando', today: 'Hoje', yesterday: 'Ontem', ph: 'Escreva uma mensagem…', search: 'Buscar jogadores…', friends: 'Amigos', nowOn: 'Online agora', convs: 'Conversas', none: 'Ninguém online agora.', noFriends: 'Você ainda não tem amigos. Adicione pela Comunidade!', blocked: 'Você não pode mandar mensagem para este jogador.', min: 'Minimizar', close: 'Fechar', lvl: 'Nv.', ago: 'há', say: 'Diga oi! 👋', slow: 'Mais devagar 🙂', photo: 'Foto', you: 'Você: ', sticker: 'Sticker', status: 'Seu status', lastSeen: 'Visto por último', help: 'precisa de ajuda', helpBtn: 'Ajudar', helpWish: 'quer', helpEnergy: 'pede energia ⚡', helped: 'Você ajudou! +50 moedas', helpSeen: 'Ver', helpErr: 'Não dá mais para ajudar' },
+    fr: { chat: 'Chat', online: 'En ligne', idle: 'Absent', busy: 'Ne pas déranger', offline: 'Hors ligne', invisible: 'Invisible', seen: 'Vu', sent: 'Envoyé', delivered: 'Distribué', failed: 'Non envoyé. Touche pour réessayer', typing: 'écrit', today: "Aujourd'hui", yesterday: 'Hier', ph: 'Écris un message…', search: 'Chercher des joueurs…', friends: 'Amis', nowOn: 'En ligne', convs: 'Conversations', none: "Personne n'est en ligne.", noFriends: "Pas encore d'amis. Ajoute-en depuis la Communauté !", blocked: 'Tu ne peux pas écrire à ce joueur.', min: 'Réduire', close: 'Fermer', lvl: 'Niv.', ago: 'il y a', say: 'Dis bonjour ! 👋', slow: 'Doucement 🙂', photo: 'Photo', you: 'Toi : ', sticker: 'Sticker', status: 'Ton statut', lastSeen: 'Vu', help: "a besoin d'aide", helpBtn: 'Aider', helpWish: 'veut', helpEnergy: "demande de l'énergie ⚡", helped: 'Tu as aidé ! +50 pièces', helpSeen: 'Voir', helpErr: 'Impossible d\'aider' },
+    it: { chat: 'Chat', online: 'Online', idle: 'Assente', busy: 'Non disturbare', offline: 'Offline', invisible: 'Invisibile', seen: 'Visto', sent: 'Inviato', delivered: 'Consegnato', failed: 'Non inviato. Tocca per riprovare', typing: 'sta scrivendo', today: 'Oggi', yesterday: 'Ieri', ph: 'Scrivi un messaggio…', search: 'Cerca giocatori…', friends: 'Amici', nowOn: 'Online ora', convs: 'Conversazioni', none: 'Nessuno è online adesso.', noFriends: 'Ancora nessun amico. Aggiungili dalla Comunità!', blocked: 'Non puoi scrivere a questo giocatore.', min: 'Riduci', close: 'Chiudi', lvl: 'Liv.', ago: '', say: 'Salutalo! 👋', slow: 'Più piano 🙂', photo: 'Foto', you: 'Tu: ', sticker: 'Sticker', status: 'Il tuo stato', lastSeen: 'Ultimo accesso', help: 'ha bisogno di aiuto', helpBtn: 'Aiuta', helpWish: 'vuole', helpEnergy: 'chiede energia ⚡', helped: 'Hai aiutato! +50 monete', helpSeen: 'Vedi', helpErr: 'Non si può più aiutare' },
+    de: { chat: 'Chat', online: 'Online', idle: 'Abwesend', busy: 'Nicht stören', offline: 'Offline', invisible: 'Unsichtbar', seen: 'Gesehen', sent: 'Gesendet', delivered: 'Zugestellt', failed: 'Nicht gesendet. Tippen zum Wiederholen', typing: 'schreibt', today: 'Heute', yesterday: 'Gestern', ph: 'Nachricht schreiben…', search: 'Spieler suchen…', friends: 'Freunde', nowOn: 'Jetzt online', convs: 'Unterhaltungen', none: 'Gerade ist niemand online.', noFriends: 'Noch keine Freunde. Füge welche in der Community hinzu!', blocked: 'Du kannst diesem Spieler nicht schreiben.', min: 'Minimieren', close: 'Schließen', lvl: 'Lv.', ago: 'vor', say: 'Sag hallo! 👋', slow: 'Langsamer 🙂', photo: 'Foto', you: 'Du: ', sticker: 'Sticker', status: 'Dein Status', lastSeen: 'Zuletzt', help: 'braucht Hilfe', helpBtn: 'Helfen', helpWish: 'wünscht', helpEnergy: 'bittet um Energie ⚡', helped: 'Geholfen! +50 Münzen', helpSeen: 'Ansehen', helpErr: 'Hilfe nicht mehr möglich' }
   };
   var T = L[lang] || L.es;
   var esc = C.esc, api = C.api;
@@ -62,6 +62,15 @@
     '.agdw .em{border:0;background:none;font-size:20px;cursor:pointer;padding:2px;border-radius:8px}.agdw .em:hover{background:#e9f6ff}.agdw .sk{border:0;padding:3px;border-radius:10px;background:#f6fbff;cursor:pointer}.agdw .sk:hover{background:#d9efff}.agdw .sk img{display:block;width:100%;height:46px;object-fit:contain}' +
     '.agdw .note{padding:6px 10px;font-size:12px;color:#e8382f;font-weight:700;text-align:center;background:#fff3f2}' +
     '#agNt{bottom:56px!important}' +
+    '#agHelp{position:fixed;left:10px;bottom:10px;z-index:99991;display:flex;flex-direction:column-reverse;gap:8px;width:min(330px,calc(100vw - 20px));pointer-events:none}' +
+    '#agHelp .hc{pointer-events:auto;display:flex;gap:9px;align-items:center;background:#fffdf4;border:3px solid #1c6e9c;border-radius:16px;padding:8px 10px;box-shadow:0 6px 0 rgba(0,0,0,.15),0 10px 24px rgba(0,0,0,.25);animation:agHcIn .45s cubic-bezier(.3,1.6,.5,1)}' +
+    '@keyframes agHcIn{from{transform:translateX(-120%)}}#agHelp .hc.out{transition:opacity .3s,transform .3s;opacity:0;transform:translateX(-40px)}' +
+    '#agHelp .tx3{flex:1;min-width:0}#agHelp .tx3 b{display:block;color:#0a5f8c;font-size:14px}#agHelp .tx3 small{display:block;color:#5a6b74;font-size:12px;line-height:1.25;max-height:2.5em;overflow:hidden}' +
+    '#agHelp .it{width:38px;height:38px;object-fit:contain;flex:0 0 38px}#agHelp .hb{display:flex;flex-direction:column;gap:4px}' +
+    '#agHelp .hb button{border:0;border-radius:999px;padding:5px 12px;font:700 13px CV,sans-serif;cursor:pointer;white-space:nowrap}#agHelp .hb .y{background:linear-gradient(#8ee05a,#4caf27);color:#fff;box-shadow:0 3px 0 #2f7d17;text-shadow:0 1px 0 rgba(0,0,0,.25)}' +
+    '#agHelp .hb .v{background:#e9f6ff;color:#0a5f8c}#agHelp .hb .y:disabled{filter:grayscale(1);opacity:.6}#agHelp .ok{color:#2c7710;font-weight:700;font-size:13px}' +
+    '#agHelp ' +
+    '@media (max-width:640px){#agHelp{bottom:50px}}' +
     '@media (max-width:640px){#agDockBar{width:auto;min-width:120px;right:6px}#agDockList{right:0;left:0;width:auto}.agdw{width:calc(100vw - 12px)!important;right:6px!important;height:min(70vh,440px)}.agdw.min{height:40px}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
@@ -70,6 +79,7 @@
   function load() { try { return JSON.parse(localStorage.getItem(SAVE)) || {}; } catch (e) { return {}; } }
   function save() { try { localStorage.setItem(SAVE, JSON.stringify({ wins: wins.map(function (w) { return { name: w.name, min: w.min }; }) })); } catch (e) { } }
 
+  var helpAfter = -1, helpBox = null;
   var root, bar, list, wins = [], meStatus = 'online', unread = 0, listData = null, lastAct = Date.now(), typingTo = null, ticking = false, lastTick = 0;
   var narrow = function () { return innerWidth <= 640; };
   function maxWins() { return narrow() ? 1 : Math.max(1, Math.min(3, Math.floor((innerWidth - 250) / 290))); }
@@ -273,17 +283,54 @@
     paint(w); if (first) scrollEnd(w, true);
   }
 
+  // ---------- ayuda rapida: aviso abajo a la izquierda cuando un amigo pide ayuda ----------
+  var shownHelp = {};
+  function helpNotes(h) {
+    var first = helpAfter < 0;
+    var list = h.list || [];
+    if (first) list = list.filter(function (p) { return Date.now() - new Date(p.at).getTime() < 15 * 60000; }).slice(0, 1);
+    helpAfter = Math.max(helpAfter, h.top || 0);
+    if (meStatus === 'busy' || (C.pref && !C.pref('ntHelp'))) return;
+    list.slice().reverse().forEach(function (p) { if (!shownHelp[p.id]) { shownHelp[p.id] = 1; helpCard(p); } });
+  }
+  function helpCard(p) {
+    if (!helpBox) { helpBox = document.createElement('div'); helpBox.id = 'agHelp'; document.body.appendChild(helpBox); stopKeys(helpBox); }
+    while (helpBox.children.length >= 3) helpBox.lastChild.remove();
+    var el = document.createElement('div'); el.className = 'hc';
+    var what = p.energy ? T.helpEnergy : p.kind === 'wishlist' && p.itemInfo ? T.helpWish + ' ' + esc(prettyName(p.itemInfo.name)) : T.help;
+    var pic = p.itemInfo && p.itemInfo.icon ? p.itemInfo.icon : p.image;
+    el.innerHTML = av(p.from, 40) + '<div class="tx3"><b>' + esc(p.from.name) + '</b><small>' + what + (p.text ? ' · ' + esc(p.text) : '') + '</small></div>' +
+      (pic ? '<img class="it" src="' + esc(pic) + '" alt="" onerror="this.remove()">' : '') +
+      '<div class="hb"><button class="y">' + T.helpBtn + '</button><button class="v">' + T.helpSeen + '</button></div>';
+    helpBox.insertBefore(el, helpBox.firstChild);
+    C.snd('notify', 'sndReq');
+    var timer = setTimeout(gone, 15000);
+    function gone() { el.classList.add('out'); setTimeout(function () { el.remove(); }, 300); }
+    el.onmouseenter = function () { clearTimeout(timer); };
+    el.onmouseleave = function () { timer = setTimeout(gone, 6000); };
+    el.querySelector('.v').onclick = function () { gone(); if (window.agOpenWall) window.agOpenWall(); };
+    var yb = el.querySelector('.y');
+    yb.onclick = function () {
+      yb.disabled = true;
+      api('POST', '/api/ag/wall/' + p.id + '/help', { item: p.item || null }).then(function () {
+        el.querySelector('.hb').outerHTML = '<div class="ok">✓ ' + T.helped + '</div>'; C.snd('send', 'sndReq'); clearTimeout(timer); timer = setTimeout(gone, 3500);
+      }).catch(function () { el.querySelector('.hb').outerHTML = '<div class="ok" style="color:#e8382f">' + T.helpErr + '</div>'; clearTimeout(timer); timer = setTimeout(gone, 3500); });
+    };
+  }
+  function prettyName(n) { return String(n).replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
+
   // ---------- un solo pedido al servidor para todo (cada 3 s con ventanas abiertas) ----------
   function active() { return !document.hidden && Date.now() - lastAct < 120000; }
   ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) { addEventListener(ev, function () { lastAct = Date.now(); }, { passive: true, capture: true }); });
   function tick(now) {
     if (ticking) { if (now) tick.again = true; return; }
     ticking = true; lastTick = Date.now();
-    var body = { active: active(), wins: wins.map(function (w) { return { name: w.name, after: w.after }; }), typing: typingTo };
+    var body = { active: active(), wins: wins.map(function (w) { return { name: w.name, after: w.after }; }), typing: typingTo, helpAfter: Math.max(0, helpAfter) };
     typingTo = null;
     api('POST', '/api/ag/dock', body).then(function (r) {
       meStatus = r.status; unread = r.unread; paintMe();
       (r.wins || []).forEach(function (d) { var w = find(d.name); if (w) update(w, d); });
+      if (r.helps) helpNotes(r.helps);
       // si alguien te escribe, se abre su ventanita sola (como en Facebook)
       var me = C.me();
       if (meStatus !== 'busy') (r.from || []).forEach(function (n) { if (!find(n)) { openWin(n, false, false, true); C.snd('notify', 'sndMsg'); } });
