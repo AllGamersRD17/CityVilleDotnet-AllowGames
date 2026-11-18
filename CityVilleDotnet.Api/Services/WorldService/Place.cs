@@ -111,6 +111,11 @@ public sealed class Place(CityVilleDbContext context, ILogger<Place> logger) : A
 
         await context.SaveChangesAsync(cancellationToken);
 
+        // Allow Games: en este CityVille las parcelas nuevas ya salen aradas y al cosechar se vuelven a arar solas,
+        // asi que poner una parcela cuenta para el desafio "Ara 4 parcelas".
+        if (request.Building.ClassName == BuildingClassType.Plot)
+            CityVilleDotnet.Api.Features.AllowGames.ChallengeService.Track(playerId, "Plow");
+
         return new CityVilleResponse().Data(new ASObject
         {
             { "id", obj.WorldFlatId }

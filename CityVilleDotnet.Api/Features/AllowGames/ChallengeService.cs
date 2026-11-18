@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Text.Json;
 
 namespace CityVilleDotnet.Api.Features.AllowGames;
@@ -31,7 +31,7 @@ public static class ChallengeService
         new("construir", ["Place", "Build"], 2, 250, 1, 0, "🏗️",
             "Construye o coloca 2 cosas nuevas", "Build or place 2 new things",
             "Construa ou coloque 2 coisas", "Construis ou place 2 objets", "Costruisci o posiziona 2 oggetti", "Baue oder platziere 2 Dinge"),
-        new("arar", ["Plow"], 4, 150, 1, 1, "🚜",
+        new("arar", ["Plow", "ClearWithered"], 4, 150, 1, 1, "🚜",
             "Ara 4 parcelas para sembrar", "Plow 4 plots",
             "Are 4 lotes", "Laboure 4 parcelles", "Ara 4 appezzamenti", "Pflüge 4 Felder"),
         new("contratos", ["StartContract"], 3, 200, 1, 0, "📜",
