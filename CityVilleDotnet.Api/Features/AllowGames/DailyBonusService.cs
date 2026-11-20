@@ -50,6 +50,12 @@ public static class DailyBonusService
         catch { _data = new(); }
     }
 
+    // para el aviso "tu premio diario te espera"
+    public static bool ClaimedToday(Guid playerId)
+    {
+        lock (Lock) return _data.TryGetValue(playerId, out var e) && e.Last == DateOnly.FromDateTime(DateTime.Now);
+    }
+
     public static int StreakOf(Guid playerId)
     {
         lock (Lock) return _data.TryGetValue(playerId, out var e) ? e.Streak : 0;

@@ -72,6 +72,7 @@ public sealed class PlaceOrder(CityVilleDbContext context) : AmfService<PlaceOrd
 
         player.AddLotOrder(lotOrder);
         receiverPlayer.AddLotOrder(receivedLotOrder);
+        CityVilleDotnet.Api.Features.AllowGames.PushService.OnFranchise(receiverPlayer.Username, player.Username);
 
         await context.SaveChangesAsync(cancellationToken);
 

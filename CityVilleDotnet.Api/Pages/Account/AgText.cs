@@ -15,7 +15,7 @@ public static class AgText
             ["User"] = "Usuario", ["Code"] = "Código", ["NewPass"] = "Contraseña nueva", ["Confirm"] = "Repite la contraseña", ["Save"] = "Guardar contraseña",
             ["BadCode"] = "El código no es válido o ya venció. Pide uno nuevo.", ["Mismatch"] = "Las contraseñas no son iguales.", ["Short"] = "La contraseña necesita 6 caracteres o más.",
             ["Forgot"] = "¿Olvidaste tu contraseña?", ["ChangeTitle"] = "Cambiar mi contraseña", ["Current"] = "Contraseña actual", ["Changed"] = "¡Listo! Tu contraseña se cambió.",
-            ["WrongCurrent"] = "La contraseña actual no es correcta.", ["Back"] = "Volver al juego",
+            ["WrongCurrent"] = "La contraseña actual no es correcta.", ["Back"] = "Volver al juego", ["LoginHi"] = "¡Hola de nuevo, alcalde!", ["LoginSub"] = "Tu ciudad te está esperando", ["ShowPass"] = "Mostrar contraseña", ["NewHere"] = "¿Nuevo en CityVille?", ["CreateFree"] = "Crear cuenta gratis", ["Or"] = "o",
         },
         ["en"] = new()
         {
@@ -25,7 +25,7 @@ public static class AgText
             ["User"] = "Username", ["Code"] = "Code", ["NewPass"] = "New password", ["Confirm"] = "Repeat password", ["Save"] = "Save password",
             ["BadCode"] = "The code is not valid or has expired. Ask for a new one.", ["Mismatch"] = "Passwords don't match.", ["Short"] = "Password needs 6 or more characters.",
             ["Forgot"] = "Forgot your password?", ["ChangeTitle"] = "Change my password", ["Current"] = "Current password", ["Changed"] = "Done! Your password was changed.",
-            ["WrongCurrent"] = "Current password is not correct.", ["Back"] = "Back to the game",
+            ["WrongCurrent"] = "Current password is not correct.", ["Back"] = "Back to the game", ["LoginHi"] = "Welcome back, Mayor!", ["LoginSub"] = "Your city is waiting for you", ["ShowPass"] = "Show password", ["NewHere"] = "New to CityVille?", ["CreateFree"] = "Create a free account", ["Or"] = "or",
         },
         ["fr"] = new()
         {
@@ -35,7 +35,7 @@ public static class AgText
             ["User"] = "Pseudo", ["Code"] = "Code", ["NewPass"] = "Nouveau mot de passe", ["Confirm"] = "Répète le mot de passe", ["Save"] = "Enregistrer",
             ["BadCode"] = "Code invalide ou expiré. Demandes-en un nouveau.", ["Mismatch"] = "Les mots de passe ne sont pas identiques.", ["Short"] = "Il faut 6 caractères ou plus.",
             ["Forgot"] = "Mot de passe oublié ?", ["ChangeTitle"] = "Changer mon mot de passe", ["Current"] = "Mot de passe actuel", ["Changed"] = "C'est fait ! Mot de passe changé.",
-            ["WrongCurrent"] = "Le mot de passe actuel est incorrect.", ["Back"] = "Retour au jeu",
+            ["WrongCurrent"] = "Le mot de passe actuel est incorrect.", ["Back"] = "Retour au jeu", ["LoginHi"] = "Bon retour, Maire !", ["LoginSub"] = "Ta ville t'attend", ["ShowPass"] = "Afficher le mot de passe", ["NewHere"] = "Nouveau sur CityVille ?", ["CreateFree"] = "Créer un compte gratuit", ["Or"] = "ou",
         },
         ["pt"] = new()
         {
@@ -45,7 +45,7 @@ public static class AgText
             ["User"] = "Usuário", ["Code"] = "Código", ["NewPass"] = "Senha nova", ["Confirm"] = "Repita a senha", ["Save"] = "Salvar senha",
             ["BadCode"] = "Código inválido ou vencido. Peça um novo.", ["Mismatch"] = "As senhas não são iguais.", ["Short"] = "A senha precisa de 6 caracteres ou mais.",
             ["Forgot"] = "Esqueceu a senha?", ["ChangeTitle"] = "Trocar minha senha", ["Current"] = "Senha atual", ["Changed"] = "Pronto! Sua senha foi trocada.",
-            ["WrongCurrent"] = "A senha atual está errada.", ["Back"] = "Voltar ao jogo",
+            ["WrongCurrent"] = "A senha atual está errada.", ["Back"] = "Voltar ao jogo", ["LoginHi"] = "Bem-vindo de volta, prefeito!", ["LoginSub"] = "Sua cidade está te esperando", ["ShowPass"] = "Mostrar senha", ["NewHere"] = "Novo no CityVille?", ["CreateFree"] = "Criar conta grátis", ["Or"] = "ou",
         },
         ["it"] = new()
         {
@@ -55,7 +55,7 @@ public static class AgText
             ["User"] = "Utente", ["Code"] = "Codice", ["NewPass"] = "Nuova password", ["Confirm"] = "Ripeti la password", ["Save"] = "Salva password",
             ["BadCode"] = "Codice non valido o scaduto. Chiedine uno nuovo.", ["Mismatch"] = "Le password non coincidono.", ["Short"] = "Servono almeno 6 caratteri.",
             ["Forgot"] = "Password dimenticata?", ["ChangeTitle"] = "Cambia la mia password", ["Current"] = "Password attuale", ["Changed"] = "Fatto! Password cambiata.",
-            ["WrongCurrent"] = "La password attuale non è corretta.", ["Back"] = "Torna al gioco",
+            ["WrongCurrent"] = "La password attuale non è corretta.", ["Back"] = "Torna al gioco", ["LoginHi"] = "Bentornato, Sindaco!", ["LoginSub"] = "La tua città ti aspetta", ["ShowPass"] = "Mostra password", ["NewHere"] = "Nuovo su CityVille?", ["CreateFree"] = "Crea un account gratis", ["Or"] = "oppure",
         },
     };
 

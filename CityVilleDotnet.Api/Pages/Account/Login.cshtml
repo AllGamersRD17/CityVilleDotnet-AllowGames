@@ -1,73 +1,173 @@
 ﻿@page
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resources.SharedResource> Localizer
 @model CityVilleDotnet.Api.Pages.Account.LoginModel
-
-<div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light px-3">
-    <img class="ag-auth-logo" src="/ag/logo_revived.png" alt="CityVille Revived"/>
-    <div class="ag-auth-wrap w-100">
-    <img class="ag-low" src="/ag/lowlitta.png" alt="Lowlitta"/>
-    <div class="card shadow-sm" style="max-width: 400px; width: 100%;">
-        <div class="card-header text-center">
-            <h2 class="mb-0">@Localizer["Login_"]</h2>
-        </div>
-        <div class="card-body">
-            @{
-                var showPasswordForm = !Model.DiscordEnabled || Request.Method == "POST";
-            }
-
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
-
-            @if (Model.DiscordEnabled)
-            {
-                <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="mb-3">
-                    <button type="submit" class="w-100 btn btn-lg text-white" style="background-color: #5865F2;">
-                        <i class="bi bi-discord me-2"></i>@Localizer["ContinueWithDiscord"]
-                    </button>
-                </form>
-            }
-
-            <details open="@showPasswordForm">
-                <summary class="w-100 btn btn-link text-muted small text-decoration-none mb-2@(Model.DiscordEnabled ? "" : " d-none")">
-                    @Localizer["OrUsePassword"] <i class="bi bi-chevron-down"></i>
-                </summary>
-                <form id="account" method="post" novalidate>
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Username" type="text" class="form-control" id="floatingUsername"
-                               placeholder="Username" autocomplete="username" aria-required="true"/>
-                        <label for="floatingUsername">@Html.DisplayNameFor(m => m.Input.Username)</label>
-                        <span asp-validation-for="Input.Username" class="text-danger small"></span>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Password" type="password" class="form-control" id="floatingPassword"
-                               placeholder="Password" autocomplete="current-password" aria-required="true"/>
-                        <label for="floatingPassword">@Html.DisplayNameFor(m => m.Input.Password)</label>
-                        <span asp-validation-for="Input.Password" class="text-danger small"></span>
-                    </div>
-
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" asp-for="Input.RememberMe" id="rememberMe"/>
-                        <label class="form-check-label" for="rememberMe">
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-
-                    <button id="login-submit" type="submit" class="w-100 btn btn-primary btn-lg">
-                        @Localizer["Login_"]
-                    </button>
-                    <div class="text-center mt-2"><a href="/Account/Reset" class="small text-decoration-none">@CityVilleDotnet.Api.Pages.Account.AgText.Get("Forgot")</a></div>
-                </form>
-            </details>
-
-            <div class="mt-3 text-center">
-                <p>
-                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">
-                        @Localizer["Register"]
-                    </a>
-                </p>
-            </div>
-        </div>
+@using CityVilleDotnet.Api.Pages.Account
+@{
+    // Allow Games: inicio de sesion estilo app de Android (Material), pensado para celular primero
+    Layout = null;
+    var showPasswordForm = !Model.DiscordEnabled || Request.Method == "POST";
+    var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta name="theme-color" content="#2f8fc4"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="manifest" href="/manifest.webmanifest"/>
+    <link rel="icon" href="/ag/favicon.ico"/>
+    <link href="~/lib/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet" asp-append-version="true"/>
+    <title>@Localizer["Login_"] · CityVille Revived</title>
+    <style>
+        @@font-face{font-family:"CV";src:url(/ag/fonts/fredoka-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+        @@font-face{font-family:"CV";src:url(/ag/fonts/fredoka-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+        @@font-face{font-family:"CV";src:url(/ag/fonts/fredoka-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+        :root{--pri:#1f7fbf;--pri2:#2f8fc4;--on:#fff;--surf:#fff;--txt:#17323f;--sub:#5d7480;--line:#9fb3bf;--err:#c62828;--grn:#4caf27}
+        *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+        html,body{margin:0;height:100%}
+        body{font-family:"CV",system-ui,sans-serif;color:var(--txt);min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+            background:linear-gradient(180deg,#59b8ee 0%,#9fdcff 52%,#bfe9ff 62%,#7cc44a 62.2%,#5aa632 100%);overflow-x:hidden;
+            padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+        /* nubes y colinas */
+        .sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+        .cl{position:absolute;width:140px;height:44px;background:#fff;border-radius:44px;opacity:.9;animation:drift linear infinite}
+        .cl::before,.cl::after{content:"";position:absolute;background:#fff;border-radius:50%}
+        .cl::before{width:60px;height:60px;left:22px;top:-28px}.cl::after{width:46px;height:46px;left:70px;top:-18px}
+        .cl.a{top:9%;left:-160px;animation-duration:46s}.cl.b{top:22%;left:-160px;transform:scale(.7);animation-duration:62s;animation-delay:-25s}.cl.c{top:4%;left:-160px;transform:scale(.55);animation-duration:80s;animation-delay:-50s}
+        @@keyframes drift{to{left:110%}}
+        .hill{position:absolute;bottom:0;border-radius:50% 50% 0 0;background:#6dbb3c}
+        .hill.h1{left:-10%;width:70%;height:30vh;background:#79c446}.hill.h2{right:-15%;width:80%;height:24vh}
+        main{position:relative;z-index:1;width:100%;max-width:440px;padding:18px 16px;display:flex;flex-direction:column;align-items:center;gap:14px}
+        .logo{width:min(78vw,300px);filter:drop-shadow(0 6px 0 rgba(0,0,0,.12));animation:pop .7s cubic-bezier(.3,1.6,.5,1) both}
+        @@keyframes pop{from{transform:scale(.6);opacity:0}}
+        /* tarjeta Material */
+        .card{width:100%;background:var(--surf);border-radius:28px;padding:22px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.18),0 12px 32px rgba(0,40,70,.22);animation:up .5s .1s cubic-bezier(.2,.9,.3,1) both}
+        @@keyframes up{from{transform:translateY(30px);opacity:0}}
+        h1{margin:0;font-size:24px;font-weight:700;color:var(--txt)}
+        .sub{margin:2px 0 16px;color:var(--sub);font-size:15px;font-weight:500}
+        /* campo con borde y etiqueta flotante */
+        .fld{position:relative;margin-bottom:14px}
+        .fld input{width:100%;height:56px;border:1.5px solid var(--line);border-radius:14px;padding:20px 46px 6px 46px;font:500 17px "CV",sans-serif;color:var(--txt);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+        .fld input:focus{border-color:var(--pri);box-shadow:0 0 0 1px var(--pri)}
+        .fld label{position:absolute;left:46px;top:17px;font-size:16px;color:var(--sub);pointer-events:none;transition:all .15s;font-weight:500}
+        .fld input:focus+label,.fld input:not(:placeholder-shown)+label{top:7px;font-size:12px;color:var(--pri)}
+        .fld .ic{position:absolute;left:14px;top:16px;font-size:20px;color:var(--sub)}
+        .fld .eye{position:absolute;right:6px;top:6px;width:44px;height:44px;border:0;border-radius:50%;background:none;color:var(--sub);font-size:20px;cursor:pointer}
+        .fld .eye:active{background:rgba(31,127,191,.12)}
+        .fld .er{display:block;color:var(--err);font-size:13px;margin:4px 0 0 14px}
+        .fld .er:empty{display:none}
+        .fld input.input-validation-error{border-color:var(--err)}
+        /* interruptor */
+        .sw{display:flex;align-items:center;justify-content:space-between;margin:2px 2px 16px;font-size:15px;font-weight:500;cursor:pointer;user-select:none}
+        .sw input{appearance:none;-webkit-appearance:none;width:52px;height:32px;border-radius:16px;background:#e3e9ed;border:2px solid #8fa3ae;position:relative;cursor:pointer;transition:all .2s;margin:0}
+        .sw input::after{content:"";position:absolute;left:4px;top:4px;width:20px;height:20px;border-radius:50%;background:#8fa3ae;transition:all .2s}
+        .sw input:checked{background:var(--pri);border-color:var(--pri)}
+        .sw input:checked::after{left:24px;top:2px;width:24px;height:24px;background:#fff}
+        /* botones */
+        .btn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:52px;border-radius:26px;border:0;font:700 17px "CV",sans-serif;cursor:pointer;text-decoration:none;transition:box-shadow .15s,transform .1s}
+        .btn:active{transform:scale(.98)}
+        .btn.f{background:var(--pri);color:#fff;box-shadow:0 2px 6px rgba(31,127,191,.45)}
+        .btn.d{background:#5865F2;color:#fff;box-shadow:0 2px 6px rgba(88,101,242,.4)}
+        .btn.o{background:none;color:var(--pri);border:1.5px solid var(--line)}
+        .btn.t{background:none;color:var(--pri);height:40px;width:auto;margin:8px auto 0;padding:0 14px;font-size:15px}
+        .btn i{font-size:20px}
+        .rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rip .55s ease-out;pointer-events:none}
+        .btn.o .rip,.btn.t .rip{background:rgba(31,127,191,.2)}
+        @@keyframes rip{to{transform:scale(4);opacity:0}}
+        .or{display:flex;align-items:center;gap:10px;color:var(--sub);font-size:13px;margin:14px 0}
+        .or::before,.or::after{content:"";flex:1;height:1px;background:#d5dee3}
+        .new{text-align:center;color:var(--sub);font-size:14px;margin:0 0 8px}
+        .alert{display:flex;gap:10px;align-items:flex-start;background:#fdecea;color:var(--err);border-radius:14px;padding:10px 12px;margin-bottom:14px;font-size:14px;font-weight:500}
+        .alert ul{margin:0;padding:0;list-style:none}
+        .validation-summary-valid{display:none}
+        details>summary{list-style:none}details>summary::-webkit-details-marker{display:none}
+        details[open]>summary{display:none}
+        .ag{display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-weight:600;font-size:13px;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+        .ag img{height:30px;animation:float 3s ease-in-out infinite;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+        .ag a{color:#fff}
+        @@keyframes float{50%{transform:translateY(-3px) rotate(-2deg)}}
+        /* celular acostado: logo a un lado, tarjeta al otro, sin scroll */
+        @@media (orientation:landscape) and (max-height:560px){
+            main{max-width:860px;display:grid;grid-template-columns:1fr minmax(320px,400px);align-items:center;gap:18px;padding:10px 18px}
+            .left{display:flex;flex-direction:column;align-items:center;gap:10px}
+            .logo{width:min(40vw,320px)}
+            .card{padding:14px 18px 12px;max-height:calc(100dvh - 20px);overflow:auto}
+            h1{font-size:20px}.sub{margin-bottom:10px;font-size:14px}
+            .fld input{height:50px}.fld{margin-bottom:10px}.fld label{top:14px}.fld .ic{top:13px}.fld .eye{top:3px}
+            .btn{height:46px}.sw{margin-bottom:10px}.or{margin:8px 0}
+        }
+        @@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+    </style>
+</head>
+<body>
+<div class="sky"><i class="cl a"></i><i class="cl b"></i><i class="cl c"></i><i class="hill h1"></i><i class="hill h2"></i></div>
+<main>
+    <div class="left">
+        <img class="logo" src="/ag/logo_revived.png" alt="CityVille Revived"/>
+        <div class="ag"><img src="/ag/allowgames.png" alt="Allow Games"/><span>BETA v0.34 · <a href="/creditos.html">Créditos</a></span></div>
     </div>
-</div>
-    <p class="mt-3 ag-stroke" style="font-weight:600">Allow Games · BETA v0.33 · <a href="/creditos.html" style="color:#fff">Créditos</a></p>
-</div>
+    <div class="card">
+        <h1>@AgText.Get("LoginHi")</h1>
+        <p class="sub">@AgText.Get("LoginSub")</p>
+
+        <div asp-validation-summary="ModelOnly" class="alert" role="alert"></div>
+
+        @if (Model.DiscordEnabled)
+        {
+            <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <button type="submit" class="btn d"><i class="bi bi-discord"></i>@Localizer["ContinueWithDiscord"]</button>
+            </form>
+            <div class="or">@AgText.Get("Or")</div>
+        }
+
+        <details open="@showPasswordForm">
+            <summary class="btn o">@Localizer["OrUsePassword"]</summary>
+            <form id="account" method="post" novalidate>
+                <div class="fld">
+                    <i class="ic bi bi-person"></i>
+                    <input asp-for="Input.Username" type="text" id="u" placeholder=" " autocomplete="username" autocapitalize="none" spellcheck="false" aria-required="true"/>
+                    <label for="u">@Html.DisplayNameFor(m => m.Input.Username)</label>
+                    <span asp-validation-for="Input.Username" class="er"></span>
+                </div>
+                <div class="fld">
+                    <i class="ic bi bi-lock"></i>
+                    <input asp-for="Input.Password" type="password" id="p" placeholder=" " autocomplete="current-password" aria-required="true"/>
+                    <label for="p">@Html.DisplayNameFor(m => m.Input.Password)</label>
+                    <button type="button" class="eye" id="eye" aria-label="@AgText.Get("ShowPass")" title="@AgText.Get("ShowPass")"><i class="bi bi-eye"></i></button>
+                    <span asp-validation-for="Input.Password" class="er"></span>
+                </div>
+                <label class="sw" for="rm">@Html.DisplayNameFor(m => m.Input.RememberMe)<input type="checkbox" asp-for="Input.RememberMe" id="rm"/></label>
+                <button id="login-submit" type="submit" class="btn f"><i class="bi bi-box-arrow-in-right"></i>@Localizer["Login_"]</button>
+                <a href="/Account/Reset" class="btn t">@AgText.Get("Forgot")</a>
+            </form>
+        </details>
+
+        <div class="or"></div>
+        <p class="new">@AgText.Get("NewHere")</p>
+        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn o"><i class="bi bi-person-plus"></i>@AgText.Get("CreateFree")</a>
+    </div>
+</main>
+<script>
+    (function () {
+        var eye = document.getElementById('eye'), p = document.getElementById('p');
+        if (eye && p) eye.addEventListener('click', function () {
+            var show = p.type === 'password'; p.type = show ? 'text' : 'password';
+            eye.firstElementChild.className = 'bi ' + (show ? 'bi-eye-slash' : 'bi-eye'); p.focus();
+        });
+        // efecto de toque como en Android
+        document.addEventListener('pointerdown', function (e) {
+            var b = e.target.closest('.btn'); if (!b) return;
+            var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height), s = document.createElement('span');
+            s.className = 'rip'; s.style.width = s.style.height = d + 'px';
+            s.style.left = (e.clientX - r.left - d / 2) + 'px'; s.style.top = (e.clientY - r.top - d / 2) + 'px';
+            b.appendChild(s); setTimeout(function () { s.remove(); }, 600);
+        });
+        var f = document.getElementById('account');
+        if (f) f.addEventListener('submit', function () { var b = document.getElementById('login-submit'); b.style.opacity = '.7'; b.style.pointerEvents = 'none'; });
+        var u = document.getElementById('u'); if (u && !u.value && matchMedia('(pointer:fine)').matches) u.focus();
+    })();
+</script>
+</body>
+</html>

@@ -12,8 +12,8 @@ $sdk    = Join-Path $tools 'sdk'
 $build  = Join-Path $here 'build'
 $src    = Join-Path $here 'src'
 $log    = Join-Path $here 'crear_app_log.txt'
-$versionCode = 33
-$versionName = '0.33'
+$versionCode = 34
+$versionName = '0.34'
 $api = '34'
 $bt  = '34.0.0'
 

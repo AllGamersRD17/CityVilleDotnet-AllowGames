@@ -172,6 +172,7 @@ public static class CommunityService
             if (l.Count > 30) l.RemoveRange(0, l.Count - 30);
             _dirty = true;
         }
+        PushService.OnNote(to, kind, from, item);
     }
     public static string? AuthorOf(long id)
     {
@@ -230,6 +231,7 @@ public static class CommunityService
     public static void Activity(string me, bool active)
     {
         if (active || !LastActive.ContainsKey(me)) LastActive[me] = DateTime.UtcNow;
+        PushService.Touch(me);
     }
 
     public static void SetTyping(string me, string to) => Typing[me] = (to, DateTime.UtcNow);
@@ -516,6 +518,7 @@ public static class CommunityService
             MarkRead(me, k, m.Id);
             _dirty = true;
         }
+        PushService.OnDm(other, me, t, img is not null);
         return null;
     }
 

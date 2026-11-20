@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 
     private static final String HOST = "cityvillerevived.com";
     private static final String HOME = "https://" + HOST + "/Game?app=1";
-    private static final String APP_VERSION = "0.33";
+    static final String APP_VERSION = "0.34";
     private static final int PICK_FILE = 42;
 
     private WebView web;
@@ -79,6 +79,13 @@ public class MainActivity extends Activity {
 
         setContentView(root);
         hideBars();
+
+        // avisos en el telefono (mensajes, vecinos, premios)
+        NotifyJob.channel(this);
+        NotifyJob.schedule(this);
+        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission("android.permission.POST_NOTIFICATIONS") != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"}, 7);
+        }
 
         if (savedInstanceState != null && web.restoreState(savedInstanceState) != null) {
             pageReady = true;
@@ -329,6 +336,9 @@ public class MainActivity extends Activity {
         super.onResume();
         web.onResume();
         hideBars();
+        // ya entro al juego: quitar los avisos viejos de la barra
+        android.app.NotificationManager nm = (android.app.NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (nm != null) nm.cancelAll();
     }
 
     @Override

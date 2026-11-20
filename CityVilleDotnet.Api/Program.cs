@@ -250,6 +250,7 @@ app.MapCrewGifts();
 app.MapMissingHandlers();
 CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.MapDaily(app);
 CityVilleDotnet.Api.Features.AllowGames.FranchiseRequestService.MapFranchise(app);
+CityVilleDotnet.Api.Features.AllowGames.PushService.MapPush(app);
 app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -278,6 +279,7 @@ CityVilleDotnet.Api.Features.AllowGames.SeasonService.Initialize(app.Environment
 CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.Initialize(app.Environment.ContentRootPath);
 CityVilleDotnet.Api.Features.AllowGames.ChallengeService.Initialize(app.Environment.ContentRootPath);
 CityVilleDotnet.Api.Features.AllowGames.CommunityService.Initialize(app.Environment.ContentRootPath);
+CityVilleDotnet.Api.Features.AllowGames.PushService.Initialize(app.Environment.ContentRootPath, app.Services);
 CityVilleDotnet.Api.Features.AllowGames.SupportService.Initialize(app.Environment.ContentRootPath);
 CityVilleDotnet.Api.Features.AllowGames.ResetCodeService.Initialize(app.Environment.ContentRootPath);
 CityVilleDotnet.Api.Features.AllowGames.MissingHandlers.Initialize(app.Environment.ContentRootPath);
