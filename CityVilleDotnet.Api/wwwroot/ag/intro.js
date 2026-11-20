@@ -106,7 +106,7 @@
     '<div class="sc s1"><div class="bg"></div><div class="rays"></div><div class="ring"></div><div class="ring r2"></div>' +
     '<div class="shake"><div class="logo"><img src="' + LOGO + '" alt="Allow Games" draggable="false">' + (lite ? '' : '<img class="g1" src="' + LOGO + '" alt=""><img class="g2" src="' + LOGO + '" alt=""><div class="shine"></div>') + '</div>' +
     '<div class="line"></div><div class="tag">' + esc(t.pres) + '</div></div><div class="flash"></div></div>' +
-    '<div class="sc s2"><div class="me"><span>' + esc(t.made) + '</span><b>AllGamersRD</b><i>Allow Games · Lowlitta · Revived</i></div><h2>' + esc(t.thanks) + '</h2><div class="grid">' +
+    '<div class="sc s2"><div class="me"><span>' + esc(t.made) + '</span><b>AllGamersRD</b><i>Allow Games · CityVille Revived</i></div><h2>' + esc(t.thanks) + '</h2><div class="grid">' +
     NAMES.map(function (n) { return '<div class="nm"><b>' + esc(n[0]) + '</b><span>' + esc(n[1]) + '</span></div>'; }).join('') +
     '</div><div class="orig">' + esc(t.orig) + ' · <b>Zynga</b></div><img class="cv" src="' + CV + '" alt="CityVille Revived"></div>' +
     '<div class="skip">' + esc(t.skip) + ' ▶▶</div>';
