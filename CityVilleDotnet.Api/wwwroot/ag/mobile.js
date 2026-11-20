@@ -134,7 +134,8 @@
 
   function init() {
     if (!document.getElementById('cvGame')) return;
-    build(); pinch();
+    if (!document.documentElement.classList.contains('ag-ht')) build();
+    pinch();
     var shown = false; try { shown = localStorage.getItem('agPinchTip') === '1'; localStorage.setItem('agPinchTip', '1'); } catch (e) { }
     if (!shown) addEventListener('ag:loaded', function () { tip(t.tip, 4500); });
   }

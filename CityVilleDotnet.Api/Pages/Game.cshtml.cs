@@ -100,7 +100,7 @@ public class GameModel(UserManager<ApplicationUser> userManager, CityVilleDbCont
             ["preImageCopy"] = "",
             ["preImageUrl"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/assets/Loader_europeandistrict_507.png",
             ["serverTime"] = $"{ServerTime}",
-            ["swfLocation"] = "Game.2012.fix.swf", // Allow Games: Game.2012.swf con los personajes arreglados (tools/swf/shaderpatch.py)
+            ["swfLocation"] = "Game.2012.hud.swf", // Allow Games: Game.2012.swf con los personajes arreglados (tools/swf/shaderpatch.py)
             ["zySnid"] = "0",
             ["zySnuid"] = $"{Uid}",
             ["zyUid"] = $"{Uid}",

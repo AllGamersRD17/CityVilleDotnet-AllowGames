@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 
     private static final String HOST = "cityvillerevived.com";
     private static final String HOME = "https://" + HOST + "/Game?app=1";
-    private static final String APP_VERSION = "0.32";
+    private static final String APP_VERSION = "0.33";
     private static final int PICK_FILE = 42;
 
     private WebView web;

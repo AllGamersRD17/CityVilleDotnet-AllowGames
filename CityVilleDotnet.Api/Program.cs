@@ -216,6 +216,15 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseMiddleware<FallbackAssetMiddleware>();
 app.UseRateLimiter();
 app.UseRouting();
+// Allow Games: XP que pide cada nivel (para la barra de XP de la interfaz de celular)
+app.MapGet("/api/ag/levels", (HttpContext http) =>
+{
+    http.Response.Headers.CacheControl = "public, max-age=86400";
+    var levels = CityVilleDotnet.Common.Settings.GameSettingsManager.Instance.GetLevels()
+        .OrderBy(l => l.Num).Select(l => l.RequiredXp).ToList();
+    return Results.Json(levels);
+});
+
 // Allow Games: descarga de la app de Android (la crea 9_crear_app_android.bat y se sube con assets_nuevos)
 app.MapGet("/app/android", (HttpContext http, IWebHostEnvironment env) =>
 {
