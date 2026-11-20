@@ -211,6 +211,19 @@ app.UseStaticFiles(new StaticFileOptions
         {
             ctx.Context.Response.Headers.CacheControl = "no-cache";
         }
+        // Allow Games: que el celular no vuelva a bajar Ruffle y el juego cada vez que entra
+        else if (ctx.File.Name.EndsWith(".wasm"))
+        {
+            ctx.Context.Response.Headers.CacheControl = "public, max-age=2592000, immutable";
+        }
+        else if (ctx.Context.Request.Path.StartsWithSegments("/ruffle"))
+        {
+            ctx.Context.Response.Headers.CacheControl = "public, max-age=604800";
+        }
+        else if (ctx.File.Name.EndsWith(".swf") || ctx.File.Name.EndsWith(".xml") || ctx.File.Name.EndsWith(".z"))
+        {
+            ctx.Context.Response.Headers.CacheControl = "public, max-age=3600";
+        }
     }
 });
 app.UseMiddleware<FallbackAssetMiddleware>();
