@@ -15,12 +15,12 @@
   var P = window.AG_PLAYER || {};
   var lang = (P.locale || navigator.language || 'es').slice(0, 2);
   var T = {
-    es: { build: 'Construir', inv: 'Inventario', tools: 'Editar', friends: 'Vecinos', quests: 'Misiones', ch: 'Desafíos', daily: 'Premio', coll: 'Colecciones', move: 'Mover', rotate: 'Girar', store: 'Guardar', sell: 'Vender', done: 'Listo', home: 'Volver a mi ciudad', visiting: 'Visitando', lvl: 'Nivel', set: 'Ajustes', classic: 'Usar interfaz clásica', full: 'Pantalla completa', menu: 'Más opciones', close: 'Cerrar', hintMove: 'Toca un edificio y luego donde lo quieres', hintRotate: 'Toca un edificio para girarlo', hintStore: 'Toca un edificio para guardarlo', hintSell: 'Toca un edificio para venderlo', goods: 'Mercancía', energy: 'Energía', full2: 'Llena' },
-    en: { build: 'Build', inv: 'Inventory', tools: 'Edit', friends: 'Neighbors', quests: 'Quests', ch: 'Challenges', daily: 'Reward', coll: 'Collections', move: 'Move', rotate: 'Rotate', store: 'Store', sell: 'Sell', done: 'Done', home: 'Back to my city', visiting: 'Visiting', lvl: 'Level', set: 'Settings', classic: 'Use classic interface', full: 'Fullscreen', menu: 'More options', close: 'Close', hintMove: 'Tap a building, then where you want it', hintRotate: 'Tap a building to rotate it', hintStore: 'Tap a building to store it', hintSell: 'Tap a building to sell it', goods: 'Goods', energy: 'Energy', full2: 'Full' },
-    pt: { build: 'Construir', inv: 'Inventário', tools: 'Editar', friends: 'Vizinhos', quests: 'Missões', ch: 'Desafios', daily: 'Prêmio', coll: 'Coleções', move: 'Mover', rotate: 'Girar', store: 'Guardar', sell: 'Vender', done: 'Pronto', home: 'Voltar para minha cidade', visiting: 'Visitando', lvl: 'Nível', set: 'Ajustes', classic: 'Usar interface clássica', full: 'Tela cheia', menu: 'Mais opções', close: 'Fechar', hintMove: 'Toque num prédio e depois onde quer', hintRotate: 'Toque num prédio para girar', hintStore: 'Toque num prédio para guardar', hintSell: 'Toque num prédio para vender', goods: 'Mercadorias', energy: 'Energia', full2: 'Cheia' },
-    fr: { build: 'Construire', inv: 'Inventaire', tools: 'Modifier', friends: 'Voisins', quests: 'Quêtes', ch: 'Défis', daily: 'Cadeau', coll: 'Collections', move: 'Déplacer', rotate: 'Tourner', store: 'Ranger', sell: 'Vendre', done: 'OK', home: 'Retour à ma ville', visiting: 'En visite', lvl: 'Niveau', set: 'Réglages', classic: 'Interface classique', full: 'Plein écran', menu: "Plus d'options", close: 'Fermer', hintMove: 'Touche un bâtiment puis sa nouvelle place', hintRotate: 'Touche un bâtiment pour le tourner', hintStore: 'Touche un bâtiment pour le ranger', hintSell: 'Touche un bâtiment pour le vendre', goods: 'Marchandises', energy: 'Énergie', full2: 'Pleine' },
-    it: { build: 'Costruisci', inv: 'Inventario', tools: 'Modifica', friends: 'Vicini', quests: 'Missioni', ch: 'Sfide', daily: 'Premio', coll: 'Collezioni', move: 'Sposta', rotate: 'Ruota', store: 'Riponi', sell: 'Vendi', done: 'Fatto', home: 'Torna alla mia città', visiting: 'In visita', lvl: 'Livello', set: 'Impostazioni', classic: 'Interfaccia classica', full: 'Schermo intero', menu: 'Altre opzioni', close: 'Chiudi', hintMove: 'Tocca un edificio e poi dove vuoi', hintRotate: 'Tocca un edificio per ruotarlo', hintStore: 'Tocca un edificio per riporlo', hintSell: 'Tocca un edificio per venderlo', goods: 'Merci', energy: 'Energia', full2: 'Piena' },
-    de: { build: 'Bauen', inv: 'Inventar', tools: 'Bearbeiten', friends: 'Nachbarn', quests: 'Aufgaben', ch: 'Challenges', daily: 'Bonus', coll: 'Sammlungen', move: 'Bewegen', rotate: 'Drehen', store: 'Lagern', sell: 'Verkaufen', done: 'Fertig', home: 'Zurück in meine Stadt', visiting: 'Zu Besuch', lvl: 'Level', set: 'Einstellungen', classic: 'Klassische Oberfläche', full: 'Vollbild', menu: 'Mehr', close: 'Schließen', hintMove: 'Tippe ein Gebäude an, dann den neuen Platz', hintRotate: 'Tippe ein Gebäude zum Drehen an', hintStore: 'Tippe ein Gebäude zum Lagern an', hintSell: 'Tippe ein Gebäude zum Verkaufen an', goods: 'Waren', energy: 'Energie', full2: 'Voll' }
+    es: { nb: 'Mis vecinos', visit: 'Visitar', msg: 'Mensaje', addf: 'Agregar', none: 'Todavía no tienes vecinos. ¡Agrega amigos para visitarlos y ayudarlos!', fps: 'Modo ahorro (más fluido)', on: 'Sí', off: 'No', build: 'Construir', inv: 'Inventario', tools: 'Editar', friends: 'Vecinos', quests: 'Misiones', ch: 'Desafíos', daily: 'Premio', coll: 'Colecciones', move: 'Mover', rotate: 'Girar', store: 'Guardar', sell: 'Vender', done: 'Listo', home: 'Volver a mi ciudad', visiting: 'Visitando', lvl: 'Nivel', set: 'Ajustes', classic: 'Usar interfaz clásica', full: 'Pantalla completa', menu: 'Más opciones', close: 'Cerrar', hintMove: 'Toca un edificio y luego donde lo quieres', hintRotate: 'Toca un edificio para girarlo', hintStore: 'Toca un edificio para guardarlo', hintSell: 'Toca un edificio para venderlo', goods: 'Mercancía', energy: 'Energía', full2: 'Llena' },
+    en: { nb: 'My neighbors', visit: 'Visit', msg: 'Message', addf: 'Add', none: 'No neighbors yet. Add friends to visit and help them!', fps: 'Battery saver (smoother)', on: 'On', off: 'Off', build: 'Build', inv: 'Inventory', tools: 'Edit', friends: 'Neighbors', quests: 'Quests', ch: 'Challenges', daily: 'Reward', coll: 'Collections', move: 'Move', rotate: 'Rotate', store: 'Store', sell: 'Sell', done: 'Done', home: 'Back to my city', visiting: 'Visiting', lvl: 'Level', set: 'Settings', classic: 'Use classic interface', full: 'Fullscreen', menu: 'More options', close: 'Close', hintMove: 'Tap a building, then where you want it', hintRotate: 'Tap a building to rotate it', hintStore: 'Tap a building to store it', hintSell: 'Tap a building to sell it', goods: 'Goods', energy: 'Energy', full2: 'Full' },
+    pt: { nb: 'Meus vizinhos', visit: 'Visitar', msg: 'Mensagem', addf: 'Adicionar', none: 'Você ainda não tem vizinhos. Adicione amigos para visitar e ajudar!', fps: 'Modo economia (mais fluido)', on: 'Sim', off: 'Não', build: 'Construir', inv: 'Inventário', tools: 'Editar', friends: 'Vizinhos', quests: 'Missões', ch: 'Desafios', daily: 'Prêmio', coll: 'Coleções', move: 'Mover', rotate: 'Girar', store: 'Guardar', sell: 'Vender', done: 'Pronto', home: 'Voltar para minha cidade', visiting: 'Visitando', lvl: 'Nível', set: 'Ajustes', classic: 'Usar interface clássica', full: 'Tela cheia', menu: 'Mais opções', close: 'Fechar', hintMove: 'Toque num prédio e depois onde quer', hintRotate: 'Toque num prédio para girar', hintStore: 'Toque num prédio para guardar', hintSell: 'Toque num prédio para vender', goods: 'Mercadorias', energy: 'Energia', full2: 'Cheia' },
+    fr: { nb: 'Mes voisins', visit: 'Visiter', msg: 'Message', addf: 'Ajouter', none: 'Pas encore de voisins. Ajoute des amis pour les visiter et les aider !', fps: 'Mode éco (plus fluide)', on: 'Oui', off: 'Non', build: 'Construire', inv: 'Inventaire', tools: 'Modifier', friends: 'Voisins', quests: 'Quêtes', ch: 'Défis', daily: 'Cadeau', coll: 'Collections', move: 'Déplacer', rotate: 'Tourner', store: 'Ranger', sell: 'Vendre', done: 'OK', home: 'Retour à ma ville', visiting: 'En visite', lvl: 'Niveau', set: 'Réglages', classic: 'Interface classique', full: 'Plein écran', menu: "Plus d'options", close: 'Fermer', hintMove: 'Touche un bâtiment puis sa nouvelle place', hintRotate: 'Touche un bâtiment pour le tourner', hintStore: 'Touche un bâtiment pour le ranger', hintSell: 'Touche un bâtiment pour le vendre', goods: 'Marchandises', energy: 'Énergie', full2: 'Pleine' },
+    it: { nb: 'I miei vicini', visit: 'Visita', msg: 'Messaggio', addf: 'Aggiungi', none: 'Ancora nessun vicino. Aggiungi amici per visitarli e aiutarli!', fps: 'Modalità risparmio (più fluida)', on: 'Sì', off: 'No', build: 'Costruisci', inv: 'Inventario', tools: 'Modifica', friends: 'Vicini', quests: 'Missioni', ch: 'Sfide', daily: 'Premio', coll: 'Collezioni', move: 'Sposta', rotate: 'Ruota', store: 'Riponi', sell: 'Vendi', done: 'Fatto', home: 'Torna alla mia città', visiting: 'In visita', lvl: 'Livello', set: 'Impostazioni', classic: 'Interfaccia classica', full: 'Schermo intero', menu: 'Altre opzioni', close: 'Chiudi', hintMove: 'Tocca un edificio e poi dove vuoi', hintRotate: 'Tocca un edificio per ruotarlo', hintStore: 'Tocca un edificio per riporlo', hintSell: 'Tocca un edificio per venderlo', goods: 'Merci', energy: 'Energia', full2: 'Piena' },
+    de: { nb: 'Meine Nachbarn', visit: 'Besuchen', msg: 'Nachricht', addf: 'Hinzufügen', none: 'Noch keine Nachbarn. Füge Freunde hinzu, um sie zu besuchen und ihnen zu helfen!', fps: 'Sparmodus (flüssiger)', on: 'An', off: 'Aus', build: 'Bauen', inv: 'Inventar', tools: 'Bearbeiten', friends: 'Nachbarn', quests: 'Aufgaben', ch: 'Challenges', daily: 'Bonus', coll: 'Sammlungen', move: 'Bewegen', rotate: 'Drehen', store: 'Lagern', sell: 'Verkaufen', done: 'Fertig', home: 'Zurück in meine Stadt', visiting: 'Zu Besuch', lvl: 'Level', set: 'Einstellungen', classic: 'Klassische Oberfläche', full: 'Vollbild', menu: 'Mehr', close: 'Schließen', hintMove: 'Tippe ein Gebäude an, dann den neuen Platz', hintRotate: 'Tippe ein Gebäude zum Drehen an', hintStore: 'Tippe ein Gebäude zum Lagern an', hintSell: 'Tippe ein Gebäude zum Verkaufen an', goods: 'Waren', energy: 'Energie', full2: 'Voll' }
   };
   var t = T[lang] || T.es;
   var IC = '/ag/ic/';
@@ -85,9 +85,27 @@
     // visitando
     '#agHT .visit{position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);display:none;pointer-events:auto;align-items:center;gap:8px;border:4px solid #fff;border-radius:999px;padding:10px 24px 10px 14px;color:#fff;font-size:18px;font-weight:900;background:linear-gradient(#8ee05a,#4caf27);box-shadow:0 5px 0 #2f7d17,0 8px 16px rgba(0,0,0,.35);text-shadow:0 2px 0 #2c7710}' +
     '#agHT .visit img{width:38px;height:38px;object-fit:contain}' +
-    '#agHT.visiting .visit{display:flex}#agHT.visiting .act,#agHT.visiting .fan{display:none}' +
+    '#agHT.visiting .visit{display:flex}#agHT.visiting .act,#agHT.visiting .fan{display:none}#agHT.nbopen .side,#agHT.nbopen .act,#agHT.nbopen .fan,#agHT.nbopen .visit{display:none!important}' +
     '#agHT .vtag{display:none;pointer-events:auto;height:34px;align-items:center;padding:0 14px;border-radius:999px;background:rgba(7,59,87,.88);border:3px solid #fff;color:#fff;font-size:14px;font-weight:900}' +
     '#agHT.visiting .vtag{display:flex}#agHT.visiting .pill.c,#agHT.visiting .pill.m,#agHT.visiting .pill.g{display:none}' +
+    // barra de vecinos (como Hometown)
+    '#htNb{position:fixed;left:0;right:0;bottom:0;z-index:1050;transform:translateY(110%);transition:transform .28s cubic-bezier(.2,1,.3,1);padding:8px calc(10px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));background:linear-gradient(#fffdf4,#f3e7c3);border-top:4px solid #1c6e9c;border-radius:22px 22px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.3);font-family:CV,sans-serif;-webkit-user-select:none;user-select:none}' +
+    '#htNb.open{transform:none}' +
+    '#htNb .hd{display:flex;align-items:center;gap:8px;margin:0 2px 6px}#htNb .hd b{flex:1;color:#0a5f8c;font-size:16px}' +
+    '#htNb .hd button{border:0;border-radius:999px;padding:6px 12px;font:700 13px CV,sans-serif;color:#fff;background:linear-gradient(#7fd0ff,#2f8fc4);box-shadow:0 3px 0 #1c6e9c}' +
+    '#htNb .hd .x{background:linear-gradient(#ff8a80,#e8382f);box-shadow:0 3px 0 #9c1d16;width:34px;padding:6px 0}' +
+    '#htNb .row{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;padding:2px 2px 6px;touch-action:pan-x;scrollbar-width:none}#htNb .row::-webkit-scrollbar{display:none}' +
+    '#htNb .nb{flex:0 0 auto;width:78px;scroll-snap-align:start;text-align:center;position:relative;cursor:pointer}' +
+    '#htNb .av{position:relative;width:64px;height:64px;margin:0 auto;border-radius:16px;border:3px solid #fff;background:#cfe9f7 center/cover;box-shadow:0 3px 0 #9fbfd0,0 4px 8px rgba(0,0,0,.2)}' +
+    '#htNb .av i{position:absolute;right:-6px;bottom:-6px;min-width:24px;height:24px;border-radius:12px;background:url(' + IC + 'xp.png) center/contain no-repeat;color:#fff;font:900 11px/24px CV,sans-serif;font-style:normal;text-shadow:0 1px 0 #8a5a00,0 0 2px #8a5a00}' +
+    '#htNb .av s{position:absolute;left:-4px;top:-4px;width:14px;height:14px;border-radius:50%;border:2px solid #fff;background:#9aa7ad}' +
+    '#htNb .av s.online{background:#43c463}#htNb .av s.idle{background:#f5b81c}#htNb .av s.busy{background:#e8382f}' +
+    '#htNb .nm{display:block;margin-top:6px;font-size:12px;font-weight:700;color:#21445a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+    '#htNb .add .av{background:linear-gradient(#b6f07a,#4fae1f);display:flex;align-items:center;justify-content:center;font-size:34px;color:#fff;font-weight:900}' +
+    '#htNb .none{padding:14px 6px;color:#5d7480;font-size:14px}' +
+    '#htNb .pop{position:absolute;left:-2px;right:-2px;top:-2px;bottom:-2px;display:flex;flex-direction:column;justify-content:center;gap:5px;z-index:2;background:rgba(255,253,244,.94);border-radius:14px;border:2px solid #1c6e9c}' +
+    '#htNb .pop button{border:0;border-radius:999px;padding:6px 4px;margin:0 3px;font:700 12px CV,sans-serif;color:#fff;white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.25)}' +
+    '#htNb .pop .v{background:linear-gradient(#8ee05a,#4caf27)}#htNb .pop .m{background:linear-gradient(#7fd0ff,#2f8fc4)}' +
     // hoja de ajustes
     '#agHTs{position:fixed;inset:0;z-index:1060;display:none;align-items:center;justify-content:center;background:rgba(8,40,60,.45)}#agHTs.show{display:flex}' +
     '#agHTs .bx{width:min(360px,92vw);background:linear-gradient(#fffdf4,#fff3cf);border:4px solid #1c6e9c;border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:8px;font-family:CV,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.4)}' +
@@ -160,6 +178,7 @@
       '<button data-a="coll"><img src="' + IC + 'library.png" width="28" alt="">' + t.coll + '</button>' +
       '<button data-a="menu"><span style="font-size:24px;width:28px;text-align:center">\u2630</span>' + t.menu + '</button>' +
       ((document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen) && !/AllowGamesApp/.test(navigator.userAgent) ? '<button data-a="fs"><img src="' + IC + 'expand.png" width="28" alt="">' + t.full + '</button>' : '') +
+      '<button data-a="saver"><img src="' + IC + 'energy.png" width="28" alt=""><span id="htSaver"></span></button>' +
       '<button data-a="classic"><img src="' + IC + 'home.png" width="28" alt="">' + t.classic + '</button>' +
       '<button class="x" data-a="close">' + t.close + '</button></div>';
     document.body.appendChild(sheet);
@@ -176,6 +195,55 @@
       var sync = function () { var n = src.textContent; els.htBadge.textContent = n; els.htBadge.style.display = src.style.display === 'none' || !n || n === '0' ? 'none' : 'block'; };
       new MutationObserver(sync).observe(src, { childList: true, attributes: true, characterData: true, subtree: true }); sync();
     }
+  }
+
+  // ---------- vecinos (barra de abajo como Hometown) ----------
+  var nbEl = null, nbData = null;
+  function esc(x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function toggleNb(force) {
+    if (!nbEl) {
+      nbEl = document.createElement('div'); nbEl.id = 'htNb';
+      nbEl.innerHTML = '<div class="hd"><b>' + t.nb + '</b><button data-n="chat">\uD83D\uDCAC Chat</button><button class="x" data-n="close">\u2715</button></div><div class="row" id="htNbRow"></div>';
+      document.body.appendChild(nbEl);
+      ['pointerdown', 'touchstart', 'mousedown'].forEach(function (ev) { nbEl.addEventListener(ev, function (e) { e.stopPropagation(); }, true); });
+      nbEl.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-n]');
+        if (b) {
+          var a = b.getAttribute('data-n'), card = b.closest('.nb');
+          if (a === 'close') toggleNb(false);
+          else if (a === 'chat') { toggleNb(false); if (window.agOpenCommunity) window.agOpenCommunity(); }
+          else if (a === 'add') { toggleNb(false); if (window.agOpenCommunity) window.agOpenCommunity(); }
+          else if (a === 'visit') { toggleNb(false); defaultTool(); call(UI, 'visitNeighbor', card.getAttribute('data-uid')); }
+          else if (a === 'msg') { toggleNb(false); if (window.agChat) window.agChat.open(card.getAttribute('data-name')); }
+          return;
+        }
+        var c = e.target.closest('.nb[data-uid]'); if (!c) return;
+        var had = c.querySelector('.pop');
+        nbEl.querySelectorAll('.pop').forEach(function (x) { x.remove(); });
+        if (!had) {
+          var pop = document.createElement('div'); pop.className = 'pop';
+          pop.innerHTML = '<button class="v" data-n="visit">\uD83C\uDFE0 ' + t.visit + '</button><button class="m" data-n="msg">\uD83D\uDCAC ' + t.msg + '</button>';
+          c.appendChild(pop);
+        }
+      });
+    }
+    var open = force === undefined ? !nbEl.classList.contains('open') : force;
+    nbEl.classList.toggle('open', open);
+    hud.classList.toggle('nbopen', open);
+    if (open) loadNb();
+  }
+  function loadNb() {
+    var row = document.getElementById('htNbRow');
+    if (!nbData) row.innerHTML = '<div class="none">...</div>';
+    fetch('/api/ag/neighbors', { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d) return; nbData = d;
+      var h = '<div class="nb add" data-n="add"><div class="av">+</div><span class="nm">' + t.addf + '</span></div>';
+      if (!d.list.length) h += '<div class="none">' + t.none + '</div>';
+      d.list.forEach(function (n) {
+        h += '<div class="nb" data-uid="' + esc(n.uid) + '" data-name="' + esc(n.name) + '"><div class="av" style="background-image:url(\'' + esc(n.avatar) + '\')"><s class="' + esc(n.status) + '"></s><i>' + (+n.level || 1) + '</i></div><span class="nm">' + esc(n.name) + '</span></div>';
+      });
+      row.innerHTML = h;
+    }).catch(function () { });
   }
 
   var toolOn = null;
@@ -199,12 +267,13 @@
       case 'tools': fan.classList.toggle('open'); break;
       case 'quests': call(UI, 'displayQuestManager'); break;
       case 'coll': call(UI, 'displayCollections'); break;
-      case 'friends': if (window.agOpenCommunity) window.agOpenCommunity(); break;
+      case 'friends': toggleNb(); break;
       case 'ch': if (window.agOpenChallenges) window.agOpenChallenges(); break;
       case 'daily': if (window.agOpenDaily) window.agOpenDaily(); break;
       case 'zin': try { fl().zoomIn(); } catch (x) { } break;
       case 'zout': try { fl().zoomOut(); } catch (x) { } break;
-      case 'set': sheet.classList.add('show'); break;
+      case 'set': document.getElementById('htSaver').textContent = t.fps + ': ' + (saver() ? t.on : t.off); sheet.classList.add('show'); break;
+      case 'saver': try { localStorage.setItem('agSaver', saver() ? '0' : '1'); } catch (x) { } ticks = 0; break;
       case 'done': defaultTool(); break;
       case 'home': var uid = call('', 'player.uid'); if (uid) call(UI, 'visitNeighbor', String(uid)); break;
       case 'menu': var m = document.getElementById('cvMenuToggle'); if (m) m.click(); break;
@@ -235,14 +304,19 @@
     if (last[id] !== undefined && v > last[id]) { var p = els[id].closest('.pill'); if (p) { p.classList.add('bump'); setTimeout(function () { p.classList.remove('bump'); }, 180); } }
     last[id] = v;
   }
-  var ready = false;
+  var ready = false, ticks = 0;
+  function saver() { try { return localStorage.getItem('agSaver') !== '0'; } catch (e) { return true; } }
   function tick() {
     var lv = call('', 'player.level');
     if (typeof lv !== 'number') return;
     if (!ready) { ready = true; hud.style.display = ''; }
     // el HUD viejo de Flash fuera
-    if (call('', 'hud.visible') !== false) call('', 'hud.visible', false);
-    if (call('', 'ui.bottomUI.visible') !== false) call('', 'ui.bottomUI.visible', false);
+    if (ticks++ % 5 === 0) {
+      if (call('', 'hud.visible') !== false) call('', 'hud.visible', false);
+      if (call('', 'ui.bottomUI.visible') !== false) call('', 'ui.bottomUI.visible', false);
+      var want = saver() ? 20 : 30;
+      if (call('', 'stage.frameRate') !== want) call('', 'stage.frameRate', want);
+    }
 
     var gold = call('', 'player.gold'), cash = call('', 'player.cash'), en = call('', 'player.energy'), enMax = call('', 'player.energyMax'), xp = call('', 'player.xp');
     var goods = call('', 'player.commodities.getCount', 'goods'), goodsMax = call('', 'player.commodities.getCapacity', 'goods');
@@ -264,7 +338,7 @@
   function init() {
     if (!document.getElementById('cvGame')) { document.documentElement.classList.remove('ag-ht'); return; }
     build(); hud.style.display = 'none';
-    setInterval(tick, 800);
+    setInterval(tick, 1200);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

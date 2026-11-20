@@ -949,6 +949,24 @@ public static class CommunityService
             return Results.Json(new { friends = outFr, online = outOn, convs = Conversations(p.Username) });
         });
 
+        // vecinos para la barra estilo Hometown del celular (con el uid para visitarlos)
+        app.MapGet("/api/ag/neighbors", async (HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
+        {
+            var (p, _) = await Me(h, db, u);
+            if (p is null) return Results.Unauthorized();
+            var rel = await Relations(db, p.Id);
+            var friends = rel.Where(x => x.Value == "friend").Select(x => x.Key).ToList();
+            var fr = await db.Set<Player>().AsNoTracking()
+                .Where(x => x.Snuid != -1 && friends.Contains(x.Username))
+                .Select(x => new { uid = x.Snuid, name = x.Username, avatar = x.ProfilePictureUrl ?? "/blank.png", level = x.Level })
+                .ToListAsync();
+            int Rank(string st) => st == "online" ? 0 : st == "idle" ? 1 : st == "busy" ? 2 : 3;
+            var list = fr.Where(x => !Blocked(p.Username, x.name))
+                .Select(x => new { uid = x.uid.ToString(), x.name, x.avatar, x.level, status = Presence(x.name) })
+                .OrderBy(x => Rank(x.status)).ThenByDescending(x => x.level).ToList();
+            return Results.Json(new { me = p.Snuid.ToString(), pending = rel.Count(x => x.Value == "received"), list });
+        });
+
         app.MapGet("/api/ag/friends/find", async (string? q, HttpContext h, CityVilleDbContext db, UserManager<ApplicationUser> u) =>
         {
             var (p, _) = await Me(h, db, u);

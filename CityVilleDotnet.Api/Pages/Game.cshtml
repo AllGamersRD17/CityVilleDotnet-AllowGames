@@ -32,7 +32,14 @@
 		const cvIos = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 		
 		if (cvTouch) {
-			Object.defineProperty(window, "devicePixelRatio", { get: () => 1 });
+			// Allow Games: el juego se dibuja mas grande y se achica para que quepa (fitGame).
+			// Antes se forzaba 1 y en celular se veia borroso; ahora se usa la nitidez real de la pantalla
+			// (hasta 1.5) sin pasarse, para que no se trabe.
+			const realDpr = window.devicePixelRatio || 1;
+			Object.defineProperty(window, "devicePixelRatio", { get: () => {
+				const sc = Math.min(1, innerWidth / 960, innerHeight / 756);
+				return Math.max(1, Math.min(1.5, realDpr * sc));
+			} });
 		}
 	</script>
 	
@@ -329,7 +336,7 @@
 		wmode: "window",
 		deviceFontRenderer: "canvas",
 		maxExecutionDuration: 360,
-		quality: cvTouch ? "low" : "high",
+		quality: cvTouch ? "medium" : "high",
 		preferredRenderer: cvIos ? "wgpu-webgl" : null
 	};
 	// Allow Games: pruebas de calidad por URL (?q=best&dfr=embedded&r=webgl)
