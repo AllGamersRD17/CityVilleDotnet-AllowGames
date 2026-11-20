@@ -2,6 +2,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Resources.SharedResource> Localizer
 @model CityVilleDotnet.Api.Pages.Account.RegisterModel
 
+<a href="/Account/Login" class="ag-back" style="position:fixed;top:calc(10px + env(safe-area-inset-top));left:calc(10px + env(safe-area-inset-left));z-index:50;display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;background:#fff;color:#1f7fbf;font-weight:700;text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.25);font-size:16px"><i class="bi bi-arrow-left"></i>@AgText.Get("Back")</a>
 <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light px-3">
     <img class="ag-auth-logo" src="/ag/logo_revived.png" alt="CityVille Revived"/>
     <div class="ag-auth-wrap w-100">
@@ -70,5 +71,5 @@
         </div>
     </div>
 </div>
-    <p class="mt-3 ag-stroke" style="font-weight:600">Allow Games · BETA v0.37 · <a href="/creditos.html" style="color:#fff">Créditos</a></p>
+    <p class="mt-3 ag-stroke" style="font-weight:600">Allow Games · BETA v0.38 · <a href="/creditos.html" style="color:#fff">Créditos</a></p>
 </div>

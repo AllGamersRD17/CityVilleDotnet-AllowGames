@@ -24,6 +24,9 @@
   };
   var t = T[lang] || T.es;
   var IC = '/ag/ic/';
+  // tablets/celulares sencillos: menos cuadros por segundo y sin musica de fondo (lo que mas los traba)
+  var weak = (navigator.hardwareConcurrency || 4) <= 4 || (navigator.deviceMemory && navigator.deviceMemory <= 3);
+  window.agWeak = weak;
 
   var css =
     'html.ag-ht,html.ag-ht body{overflow:hidden!important;overscroll-behavior:none;position:fixed;inset:0}' +
@@ -106,6 +109,11 @@
     '#htNb .pop{position:absolute;left:-2px;right:-2px;top:-2px;bottom:-2px;display:flex;flex-direction:column;justify-content:center;gap:5px;z-index:2;background:rgba(255,253,244,.94);border-radius:14px;border:2px solid #1c6e9c}' +
     '#htNb .pop button{border:0;border-radius:999px;padding:6px 4px;margin:0 3px;font:700 12px CV,sans-serif;color:#fff;white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.25)}' +
     '#htNb .pop .v{background:linear-gradient(#8ee05a,#4caf27)}#htNb .pop .m{background:linear-gradient(#7fd0ff,#2f8fc4)}' +
+    // flecha del tutorial apuntando al boton Construir de verdad
+    '#agHT .garr{position:absolute;display:none;right:calc(30px + env(safe-area-inset-right));bottom:calc(118px + env(safe-area-inset-bottom));width:46px;height:56px;pointer-events:none;animation:agArr .7s ease-in-out infinite alternate;filter:drop-shadow(0 3px 2px rgba(0,0,0,.35))}' +
+    '#agHT.guide .garr{display:block}#agHT.guide .big{box-shadow:0 5px 0 #8a5c00,0 0 0 6px rgba(255,236,120,.9),0 0 30px 10px rgba(255,220,60,.8)}' +
+    '@keyframes agArr{to{transform:translateY(12px)}}' +
+    '@media (max-height:430px){#agHT .garr{bottom:calc(98px + env(safe-area-inset-bottom));right:calc(24px + env(safe-area-inset-right))}}' +
     // hoja de ajustes
     '#agHTs{position:fixed;inset:0;z-index:1060;display:none;align-items:center;justify-content:center;background:rgba(8,40,60,.45)}#agHTs.show{display:flex}' +
     '#agHTs .bx{width:min(360px,92vw);background:linear-gradient(#fffdf4,#fff3cf);border:4px solid #1c6e9c;border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:8px;font-family:CV,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.4)}' +
@@ -165,6 +173,7 @@
       '<button class="rb mid" data-a="inv"><img src="' + IC + 'store.png" alt=""><span>' + t.inv + '</span></button>' +
       '</div><button class="big" data-a="build"><img src="' + IC + 'city.png" alt=""><span>' + t.build + '</span></button></div>' +
       '<div class="mode" id="htMode"><span id="htModeT"></span><button data-a="done">\u2713 ' + t.done + '</button></div>' +
+      '<svg class="garr" viewBox="0 0 46 56"><path d="M15 0h16v30h13L23 56 2 30h13z" fill="#ffe23d" stroke="#8a5c00" stroke-width="3" stroke-linejoin="round"/></svg>' +
       '<button class="visit" data-a="home"><img src="' + IC + 'home.png" alt="">' + t.home + '</button>';
     document.body.appendChild(hud);
     fan = hud.querySelector('#htFan'); modeBar = hud.querySelector('#htMode');
@@ -204,7 +213,7 @@
     if (!nbEl) {
       nbEl = document.createElement('div'); nbEl.id = 'htNb';
       nbEl.innerHTML = '<div class="hd"><b>' + t.nb + '</b><button data-n="chat">\uD83D\uDCAC Chat</button><button class="x" data-n="close">\u2715</button></div><div class="row" id="htNbRow"></div>';
-      document.body.appendChild(nbEl);
+      document.body.appendChild(nbEl); fit();
       ['pointerdown', 'touchstart', 'mousedown'].forEach(function (ev) { nbEl.addEventListener(ev, function (e) { e.stopPropagation(); }, true); });
       nbEl.addEventListener('click', function (e) {
         var b = e.target.closest('[data-n]');
@@ -304,18 +313,21 @@
     if (last[id] !== undefined && v > last[id]) { var p = els[id].closest('.pill'); if (p) { p.classList.add('bump'); setTimeout(function () { p.classList.remove('bump'); }, 180); } }
     last[id] = v;
   }
-  var ready = false, ticks = 0;
+  var ready = false, ticks = 0, musicOff = false;
   function saver() { try { return localStorage.getItem('agSaver') !== '0'; } catch (e) { return true; } }
   function tick() {
     var lv = call('', 'player.level');
     if (typeof lv !== 'number') return;
     if (!ready) { ready = true; hud.style.display = ''; }
     // el HUD viejo de Flash fuera
-    if (ticks++ % 5 === 0) {
+    if (ticks++ % 3 === 0) {
       if (call('', 'hud.visible') !== false) call('', 'hud.visible', false);
       if (call('', 'ui.bottomUI.visible') !== false) call('', 'ui.bottomUI.visible', false);
-      var want = saver() ? 20 : 30;
+      var want = saver() ? (weak ? 15 : 20) : 30;
       if (call('', 'stage.frameRate') !== want) call('', 'stage.frameRate', want);
+      var noMusic = saver() && weak;
+      if (noMusic !== musicOff) { musicOff = noMusic; call('Classes.util.Sounds', noMusic ? 'pauseMusic' : 'unpauseMusic'); }
+      hud.classList.toggle('guide', call('', 'guide.isActive') === true);
     }
 
     var gold = call('', 'player.gold'), cash = call('', 'player.cash'), en = call('', 'player.energy'), enMax = call('', 'player.energyMax'), xp = call('', 'player.xp');
@@ -335,10 +347,16 @@
     if (vis && toolOn) setMode(null);
   }
 
+  // se adapta a cada pantalla: en tablet todo mas grande, en celular chico un poco mas pequeno
+  function fit() {
+    var z = Math.max(0.82, Math.min(1.45, Math.min(innerWidth / 860, innerHeight / 400)));
+    [hud, sheet, nbEl].forEach(function (el) { if (el) el.style.zoom = z; });
+  }
   function init() {
     if (!document.getElementById('cvGame')) { document.documentElement.classList.remove('ag-ht'); return; }
-    build(); hud.style.display = 'none';
-    setInterval(tick, 1200);
+    build(); hud.style.display = 'none'; fit();
+    addEventListener('resize', fit); addEventListener('orientationchange', function () { setTimeout(fit, 300); });
+    setInterval(function () { if (!document.hidden) tick(); }, 2000);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

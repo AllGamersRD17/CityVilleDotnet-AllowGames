@@ -29,6 +29,8 @@
 	
 	<script>
 		const cvTouch = matchMedia("(pointer: coarse)").matches;
+		// tablets y celulares sencillos: modo liviano
+		const cvWeak = cvTouch && ((navigator.hardwareConcurrency || 4) <= 4 || (navigator.deviceMemory && navigator.deviceMemory <= 3));
 		const cvIos = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 		
 		if (cvTouch) {
@@ -38,7 +40,7 @@
 			const realDpr = window.devicePixelRatio || 1;
 			Object.defineProperty(window, "devicePixelRatio", { get: () => {
 				const sc = Math.min(1, innerWidth / 960, innerHeight / 756);
-				return Math.max(1, Math.min(1.5, realDpr * sc));
+				return cvWeak ? 1 : Math.max(1, Math.min(1.5, realDpr * sc));
 			} });
 		}
 	</script>
@@ -336,7 +338,7 @@
 		wmode: "window",
 		deviceFontRenderer: "canvas",
 		maxExecutionDuration: 360,
-		quality: cvTouch ? "medium" : "high",
+		quality: cvWeak ? "low" : cvTouch ? "medium" : "high",
 		preferredRenderer: cvIos ? "wgpu-webgl" : null
 	};
 	// Allow Games: pruebas de calidad por URL (?q=best&dfr=embedded&r=webgl)
