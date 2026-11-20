@@ -216,6 +216,19 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseMiddleware<FallbackAssetMiddleware>();
 app.UseRateLimiter();
 app.UseRouting();
+// Allow Games: descarga de la app de Android (la crea 9_crear_app_android.bat y se sube con assets_nuevos)
+app.MapGet("/app/android", (HttpContext http, IWebHostEnvironment env) =>
+{
+    var apk = Path.Combine(env.WebRootPath, "assets", "app", "CityVilleRevived.apk");
+    http.Response.Headers.CacheControl = "no-cache";
+    if (File.Exists(apk))
+        return Results.File(apk, "application/vnd.android.package-archive", "CityVilleRevived.apk");
+    return Results.Content("<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>CityVille Revived</title>" +
+        "<body style='margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#04050c;color:#fff;font-family:sans-serif;text-align:center'>" +
+        "<div><h2>App de Android: muy pronto</h2><p>Android app: coming soon</p><p><a style='color:#8ee05a' href='/Game'>Jugar en el navegador / Play in browser</a></p></div>",
+        "text/html; charset=utf-8");
+});
+
 app.MapGet("/", (HttpContext http, IWebHostEnvironment env) =>
 {
     http.Response.Headers.CacheControl = "no-cache";

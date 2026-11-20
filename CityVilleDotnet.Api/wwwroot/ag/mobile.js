@@ -15,7 +15,9 @@
   };
   var t = T[lang] || T.es;
   var isIos = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+  var inApp = /AllowGamesApp/.test(navigator.userAgent);
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  var standalone = inApp || (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
 
   var css =
     // el boton viejo de menu lo reemplaza el dock
@@ -64,7 +66,7 @@
       '<button data-a="zin" class="sm" title="' + t.zin + '">＋</button>' +
       '<button data-a="zout" class="sm" title="' + t.zout + '">－</button>' +
       (canFs ? '<button data-a="fs" class="sm" title="' + t.fs + '"><i class="bi bi-arrows-fullscreen"></i></button>' : '') +
-      (!standalone ? '<button data-a="inst" id="agInstBtn" class="sm" title="' + t.inst + '"' + (isIos ? '' : ' style="display:none"') + '><i class="bi bi-phone"></i></button>' : '') +
+      (!standalone ? '<button data-a="inst" id="agInstBtn" class="sm" title="' + t.inst + '"' + (isIos || isAndroid ? '' : ' style="display:none"') + '><i class="bi bi-phone"></i></button>' : '') +
       '<button data-a="hide" class="sm" title="' + t.hide + '">›</button>';
     var tab = document.createElement('button'); tab.id = 'agDockTab'; tab.type = 'button'; tab.textContent = '‹';
     document.body.appendChild(dock); document.body.appendChild(tab);
@@ -80,7 +82,8 @@
       else if (a === 'fs') fullscreen();
       else if (a === 'hide') dock.classList.add('min');
       else if (a === 'inst') {
-        if (deferredInstall) { deferredInstall.prompt(); deferredInstall = null; b.style.display = 'none'; }
+        if (isAndroid) location.href = '/app/android';
+        else if (deferredInstall) { deferredInstall.prompt(); deferredInstall = null; b.style.display = 'none'; }
         else tip(t.instIos, 6000);
       }
     });
