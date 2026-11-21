@@ -10,6 +10,7 @@
 @model CityVilleDotnet.Api.Pages.GameModel
 
 @section Header {
+	<script>/* Allow Games: en celular y tablet se abre la version rapida sin Flash (se puede volver a la clasica desde ahi) */(function(){try{var q=location.search,m=localStorage.getItem('agMode');if(m!=='classic'&&!/[?&](hud|classic|flash|player)=/.test(q)&&matchMedia('(pointer:coarse)').matches&&!matchMedia('(pointer:fine)').matches)location.replace('/m')}catch(e){}})();</script>
 	<script type="text/javascript" src="/ag/intro.js?v=6"></script>
 	<script>addEventListener("DOMContentLoaded",function(){var n=document.querySelector(".cv-navbar");function f(){if(n)document.documentElement.style.setProperty("--ag-nav-h",n.offsetHeight+"px")}f();addEventListener("resize",f)});</script>
 	<script>window.AG_PLAYER = { name: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.UserName)), uid: "@Model.Uid", level: @Model.Level, locale: "@Model.GameLocale", daily: @Html.Raw(Model.DailyBonusJson) };</script>

@@ -1,0 +1,26 @@
+@page "/m"
+@model CityVilleDotnet.Api.Pages.GameModel
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="@Model.GameLocale.Substring(0, 2)">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+	<meta name="theme-color" content="#2f7fc1" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<title>CityVille Revived</title>
+	<link rel="icon" href="/favicon.ico" />
+	<link rel="stylesheet" href="/m/app.css?v=1" />
+	<script>window.AG_PLAYER = { name: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.UserName)), uid: "@Model.Uid", level: @Model.Level, locale: "@Model.GameLocale", daily: @Html.Raw(Model.DailyBonusJson) };</script>
+</head>
+<body>
+	<canvas id="mv"></canvas>
+	<div id="mh"></div>
+	<div id="mload"><img src="/assets/hometown/spl_logo.png" alt="" onerror="this.remove()" /><div class="bar"><i></i></div><p></p></div>
+	<script src="/ag/intro.js?v=6"></script>
+	<script src="/m/app.js?v=1"></script>
+</body>
+</html>

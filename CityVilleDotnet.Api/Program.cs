@@ -265,6 +265,7 @@ CityVilleDotnet.Api.Features.AllowGames.DailyBonusService.MapDaily(app);
 CityVilleDotnet.Api.Features.AllowGames.FranchiseRequestService.MapFranchise(app);
 CityVilleDotnet.Api.Features.AllowGames.PushService.MapPush(app);
 CityVilleDotnet.Api.Features.AllowGames.DiagService.MapDiag(app);
+CityVilleDotnet.Api.Features.AllowGames.MobileGateway.MapMobileGateway(app);
 app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();

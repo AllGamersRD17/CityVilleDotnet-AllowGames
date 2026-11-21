@@ -30,6 +30,8 @@ internal sealed class GatewayService(IServiceProvider serviceProvider, CityVille
             .ToFrozenDictionary(t => t.FullName!);
     }
 
+    internal static bool TryGetHandler(string className, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out Type? type) => _handlerTypes.TryGetValue(className, out type);
+
     internal static string ResolveMechanicHandler(string mechanicType)
     {
         return GameSettingsManager.GlobalTableModifierTypes.Contains(mechanicType) ? nameof(GlobalTableModifiers) : mechanicType.Pascalize();
