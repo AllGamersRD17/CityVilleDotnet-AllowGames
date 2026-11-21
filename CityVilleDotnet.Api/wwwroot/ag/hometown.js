@@ -23,7 +23,7 @@
     de: { nb: 'Meine Nachbarn', visit: 'Besuchen', msg: 'Nachricht', addf: 'Hinzufügen', none: 'Noch keine Nachbarn. Füge Freunde hinzu, um sie zu besuchen und ihnen zu helfen!', fps: 'Sparmodus (flüssiger)', on: 'An', off: 'Aus', build: 'Bauen', inv: 'Inventar', tools: 'Bearbeiten', friends: 'Nachbarn', quests: 'Aufgaben', ch: 'Challenges', daily: 'Bonus', coll: 'Sammlungen', move: 'Bewegen', rotate: 'Drehen', store: 'Lagern', sell: 'Verkaufen', done: 'Fertig', home: 'Zurück in meine Stadt', visiting: 'Zu Besuch', lvl: 'Level', set: 'Einstellungen', classic: 'Klassische Oberfläche', full: 'Vollbild', menu: 'Mehr', close: 'Schließen', hintMove: 'Tippe ein Gebäude an, dann den neuen Platz', hintRotate: 'Tippe ein Gebäude zum Drehen an', hintStore: 'Tippe ein Gebäude zum Lagern an', hintSell: 'Tippe ein Gebäude zum Verkaufen an', goods: 'Waren', energy: 'Energie', full2: 'Voll' }
   };
   var t = T[lang] || T.es;
-  var IC = '/ag/ic/';
+  var IC = '/ag/ic/', HT = '/assets/hometown/';
   // tablets/celulares sencillos: menos cuadros por segundo y sin musica de fondo (lo que mas los traba)
   var weak = (navigator.hardwareConcurrency || 4) <= 4 || (navigator.deviceMemory && navigator.deviceMemory <= 3);
   window.agWeak = weak;
@@ -88,7 +88,7 @@
     // visitando
     '#agHT .visit{position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);display:none;pointer-events:auto;align-items:center;gap:8px;border:4px solid #fff;border-radius:999px;padding:10px 24px 10px 14px;color:#fff;font-size:18px;font-weight:900;background:linear-gradient(#8ee05a,#4caf27);box-shadow:0 5px 0 #2f7d17,0 8px 16px rgba(0,0,0,.35);text-shadow:0 2px 0 #2c7710}' +
     '#agHT .visit img{width:38px;height:38px;object-fit:contain}' +
-    '#agHT.visiting .visit{display:flex}#agHT.visiting .act,#agHT.visiting .fan{display:none}#agHT.nbopen .side,#agHT.nbopen .act,#agHT.nbopen .fan,#agHT.nbopen .visit{display:none!important}' +
+    '#agHT.visiting .visit{display:flex}#agHT.visiting .act,#agHT.visiting .fan,#agHT.visiting .tab{display:none!important}#agHT.nbopen .side,#agHT.nbopen .act,#agHT.nbopen .tab,#agHT.nbopen .fan,#agHT.nbopen .visit{display:none!important}' +
     '#agHT .vtag{display:none;pointer-events:auto;height:34px;align-items:center;padding:0 14px;border-radius:999px;background:rgba(7,59,87,.88);border:3px solid #fff;color:#fff;font-size:14px;font-weight:900}' +
     '#agHT.visiting .vtag{display:flex}#agHT.visiting .pill.c,#agHT.visiting .pill.m,#agHT.visiting .pill.g{display:none}' +
     // barra de vecinos (como Hometown)
@@ -114,6 +114,53 @@
     '#agHT.guide .garr{display:block}#agHT.guide .big{box-shadow:0 5px 0 #8a5c00,0 0 0 6px rgba(255,236,120,.9),0 0 30px 10px rgba(255,220,60,.8)}' +
     '@keyframes agArr{to{transform:translateY(12px)}}' +
     '@media (max-height:430px){#agHT .garr{bottom:calc(98px + env(safe-area-inset-bottom));right:calc(24px + env(safe-area-inset-right))}}' +
+    // ===== skin CityVille Hometown (dibujos originales del juego de iPhone) =====
+    '#agHT .tab{display:none}' +
+    '#agHT.sk .pill{background:transparent no-repeat center/100% 100%;border:0;box-shadow:none;border-radius:0;height:40px;padding:0;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}' +
+    '#agHT.sk .pill img{display:none}' +
+    '#agHT.sk .pill span,#agHT.sk .pill small{position:relative;color:#fff;font-weight:900;text-shadow:-1px -1px 0 #3a2a10,1px -1px 0 #3a2a10,-1px 1px 0 #3a2a10,1px 1px 0 #3a2a10,0 2px 2px rgba(0,0,0,.5)}' +
+    '#agHT.sk .pill small{color:#ffe9a8;font-size:12px;margin-left:1px}' +
+    '#agHT.sk .pill.c{width:150px;background-image:url(' + HT + 'img_meter_coins_plusbtn.png);padding:0 33px 0 48px;justify-content:center}' +
+    '#agHT.sk .pill.m{width:110px;background-image:url(' + HT + 'img_meter_cash_plusbtn.png);padding:0 20px 0 40px;justify-content:center}' +
+    '#agHT.sk .pill.e{width:107px;background-image:url(' + HT + 'hud_meter_frame_energy_plusbtn.png);padding:0 27px 0 33px;justify-content:center}' +
+    '#agHT.sk .pill.g{width:100px;background-image:url(' + HT + 'hud_meter_frame_produce_plusbtn.png);padding:0 22px 0 40px;justify-content:center}' +
+    '#agHT.sk .pill.bump{transform:scale(1.12)}' +
+    '#agHT.sk .lv{background:linear-gradient(#fff6dc,#e8c88a);border:3px solid #fff;box-shadow:0 3px 0 #9a7a3e,0 5px 10px rgba(0,0,0,.3);border-radius:999px;height:36px;min-width:150px;padding:0 6px 0 46px}' +
+    '#agHT.sk .lv .st{left:-4px;width:52px;height:52px;background:url(' + HT + 'hud_meter_fill_xp_plusbtn.png) center/contain no-repeat;font-size:18px;color:#fff;text-shadow:-1px -1px 0 #0d4f73,1px -1px 0 #0d4f73,-1px 1px 0 #0d4f73,1px 1px 0 #0d4f73}' +
+    '#agHT.sk .lv .bar{height:20px;background:#22364a;border-radius:6px;margin-left:2px;box-shadow:inset 0 2px 3px rgba(0,0,0,.5)}' +
+    '#agHT.sk .lv .bar i{background:url(' + HT + 'hud_dashboard_filler_experience.png) 0 0/100% 100%;border-radius:6px}' +
+    '#agHT.sk .lv .bar b{line-height:20px;font-size:11px;font-weight:900}' +
+    '#agHT.sk .gear{background:url(' + HT + 'hud_settings_icon_plusbtn.png) center/70% no-repeat,radial-gradient(circle at 35% 30%,#fff7df,#e9c98d);border-color:#fff;color:transparent;box-shadow:0 3px 0 #9a7a3e,0 5px 10px rgba(0,0,0,.3)}' +
+    '#agHT.sk .act{display:none}' +
+    '#agHT.sk .tab{position:absolute;right:calc(6px + env(safe-area-inset-right));bottom:calc(8px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:2px;width:84px;padding:12px 4px 10px;background:url(' + HT + 'img_menu_tab.png) center/100% 100% no-repeat;pointer-events:auto;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}' +
+    '#agHT.sk .tab button{position:relative;width:76px;border:0;background:none;padding:2px 0;display:flex;flex-direction:column;align-items:center;cursor:pointer}' +
+    '#agHT.sk .tab button:active{transform:scale(.92)}' +
+    '#agHT.sk .tab img{width:58px;height:46px;object-fit:contain;filter:drop-shadow(0 2px 1px rgba(0,0,0,.3))}' +
+    '#agHT.sk .tab span{color:#fff;font-size:11px;font-weight:900;text-shadow:0 1px 0 #0b3d63,0 0 3px #0b3d63;margin-top:-2px;max-width:80px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+    '#agHT.sk .tab .bd{top:0;right:6px}' +
+    '#agHT.sk .side button[data-a=friends]{display:none}' +
+    '#agHT.sk .zm{right:calc(98px + env(safe-area-inset-right))}' +
+    '#agHT.sk .fan{right:calc(98px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom))}' +
+    '#agHT.sk .fan button{background:radial-gradient(circle at 35% 30%,#fff9e6,#f0d9a6);box-shadow:0 4px 0 #a8823c,0 6px 12px rgba(0,0,0,.3);color:#5a3a00;font-size:0}' +
+    '#agHT.sk .fan button span{font-size:9.5px;color:#5a3a00}' +
+    '#agHT.sk .fan button::before{content:"";width:38px;height:38px;background:center/contain no-repeat}' +
+    '#agHT.sk .fan [data-a="t:move"]::before{background-image:url(' + HT + 'img_menu_design.png)}' +
+    '#agHT.sk .fan [data-a="t:rotate"]::before{background-image:url(' + HT + 'cit_editorbutton_rotate.png)}' +
+    '#agHT.sk .fan [data-a="t:store"]::before{background-image:url(' + HT + 'cit_editorbutton_inventory.png)}' +
+    '#agHT.sk .fan [data-a="t:remove"]::before{background-image:url(' + HT + 'cit_editorbutton_sell.png)}' +
+    '#agHT.sk .mode button{font-size:0;width:52px;height:40px;background:url(' + HT + 'cit_editorbutton_validate.png) center/contain no-repeat;box-shadow:none}' +
+    '#agHT.sk .visit{background:url(' + HT + 'hud_visit_home.png) left center/auto 100% no-repeat,linear-gradient(#fff3d2,#e9c98d);color:#5a3a00;text-shadow:none;padding-left:70px;border-color:#fff;box-shadow:0 5px 0 #9a7a3e,0 8px 16px rgba(0,0,0,.35)}' +
+    '#agHT.sk .visit img{display:none}' +
+    '#agHT.sk .garr{background:url(' + HT + 'gen_icon_orangearrow1.png) center/contain no-repeat;right:calc(22px + env(safe-area-inset-right));bottom:calc(330px + env(safe-area-inset-bottom))}' +
+    '#agHT.sk .garr path{display:none}' +
+    '#agHT.sk.guide .tab button[data-a=build] img{animation:agGlow 1s ease-in-out infinite alternate}' +
+    '@keyframes agGlow{to{filter:drop-shadow(0 0 10px #ffe23d) drop-shadow(0 0 4px #fff)}}' +
+    '@media (max-height:430px){#agHT.sk .tab{width:70px;padding:8px 3px 8px}#agHT.sk .tab img{width:46px;height:36px}#agHT.sk .tab span{font-size:10px}#agHT.sk .pill{height:34px}#agHT.sk .pill.c{width:128px}#agHT.sk .pill.m{width:94px}#agHT.sk .pill.e{width:92px}#agHT.sk .pill.g{width:86px}#agHT.sk .zm,#agHT.sk .fan{right:calc(82px + env(safe-area-inset-right))}#agHT.sk .garr{bottom:calc(262px + env(safe-area-inset-bottom))}}' +
+    // vecinos con el tablero de madera
+    '#htNb.sk{background:linear-gradient(#e9f6ff,#bfe3f7);border-top-color:#8a5a2b}' +
+    '#htNb.sk .hd b{background:url(' + HT + 'nei_visit_board.png) center/100% 100% no-repeat;color:#fff;padding:6px 18px;text-shadow:0 1px 0 #3a2410,0 0 3px #3a2410;flex:0 0 auto}' +
+    '#htNb.sk .hd{justify-content:space-between}#htNb.sk .hd b+button{margin-left:auto}' +
+    '#htNb.sk .add .av{background:url(' + HT + 'nei_addfriends_image.png) center/86% no-repeat,#fff;font-size:0}' +
     // hoja de ajustes
     '#agHTs{position:fixed;inset:0;z-index:1060;display:none;align-items:center;justify-content:center;background:rgba(8,40,60,.45)}#agHTs.show{display:flex}' +
     '#agHTs .bx{width:min(360px,92vw);background:linear-gradient(#fffdf4,#fff3cf);border:4px solid #1c6e9c;border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:8px;font-family:CV,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.4)}' +
@@ -172,12 +219,16 @@
       '<button class="rb mid" data-a="tools"><img src="' + IC + 'tools.png" alt=""><span>' + t.tools + '</span></button>' +
       '<button class="rb mid" data-a="inv"><img src="' + IC + 'store.png" alt=""><span>' + t.inv + '</span></button>' +
       '</div><button class="big" data-a="build"><img src="' + IC + 'city.png" alt=""><span>' + t.build + '</span></button></div>' +
+      '<div class="tab"><button data-a="build"><img src="' + HT + 'img_menu_store.png" alt=""><span>' + t.build + '</span></button>' +
+      '<button data-a="tools"><img src="' + HT + 'img_menu_design.png" alt=""><span>' + t.tools + '</span></button>' +
+      '<button data-a="inv"><img src="' + HT + 'cit_editorbutton_inventory.png" alt=""><span>' + t.inv + '</span></button>' +
+      '<button data-a="friends"><img src="' + HT + 'img_menu_friends.png" alt=""><span>' + t.friends + '</span><i class="bd" id="htBadge2"></i></button></div>' +
       '<div class="mode" id="htMode"><span id="htModeT"></span><button data-a="done">\u2713 ' + t.done + '</button></div>' +
       '<svg class="garr" viewBox="0 0 46 56"><path d="M15 0h16v30h13L23 56 2 30h13z" fill="#ffe23d" stroke="#8a5c00" stroke-width="3" stroke-linejoin="round"/></svg>' +
       '<button class="visit" data-a="home"><img src="' + IC + 'home.png" alt="">' + t.home + '</button>';
     document.body.appendChild(hud);
     fan = hud.querySelector('#htFan'); modeBar = hud.querySelector('#htMode');
-    ['htLv', 'htXpI', 'htXp', 'htGold', 'htCash', 'htEn', 'htEnM', 'htGoods', 'htGoodsM', 'htBadge', 'htModeT'].forEach(function (id) { els[id] = document.getElementById(id); });
+    ['htLv', 'htXpI', 'htXp', 'htGold', 'htCash', 'htEn', 'htEnM', 'htGoods', 'htGoodsM', 'htBadge', 'htBadge2', 'htModeT'].forEach(function (id) { els[id] = document.getElementById(id); });
     hud.addEventListener('click', onClick);
     // que los toques en la interfaz no lleguen al mapa
     ['pointerdown', 'touchstart', 'mousedown'].forEach(function (ev) { hud.addEventListener(ev, function (e) { if (e.target.closest('button,.pill,.lv')) e.stopPropagation(); }, true); });
@@ -201,7 +252,7 @@
     // insignia de mensajes de la Comunidad
     var src = document.getElementById('agCmBadge');
     if (src && window.MutationObserver) {
-      var sync = function () { var n = src.textContent; els.htBadge.textContent = n; els.htBadge.style.display = src.style.display === 'none' || !n || n === '0' ? 'none' : 'block'; };
+      var sync = function () { var n = src.textContent; var show = src.style.display === 'none' || !n || n === '0' ? 'none' : 'block'; els.htBadge.textContent = n; els.htBadge.style.display = show; els.htBadge2.textContent = n; els.htBadge2.style.display = show; };
       new MutationObserver(sync).observe(src, { childList: true, attributes: true, characterData: true, subtree: true }); sync();
     }
   }
@@ -213,7 +264,7 @@
     if (!nbEl) {
       nbEl = document.createElement('div'); nbEl.id = 'htNb';
       nbEl.innerHTML = '<div class="hd"><b>' + t.nb + '</b><button data-n="chat">\uD83D\uDCAC Chat</button><button class="x" data-n="close">\u2715</button></div><div class="row" id="htNbRow"></div>';
-      document.body.appendChild(nbEl); fit();
+      document.body.appendChild(nbEl); fit(); if (window.agHtSkin) nbEl.classList.add('sk');
       ['pointerdown', 'touchstart', 'mousedown'].forEach(function (ev) { nbEl.addEventListener(ev, function (e) { e.stopPropagation(); }, true); });
       nbEl.addEventListener('click', function (e) {
         var b = e.target.closest('[data-n]');
@@ -355,6 +406,9 @@
   function init() {
     if (!document.getElementById('cvGame')) { document.documentElement.classList.remove('ag-ht'); return; }
     build(); hud.style.display = 'none'; fit();
+    var probe = new Image();
+    probe.onload = function () { hud.classList.add('sk'); if (nbEl) nbEl.classList.add('sk'); window.agHtSkin = true; };
+    probe.src = HT + 'img_menu_tab.png';
     addEventListener('resize', fit); addEventListener('orientationchange', function () { setTimeout(fit, 300); });
     setInterval(function () { if (!document.hidden) tick(); }, 2000);
   }
